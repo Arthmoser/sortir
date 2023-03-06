@@ -62,16 +62,16 @@ class RegistrationFormType extends AbstractType
                     'Non' => false
                 ],
                 'required' => true,
-            ])
-
-            ->add('roles', ChoiceType::class, [
-            'label'    => 'Niveau d\'acréditation : ',
-            'choices' => [
-                'Admin' => '["ROLE_ADMIN"]',
-                'User' => '["ROLE_USER"]'
-            ],
-            'required' => true,
             ]);
+
+//            ->add('roles', ChoiceType::class, [
+//            'label'    => 'Niveau d\'acréditation : ',
+//            'choices' => [
+//                'Admin' => '["ROLE_ADMIN"]',
+//                'User' => '["ROLE_USER"]'
+//            ],
+//            'required' => true,
+//            ]);
 
     }
 
