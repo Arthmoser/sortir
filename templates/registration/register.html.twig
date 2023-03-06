@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Inscription</h1>
+
+    {{ form_start(registrationForm) }}
+
+
+        <p> {{ form_row(registrationForm.nickname) }} </p>
+        {{ form_row(registrationForm.lastname) }}
+        {{ form_row(registrationForm.firstname) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.phone) }}
+        {{ form_row(registrationForm.plainPassword) }}
+        {{ form_row(registrationForm.isAllowed) }}
+
+        <button type="submit" class="btn">Inscription</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}
