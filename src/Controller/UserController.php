@@ -6,8 +6,10 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
+use App\Utils\Uploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -20,7 +22,8 @@ class UserController extends AbstractController
     //Creation of a new password for the connected user
     #[Route('show/{id}', name: 'passwordModification', requirements: ['id' => '\d+'])]
     public function passwordModification(int $id, UserRepository $userRepository,
-                                         Request $request, UserPasswordHasherInterface $userPasswordHasher,
+                                         Request $request, Uploader $uploader,
+                                         UserPasswordHasherInterface $userPasswordHasher,
                                          EntityManagerInterface $entityManager): Response
     {
         $user = $userRepository->find($id);
@@ -35,6 +38,18 @@ class UserController extends AbstractController
 
 
                 if ($form->isSubmitted() && $form->isValid()) {
+
+                    //upload photo
+                    /**
+                     * @var UploadedFile $file
+                     */
+
+                    $file = $form->get('img')->getData();
+
+                    $uploader->upload(
+                      $file,
+                      $this->getParameter('upload_user_picture'),
+                      $user->getNickname() );
 
                     $password = $form->get('password')->getData();
 

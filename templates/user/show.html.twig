@@ -36,6 +36,12 @@
 
          {% else %}
              <h1>{{ user.nickname }}</h1>
+             <article>
+                 <a href="{{ path('passwordModification', {'id': user.id }) }}">
+                 <img src="{{ asset('assets/img/photoProfil.jpg') }}" alt="{{ user.nickname }}">
+                 </a>
+
+             </article>
              <div> Prénom : {{ user.firstname }}</div>
              <div> Nom : {{ user.lastname }}</div>
              <div> Téléphone : {{ user.phone }}</div>
