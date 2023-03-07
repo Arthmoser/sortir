@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Campus{% endblock %}
+
+{% block body %}
+
+    <h1>Gérer les Campus</h1>
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <td>Campus</td>
+            <td>Actions</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for campus in campuses %}
+            <tr>
+                <td>{{ campus.name }}</td>
+                <td>TODO bouttons modifications</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

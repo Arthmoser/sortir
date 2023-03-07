@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[UniqueEntity(fields: ['nickname'], message: 'These nickname already exists! Please choose another nickname!')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -57,6 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Activity::class, inversedBy: 'users')]
     private Collection $activities;
+
+    #[ORM\Column(length: 50, nullable: false)]
+    private ?string $profilePicture = null;
 
     public function __construct()
     {
@@ -276,4 +279,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setProfilePictureAtValue(): void
+    {
+        $this->setProfilePicture('profilePicture.png');
+    }
+
 }

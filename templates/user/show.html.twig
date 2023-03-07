@@ -9,7 +9,11 @@
 
     <div>
 
-        <div> Photo : faire affichage photo </div>
+        <article>
+            <a href="{{ path('user_profil', {'id': user.id }) }}">
+                <img src="{{ asset('assets/img/profilePictures/' ~ user.profilePicture) }}" alt="{{ user.nickname }}">
+            </a>
+        </article>
 
      <div>
          {% if app.user.id == user.id %}
@@ -25,7 +29,7 @@
                  {{ form_row(registrationForm.email) }}
                  {{ form_row(registrationForm.password, {required: 'false'}) }}
                  {{ form_row(registrationForm.campus) }}
-                 {{ form_row(registrationForm.profilePicture) }}
+               {{ form_row(registrationForm.profilePicture) }}
                  {% if is_granted("ROLE_ADMIN") %}
                      {{ form_row(registrationForm.roles) }}
                      {{ form_row(registrationForm.isAllowed) }}
@@ -36,12 +40,6 @@
 
          {% else %}
              <h1>{{ user.nickname }}</h1>
-             <article>
-                 <a href="{{ path('passwordModification', {'id': user.id }) }}">
-                 <img src="{{ asset('assets/img/photoProfil.jpg') }}" alt="{{ user.nickname }}">
-                 </a>
-
-             </article>
              <div> Prénom : {{ user.firstname }}</div>
              <div> Nom : {{ user.lastname }}</div>
              <div> Téléphone : {{ user.phone }}</div>

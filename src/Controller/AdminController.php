@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\CampusRepository;
 use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,6 +58,16 @@ class AdminController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/campus', name: 'campus_list')]
+    public function list(CampusRepository $campusRepository): Response
+    {
+        $campuses = $campusRepository->findBy([], ['name' => 'ASC']);
+
+        return $this->render('admin/campus/list.html.twig', [
+            'campuses' => $campuses
         ]);
     }
 }

@@ -16,11 +16,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
+#[Route('/show', name: 'user_')]
 class UserController extends AbstractController
 {
 
     //Creation of a new password for the connected user
-    #[Route('show/{id}', name: 'passwordModification', requirements: ['id' => '\d+'])]
+    #[Route('/{id}', name: 'profil', requirements: ['id' => '\d+'])]
     public function passwordModification(int $id, UserRepository $userRepository,
                                          Request $request, Uploader $uploader,
                                          UserPasswordHasherInterface $userPasswordHasher,
@@ -44,12 +45,14 @@ class UserController extends AbstractController
                      * @var UploadedFile $file
                      */
 
-                    $file = $form->get('img')->getData();
+                    $file = $form->get('profilePicture')->getData();
 
-                    $uploader->upload(
+                    $newFileName = $uploader->upload(
                       $file,
                       $this->getParameter('upload_user_picture'),
                       $user->getNickname() );
+
+                    $user->setProfilePicture($newFileName);
 
                     $password = $form->get('password')->getData();
 

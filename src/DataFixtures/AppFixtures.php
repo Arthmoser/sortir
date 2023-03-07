@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Activity;
 use App\Entity\Campus;
 use App\Entity\User;
 use App\Repository\CampusRepository;
@@ -52,7 +53,7 @@ class AppFixtures extends Fixture
             $user
                 ->setEmail($this->faker->email)
                 ->setRoles(['ROLE_USER'])
-                ->setPassword($this->passwordHasher->hashPassword($user, $this->faker->password))
+                ->setPassword($this->passwordHasher->hashPassword($user, 'Pa$$w0rd'))
                 ->setNickname($this->faker->userName)
                 ->setLastname($this->faker->lastName)
                 ->setFirstname($this->faker->firstName)

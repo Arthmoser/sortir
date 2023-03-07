@@ -52,9 +52,6 @@ class RegistrationFormType extends AbstractType
                 'first_options'  => ['label' => 'Mot de passe : '],
                 'second_options' => ['label' => 'confirmation : '],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
@@ -87,6 +84,7 @@ class RegistrationFormType extends AbstractType
 
             ->add('profilePicture', FileType::class, [
                 'mapped' => false,
+                'required' => false,
                 'constraints' => [
                     new Image([
                             "maxSize" => '5000k',
