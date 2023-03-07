@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Campus;
 use App\Entity\User;
+use App\Repository\CampusRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -15,15 +16,17 @@ class AppFixtures extends Fixture
 {
     private EntityManagerInterface $entityManager;
     private UserPasswordHasherInterface $passwordHasher;
+    private CampusRepository $campusRepository;
     private Generator $faker;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher)
+        UserPasswordHasherInterface $passwordHasher, CampusRepository $campusRepository)
     {
         $this->entityManager = $entityManager;
         $this->passwordHasher = $passwordHasher;
         $this->faker = Factory::create('fr_FR');
+        $this->campusRepository = $campusRepository;
     }
 
 
@@ -34,7 +37,10 @@ class AppFixtures extends Fixture
 
     public function addUsers(){
 
+
         for($i=0; $i < 10; $i++){
+
+            $campus = $this->campusRepository->find($this->faker->numberBetween(1,4));
 
             $user = new User();
 
@@ -47,7 +53,7 @@ class AppFixtures extends Fixture
                 ->setFirstname($this->faker->firstName)
                 ->setPhone($this->faker->phoneNumber)
                 ->setIsAllowed($this->faker->boolean(90))
-                ->setCampus($this->faker->numberBetween(1,3));
+                ->setCampus($campus);
 
             $this->entityManager->persist($user);
         }

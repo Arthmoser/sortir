@@ -36,14 +36,14 @@ class UserController extends AbstractController
 
                 if ($form->isSubmitted() && $form->isValid()) {
 
-                    $password = $form->get('plainPassword');
+                    $password = $form->get('password')->getData();
 
                     if($password) {
                         // encode the plain password
                         $user->setPassword(
                             $userPasswordHasher->hashPassword(
                                 $user,
-                                (string)$password
+                                $password
                             )
                         );
                     }
