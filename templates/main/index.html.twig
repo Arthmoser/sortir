@@ -4,4 +4,33 @@
 
 {% block body %}
 
+    <table>
+        <thead>
+            <tr>
+                <td>Nom de la sortie</td>
+                <td>Date de la sortie</td>
+                <td>Clôture</td>
+                <td>Inscrits/Places</td>
+                <td>Etat</td>
+                <td>Inscrit</td>
+                <td>Organisateur</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for activity in activities %}
+                <tr>
+                    <td>{{ activity.name }}</td>
+                    <td>{{ activity.startingDateTime }}</td>
+                    <td>{{ activity.duration }}</td>
+                    <td>{{ activity.registrationDeadLine }}</td>
+                    <td>{{ activity.maxRegistrationNb }}</td>
+                    <td>{{ activity.overview }}</td>
+                    <td>{{ activity.location }}</td>
+                    <td>{{ activity.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}

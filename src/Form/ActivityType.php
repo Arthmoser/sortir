@@ -3,9 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Activity;
+
+use App\Entity\Campus;
+use App\Entity\Location;
+use App\Entity\Status;
+use App\Repository\CampusRepository;
+use App\Repository\LocationRepository;
+use App\Repository\StatusRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -24,7 +30,7 @@ class ActivityType extends AbstractType
                 'label' => 'Date et heure de la sortie : ',
                 'html5' => true,
                 'widget' => 'single_text'
-            ] )
+            ])
             ->add('duration', NumberType::class, [
                 'label' => 'Durée : '
             ])
@@ -41,18 +47,30 @@ class ActivityType extends AbstractType
                 'label' => 'Description : ',
                 'required' => false,
                 'attr' => [
-                        'class' => "row"
+                    'class' => "row"
                 ]
             ])
-            ->add('location', TextType::class)
-            ->add('campus', ChoiceType::class, [
-                'choices' => [
-                            'Quimper' => "quimper",
-                            'Rennes' => "rennes",
-                            'Niort' => "niort",
-                            'Nantes' => "nantes"
-            ]])
-        ;
+            ->add('location', EntityType::class, [
+                'class' => Location::class,
+                'choice_label' => 'name',
+                'label' => 'Lieu : ',
+                'query_builder' => function (LocationRepository $locationRepository) {
+                    $qb = $locationRepository->createQueryBuilder("l");
+                    $qb->addOrderBy("l.name");
+                    return $qb;
+                }
+            ])
+
+            ->add('status', EntityType::class, [
+                'class' => Status::class,
+                'choice_label' => 'type',
+                'label' => 'status : ',
+                'query_builder' => function (StatusRepository $statusRepository) {
+                    $qb = $statusRepository->createQueryBuilder("s");
+                    $qb->addOrderBy("s.type");
+                    return $qb;
+                }
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

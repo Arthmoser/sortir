@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActivityRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Activity
 {
     #[ORM\Id]
@@ -210,6 +211,14 @@ class Activity
 
         return $this;
     }
+
+//
+//    #[ORM\PrePersist]
+//    public function setStatusAtValue(): void
+//    {
+//        $this->setStatus(new Status(1, 'Créée'));
+//    }
+
 
 
 }
