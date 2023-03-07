@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\CallbackTransformer;
 
 class RegistrationFormType extends AbstractType
 {
@@ -62,16 +63,23 @@ class RegistrationFormType extends AbstractType
                     'Non' => false
                 ],
                 'required' => true,
-            ]);
+            ])
 
-//            ->add('roles', ChoiceType::class, [
-//            'label'    => 'Niveau d\'acréditation : ',
-//            'choices' => [
-//                'Admin' => '["ROLE_ADMIN"]',
-//                'User' => '["ROLE_USER"]'
-//            ],
-//            'required' => true,
-//            ]);
+//        $builder->get('roles')
+//            ->addModelTransformer(new CallbackTransformer(
+//                fn ($rolesAsArray) => count($rolesAsArray) ? $rolesAsArray[0]: null,
+//                fn ($rolesAsString) => [$rolesAsString]
+//            ));
+
+            ->add('roles', ChoiceType::class, [
+            'label'    => 'Niveau d\'acréditation : ',
+            'multiple' => true,
+            'expanded' => false,
+            'choices' => [
+                'Admin' => 'ROLE_ADMIN',
+                'User' => 'ROLE_USER'
+            ],
+            ]);
 
     }
 

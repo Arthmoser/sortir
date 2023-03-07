@@ -8,13 +8,14 @@
     {{ form_start(registrationForm) }}
 
 
-        <p> {{ form_row(registrationForm.nickname) }} </p>
+        {{ form_row(registrationForm.nickname) }}
         {{ form_row(registrationForm.lastname) }}
         {{ form_row(registrationForm.firstname) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.phone) }}
         {{ form_row(registrationForm.plainPassword) }}
         {{ form_row(registrationForm.isAllowed) }}
+        {{ form_row(registrationForm.roles) }}
 
         <button type="submit" class="btn">Inscription</button>
     {{ form_end(registrationForm) }}
