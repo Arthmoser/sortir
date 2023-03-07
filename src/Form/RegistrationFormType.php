@@ -57,14 +57,21 @@ class RegistrationFormType extends AbstractType
 
             ->add('isAllowed', ChoiceType::class, [
                 'label'    => 'Utilisateur autorisé ?',
-                'expanded' => false,
                 'choices' => [
                     'Oui' => true,
                     'Non' => false
                 ],
-                'multiple' => false,
                 'required' => true,
             ]);
+
+//            ->add('roles', ChoiceType::class, [
+//            'label'    => 'Niveau d\'acréditation : ',
+//            'choices' => [
+//                'Admin' => '["ROLE_ADMIN"]',
+//                'User' => '["ROLE_USER"]'
+//            ],
+//            'required' => true,
+//            ]);
 
     }
 
