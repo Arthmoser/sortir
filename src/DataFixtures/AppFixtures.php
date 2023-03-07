@@ -29,15 +29,15 @@ class AppFixtures extends Fixture
         for($i=0; $i < 20; $i++){
 
             $users[$i] = new User();
-        //    $hash = $this->container->get('security.password_encoder')->encodePassword($users[$i], 'user');
+            $hash = $this->container->get('security.password_encoder')->encodePassword($users[$i], 'user');
             $users[$i]
                 ->setLastname($faker->lastName)
                 ->setFirstname($faker->firstName)
                 ->setNickname($faker->userName)
                 ->setEmail($faker->email)
                 ->setPhone($faker->phoneNumber)
-                ->setIsAllowed($faker->boolean());
-            //  ->setPassword($faker->password($hash)));
+                ->setIsAllowed($faker->boolean())
+                ->setPassword($faker->password($hash));
 
             $manager ->persist($users[$i]);
         }

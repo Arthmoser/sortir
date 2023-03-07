@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Activitées {% endblock %}
+
+{% block body %}
+
+    <h2>Créer une sortie</h2>
+
+    {{ form_start(activityForm) }}
+
+    <div class="form">
+
+        {{ form_label(activityForm.name) }}
+        {{ form_widget(activityForm.name) }}
+        {{ form_errors(activityForm.name) }}
+    </div>
+
+
+    {{ form_rest(activityForm) }}
+
+    <button>Enregistrer</button>
+    <button>Publier la sortie </button>
+    <button>Annuler</button>
+
+
+    {{ form_end(activityForm) }}
+
+{% endblock %}
