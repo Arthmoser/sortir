@@ -1,11 +1,11 @@
 <nav>
     <ul>
         {% if app.user %}
-        <li><a href="#">Villes</a></li>
-        <li><a href="#">Campus</a></li>
-        <li><a href="{{ path('main_home') }}">Accueil</a></li>
-        <li><a href="#">Profil</a></li>
-        <li><a href="{{ path('app_logout') }}">Se Déconnecter ({{ app.user.userIdentifier }})</a></li>
+            <li><a href="#">Villes</a></li>
+            <li><a href="#">Campus</a></li>
+            <li><a href="{{ path('main_home') }}">Accueil</a></li>
+            <li><a href="#">Profil</a></li>
+            <li><a href="{{ path('app_logout') }}">Se Déconnecter ({{ app.user.userIdentifier }})</a></li>
         {% endif %}
     </ul>
 </nav>

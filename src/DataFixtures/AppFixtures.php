@@ -2,46 +2,56 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Campus;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private EntityManagerInterface $entityManager;
+    private UserPasswordHasherInterface $passwordHasher;
+    private Generator $faker;
 
-    private $container;
-
-    public function load(ObjectManager $manager, Container $container=null): void
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher)
     {
-        $faker = Factory::create('fr_FR');
-        $this->addUsers($manager,$faker);
+        $this->entityManager = $entityManager;
+        $this->passwordHasher = $passwordHasher;
+        $this->faker = Factory::create('fr_FR');
     }
 
-    public function addUsers(ObjectManager $manager){
-        $faker = Factory::create('fr_FR');
 
-        $users = Array();
-        for($i=0; $i < 20; $i++){
+    public function load(ObjectManager $manager): void
+    {
+        $this->addUsers();
+    }
 
-            $users[$i] = new User();
-            $hash = $this->container->get('security.password_encoder')->encodePassword($users[$i], 'user');
-            $users[$i]
-                ->setLastname($faker->lastName)
-                ->setFirstname($faker->firstName)
-                ->setNickname($faker->userName)
-                ->setEmail($faker->email)
-                ->setPhone($faker->phoneNumber)
-                ->setIsAllowed($faker->boolean())
-                ->setPassword($faker->password($hash));
+    public function addUsers(){
 
-            $manager ->persist($users[$i]);
+        for($i=0; $i < 10; $i++){
+
+            $user = new User();
+
+            $user
+                ->setEmail($this->faker->email)
+                ->setRoles(['ROLE_USER'])
+                ->setPassword($this->passwordHasher->hashPassword($user, $this->faker->password))
+                ->setNickname($this->faker->userName)
+                ->setLastname($this->faker->lastName)
+                ->setFirstname($this->faker->firstName)
+                ->setPhone($this->faker->phoneNumber)
+                ->setIsAllowed($this->faker->boolean(90))
+                ->setCampus($this->faker->numberBetween(1,3));
+
+            $this->entityManager->persist($user);
         }
-    $manager->flush();
+        $this->entityManager->flush();
     }
 
 }

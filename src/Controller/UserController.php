@@ -21,8 +21,6 @@ class UserController extends AbstractController
     #[Route('show/{id}', name: 'passwordModification', requirements: ['id' => '\d+'])]
     public function passwordModification(int $id, UserRepository $userRepository,
                                          Request $request, UserPasswordHasherInterface $userPasswordHasher,
-                                         UserAuthenticatorInterface $userAuthenticator,
-                                         UserAuthenticator $authenticator,
                                          EntityManagerInterface $entityManager): Response
     {
         $user = $userRepository->find($id);
@@ -37,9 +35,11 @@ class UserController extends AbstractController
 
 
                 if ($form->isSubmitted() && $form->isValid()) {
-                    // encode the plain password
+
                     $password = $form->get('plainPassword');
+
                     if($password) {
+                        // encode the plain password
                         $user->setPassword(
                             $userPasswordHasher->hashPassword(
                                 $user,
@@ -53,11 +53,6 @@ class UserController extends AbstractController
                     $entityManager->persist($user);
                     $entityManager->flush();
 
-                    return $userAuthenticator->authenticateUser(
-                        $user,
-                        $authenticator,
-                        $request
-                    );
                 }
 
             return $this->render('user/show.html.twig', [

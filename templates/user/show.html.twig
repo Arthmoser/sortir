@@ -9,39 +9,38 @@
 
     <div>
 
-        <h1>Profil utilisateur</h1>
-
+        <div> Photo : faire affichage photo </div>
 
      <div>
          {% if app.user.id == user.id %}
+             <h1>Mon profil</h1>
              <div>
-
-                 {{ form_start(registrationForm) }}
-
                  {{ form_row(registrationForm.nickname) }}
-                 {{ form_row(registrationForm.lastname) }}
                  {{ form_row(registrationForm.firstname) }}
-                 {{ form_row(registrationForm.email) }}
+                 {{ form_row(registrationForm.lastname) }}
                  {{ form_row(registrationForm.phone) }}
+                 {{ form_row(registrationForm.email) }}
                  {{ form_row(registrationForm.plainPassword, {required: 'false'}) }}
-
-                 <button type="submit" class="btn">Inscription</button>
-                 {{ form_end(registrationForm) }}
+                 {{ form_row(registrationForm.campus) }}
+                 {% if is_granted("ROLE_ADMIN") %}
+                     {{ form_row(registrationForm.roles) }}
+                     {{ form_row(registrationForm.isAllowed) }}
+                 {% endif %}
+                 <button type="submit" class="btn">Enregistrer</button>
              </div>
 
-             {% else %}
-                 <div> Pseudo : {{ user.nickname }}</div>
-                 <div> Prénom : {{ user.firstname }}</div>
-                 <div> Nom : {{ user.lastname }}</div>
-                 <div> Téléphone : {{ user.phone }}</div>
-                 <div> Email : {{ user.email }}</div>
-
-
+         {% else %}
+             <h1>{{ user.nickname }}</h1>
+             <div> Prénom : {{ user.firstname }}</div>
+             <div> Nom : {{ user.lastname }}</div>
+             <div> Téléphone : {{ user.phone }}</div>
+             <div> Email : {{ user.email }}</div>
+             <div> Campus : {{ user.campus.name }}</div>
          {%endif%}
      </div>
 
-        <div> Campus : {{ user.campus.name }}</div>
-        <div> Photo : faire affichage photo </div>
+
+
     </div>
 
 

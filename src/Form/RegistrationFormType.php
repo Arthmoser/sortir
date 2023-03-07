@@ -2,14 +2,20 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\User;
+use App\Repository\CampusRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -55,6 +61,14 @@ class RegistrationFormType extends AbstractType
                 ],
             ],
             )
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'first_options'  => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+            ])
 
             ->add('isAllowed', ChoiceType::class, [
                 'label'    => 'Utilisateur autorisé ?',
@@ -65,11 +79,28 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
             ])
 
-//        $builder->get('roles')
-//            ->addModelTransformer(new CallbackTransformer(
-//                fn ($rolesAsArray) => count($rolesAsArray) ? $rolesAsArray[0]: null,
-//                fn ($rolesAsString) => [$rolesAsString]
-//            ));
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'name',
+                'label' => 'Campus : ',
+                'query_builder' => function(CampusRepository $campusRepository){
+                    $qb = $campusRepository->createQueryBuilder("c");
+                    $qb->addOrderBy("c.name");
+                    return $qb;
+                }
+            ])
+
+            ->add('profilePicture', FileType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new Image([
+                            "maxSize" => '5000k',
+                            "mimeTypesMessage" => "Image format not allowed !",
+
+                        ]
+                    )
+                ]
+            ])
 
             ->add('roles', ChoiceType::class, [
             'label'    => 'Niveau d\'acréditation : ',
