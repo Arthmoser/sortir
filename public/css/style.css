@@ -68,9 +68,9 @@ h1 {
     padding: 20px;
     width: 70%;
     overflow: hidden;
-
-
-
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
 }
 
 main {
