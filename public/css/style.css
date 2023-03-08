@@ -38,6 +38,7 @@ td {
     font-family: 'Fragment Mono', monospace;
     font-size: 15px;
     text-align: center;
+
 }
 
 
@@ -66,6 +67,9 @@ h1 {
     height: 500px;
     padding: 20px;
     width: 70%;
+    overflow: hidden;
+
+
 
 }
 

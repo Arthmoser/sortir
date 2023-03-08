@@ -24,11 +24,24 @@
                     <td>{{ activity.name }}</td>
                     <td>{{ activity.startingDateTime  | date('d-m-Y H:i') }}</td>
                     <td>{{ activity.registrationDeadLine  | date('d-m-Y') }}</td>
-                    {#                    <td>{{ activity.duration }}</td> A modifier #}
                     <td> / {{ activity.maxRegistrationNb }}</td>
-                    {#                    <td>{{ activity.overview }}</td> A modifier #}
-                    {#                    <td>{{ activity.location.name }}</td> A modifier #}
                     <td>{{ activity.status.type }}</td>
+                    <td>{{ activity.status.type }}</td>
+                    <td>{{ activity.user.nickname }}</td>
+                    <td>
+
+                        {% if activity.user.id == app.user.id %}
+                            <a href="">Modifier</a>
+                            <button>Publier</button>
+                        {% else %}
+                            <button>Afficher</button>
+                            <button>S'inscrire</button>
+                            <button>Se désister</button>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <button>Annuler</button>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
