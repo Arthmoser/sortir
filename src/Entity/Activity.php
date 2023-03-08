@@ -54,8 +54,6 @@ class Activity
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'activities')]
     private Collection $users;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isPublished = null;
 
     public function __construct()
     {
@@ -221,19 +219,6 @@ class Activity
 //    {
 //        $this->setStatus(new Status(1, 'Créée'));
 //    }
-//
-
-public function isIsPublished(): ?bool
-{
-    return $this->isPublished;
-}
-
-public function setIsPublished(?bool $isPublished): self
-{
-    $this->isPublished = $isPublished;
-
-    return $this;
-}
 
 
 }
