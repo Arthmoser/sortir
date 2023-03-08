@@ -48,6 +48,7 @@ class ActivityController extends AbstractController
             if ($id != 0) {
                 $activity->setUser($user);
                 $activity->setCampus($user->getCampus());
+                $activity->addUser($user);
             }
 
             $activityRepository->save($activity, true);
@@ -80,7 +81,7 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'removeActivity')]
+    #[Route('/remove/{id}', name: 'remove')]
     public function removeActivity(int $id, ActivityRepository $activityRepository){
 
         $activity = $activityRepository->find($id);
@@ -93,6 +94,6 @@ class ActivityController extends AbstractController
             throw $this->createNotFoundException("Cette sortie ne peut pas être supprimée !");
         }
 
-        return $this->redirectToRoute('');
+        return $this->redirectToRoute('main_home');
     }
 }

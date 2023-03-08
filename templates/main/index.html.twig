@@ -26,22 +26,30 @@
                     <td>{{ activity.name }}</td>
                     <td>{{ activity.startingDateTime  | date('d-m-Y H:i') }}</td>
                     <td>{{ activity.registrationDeadLine  | date('d-m-Y') }}</td>
-                    <td> / {{ activity.maxRegistrationNb }}</td>
+                    <td>{{ activity.users | length }} / {{ activity.maxRegistrationNb }}</td>
                     <td>{{ activity.status.type }}</td>
-                    <td>{{ activity.status.type }}</td>
+                    <td>
+                        {% if activity.users.contains(app.user) %}
+                            X
+                        {% endif %}
+                    </td>
                     <td>{{ activity.user.nickname }}</td>
                     <td>
-
                         {% if activity.user.id == app.user.id %}
-                            <a href="{{ path('activity_update', {'id': activity.id}) }}">Modifier</a>
-                            <a>Publier</a>
+                            {% if activity.status.type == 'Créée' %}
+                                <a href="{{ path('activity_update', {'id': activity.id}) }}">Modifier</a>
+                                <a>Publier</a>
+                            {% endif %}
                         {% else %}
-                            <a>Afficher</a>
-                            <a>S'inscrire</a>
-                            <a>Se désister</a>
+                            <a href="{{ path('activity_show', {'id': activity.id}) }}">Afficher</a>
+                            {% if activity.users.contains(app.user) and date('now') < activity.startingDateTime %}
+                                <a>Se désister</a>
+                            {% elseif (activity.users | length) < activity.maxRegistrationNb and activity.status.type == 'Ouverte' and date('now') < activity.registrationDeadLine %}
+                                <a>S'inscrire</a>
+                            {% endif %}
                         {% endif %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <a>Annuler</a>
+                        {% if is_granted('ROLE_ADMIN') and activity.status.type == 'Ouverte' and (activity.users | length) == 0 %}
+                            <a href="{{ path('activity_remove', {'id': activity.id}) }}">Annuler</a>
                         {% endif %}
                     </td>
                 </tr>
