@@ -3,9 +3,9 @@
 {% block title %}{{ parent() }} | Home{% endblock %}
 
 {% block body %}
-
-    <table>
-        <thead>
+    <div class="box">
+        <table class="table">
+            <thead class="head">
             <tr>
                 <td>Nom de la sortie</td>
                 <td>Date de la sortie</td>
@@ -16,21 +16,24 @@
                 <td>Organisateur</td>
                 <td>Actions</td>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+
+            <tbody class="down">
             {% for activity in activities %}
                 <tr>
                     <td>{{ activity.name }}</td>
                     <td>{{ activity.startingDateTime  | date('d-m-Y H:i') }}</td>
-                    <td>{{ activity.registrationDeadLine  | date('d-m-Y')}}</td>
-{#                    <td>{{ activity.duration }}</td> A modifier#}
-                    <td>{{ activity.maxRegistrationNb }}</td>
-{#                    <td>{{ activity.overview }}</td> A modifier#}
-{#                    <td>{{ activity.location.name }}</td> A modifier#}
+                    <td>{{ activity.registrationDeadLine  | date('d-m-Y') }}</td>
+                    {#                    <td>{{ activity.duration }}</td> A modifier #}
+                    <td> / {{ activity.maxRegistrationNb }}</td>
+                    {#                    <td>{{ activity.overview }}</td> A modifier #}
+                    {#                    <td>{{ activity.location.name }}</td> A modifier #}
                     <td>{{ activity.status.type }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
 
 {% endblock %}

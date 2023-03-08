@@ -1,13 +1,18 @@
-<nav>
-    <ul>
-        {% if app.user %}
-            <li><a href="#">Villes</a></li>
-            {% if is_granted('ROLE_ADMIN') %}
-            <li><a href="{{ path('admin_campus_list') }}">Campus</a></li>
+<div class="navy">
+    <nav>
+        <ul>
+            {% if app.user %}
+                <div class="list">
+                    <li><a href="#">Villes</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('admin_campus_list') }}">Campus</a></li>
+                    {% endif %}
+                    <li><a href="{{ path('main_home') }}">Accueil</a></li>
+                    <li><a href="{{ path('user_profil', {'id': app.user.id}) }}">Profil</a></li>
+                    <li><a href="{{ path('app_logout') }}">Se Déconnecter ({{ app.user.userIdentifier }})</a></li>
+                </div>
             {% endif %}
-            <li><a href="{{ path('main_home') }}">Accueil</a></li>
-            <li><a href="{{ path('user_profil', {'id': app.user.id}) }}">Profil</a></li>
-            <li><a href="{{ path('app_logout') }}">Se Déconnecter ({{ app.user.userIdentifier }})</a></li>
-        {% endif %}
-    </ul>
-</nav>
+
+        </ul>
+    </nav>
+</div>

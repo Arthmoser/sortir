@@ -1,4 +1,77 @@
-     ul {
-         list-style: none;
+.list {
+    display: flex;
+}
 
-     }
+ul {
+    list-style: none;
+
+}
+
+
+a {
+     font-family: 'Fragment Mono', monospace;
+     font-size: 15px;
+     text-decoration: none;
+
+ }
+
+header {
+    background: linear-gradient(80deg, #FFFFFF, #EDF1D6, #9DC08B);
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.head td {
+    border-radius: 10px;
+    border: 1px solid black;
+    text-align: center;
+
+
+}
+
+.body tr {
+
+}
+
+td {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 15px;
+    text-align: center;
+}
+
+
+
+h1 {
+    font-family: 'Rampart One', cursive;
+    color: #9DC08B;
+    font-size: 3em;
+
+
+}
+
+.logo{
+    border-radius: 3px;
+    margin-right: 10px;
+    margin-bottom: -10px;
+
+}
+
+.box
+{
+    align-items: center;
+    background-color: #EDF1D6;
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 500px;
+    padding: 20px;
+    width: 70%;
+
+}
+
+main {
+
+    margin-left: 25%;
+    margin-top: 4%;
+
+}
