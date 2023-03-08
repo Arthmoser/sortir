@@ -33,15 +33,15 @@
                     <td>
 
                         {% if activity.user.id == app.user.id %}
-                            <a href="">Modifier</a>
-                            <button>Publier</button>
+                            <a href="{{ path('activity_update', {'id': activity.id}) }}">Modifier</a>
+                            <a>Publier</a>
                         {% else %}
-                            <button>Afficher</button>
-                            <button>S'inscrire</button>
-                            <button>Se désister</button>
+                            <a>Afficher</a>
+                            <a>S'inscrire</a>
+                            <a>Se désister</a>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
-                            <button>Annuler</button>
+                            <a>Annuler</a>
                         {% endif %}
                     </td>
                 </tr>
@@ -50,9 +50,6 @@
         </table>
     </div>
 
-    <div class="btn">
-        <a href="{{ path('main_add') }}">
-            <button>Créer une sortie</button>
-        </a>
-    </div>
+    <a href="{{ path('activity_add') }}"><button>Créer une sortie</button></a>
+
 {% endblock %}

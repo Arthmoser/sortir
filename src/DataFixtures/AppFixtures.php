@@ -94,8 +94,6 @@ class AppFixtures extends Fixture
         $this->entityManager->flush();
     }
 
-
-
     public function addUsers($number){
 
         $userAdmin = new User();
