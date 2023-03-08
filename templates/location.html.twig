@@ -6,7 +6,10 @@
 
     <h2>Ajouter un nouveau lieu</h2>
 
+    {{ form_start(locationForm) }}
+
     <div class="form">
+
 
         {{ form_label(locationForm.name) }}
         {{ form_widget(locationForm.name) }}

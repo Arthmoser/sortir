@@ -26,22 +26,24 @@ class LocationController extends AbstractController
         $locationForm = $this->createForm(LocationType::class, $location);
         $locationForm->handleRequest($request);
 
+//        dump($location);
         if ($locationForm->isSubmitted() && $locationForm->isValid()) {
+           // dump($location);
 
             $location
 
-                ->setCity($locationForm->get('city')->getData());
+//                ->setCity($locationForm->get('city')->getData());
 //                ->setName($locationForm->get('name')->getData())
 //                ->setStreet($locationForm->get('street')->getData())
-//                ->setLongitude($locationForm->get('longitude')->getData())
-//                ->setLatitude($locationForm->get('latitude')->getData());
+                ->setLongitude(floatval($locationForm->get('longitude')->getData()))
+                ->setLatitude(floatval($locationForm->get('latitude')->getData()));
 
             $locationRepository->save($location, true);
             $this->addFlash("success", "Lieu ajouté !");
 
             return $this->redirectToRoute('main_home', ['id' => $location->getCity()->getId()]);
         }
-        dump($location);
+   //     dump($location);
 
             return $this->render('location.html.twig', [
                 'locationForm' => $locationForm->createView()
