@@ -8,7 +8,7 @@
 
     <div>
         <h2>Nom de la sortie : {{ activity.name }}</h2>
-        <div>Date (et heure) de la sortie : {{ activity.startingDateTime | date('Y-m-d') }}</div>
+        <div>Date et heure de la sortie : {{ activity.startingDateTime | date('Y-m-d H:i:s') }}</div>
         <div>Date limite d'inscription: {{ activity.registrationDeadLine | date('Y-m-d') }}</div>
         <div>Nombre de places : {{ activity.maxRegistrationNb }}</div>
         <div>Durée : {{ activity.duration }}</div>
@@ -22,7 +22,7 @@
         <div>Longitude : {{ activity.location.longitude }}</div>
 
 
-        <div>Status : {{ activity.status.type }}</div>
+        <div>Etat : {{ activity.status.type }}</div>
 
 
         <h2>Liste des participants inscrits à cette sortie :</h2>

@@ -39,7 +39,7 @@ class LocationType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Ville',
                 'query_builder' => function(CityRepository $cityRepository){
-                $qb = $cityRepository->createQueryBuilder(("c"));
+                $qb = $cityRepository->createQueryBuilder("c");
                 $qb->addOrderBy("c.name");
                 return $qb;
                 }
