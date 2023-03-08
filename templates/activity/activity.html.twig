@@ -3,9 +3,13 @@
 {% block title %}{{ parent() }} | Activités {% endblock %}
 
 {% block body %}
-
-    <h2>Créer une sortie</h2>
-
+    <h2>
+        {% if activity.id == null %}
+            Créer une sortie
+            {% else %}
+            Modifier une sortie
+        {% endif %}
+    </h2>
     {{ form_start(activityForm) }}
 
     <div class="form">

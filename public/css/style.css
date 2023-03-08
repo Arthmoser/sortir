@@ -1,19 +1,24 @@
+
+body{
+    min-height: 100vh;
+}
+
 .list {
     display: flex;
 }
 
 ul {
     list-style: none;
-
+    margin-top: 90px;
 }
 
 
 a {
-     font-family: 'Fragment Mono', monospace;
-     font-size: 15px;
-     text-decoration: none;
-
- }
+    font-family: 'Fragment Mono', monospace;
+    font-size: 15px;
+    text-decoration: none;
+    margin-inline: 15px;
+}
 
 header {
     background: linear-gradient(80deg, #FFFFFF, #EDF1D6, #9DC08B);
@@ -30,9 +35,7 @@ header {
 
 }
 
-.body tr {
 
-}
 
 td {
     font-family: 'Fragment Mono', monospace;
@@ -40,7 +43,6 @@ td {
     text-align: center;
 
 }
-
 
 
 h1 {
@@ -51,15 +53,14 @@ h1 {
 
 }
 
-.logo{
+.logo {
     border-radius: 3px;
     margin-right: 10px;
     margin-bottom: -10px;
 
 }
 
-.box
-{
+.box {
     align-items: center;
     background-color: #EDF1D6;
     border-radius: 20px;
@@ -69,7 +70,6 @@ h1 {
     width: 70%;
     overflow: hidden;
     overflow-y: scroll;
-    scrollbar-color: rebeccapurple green;
     scrollbar-width: thin;
 }
 
@@ -77,5 +77,18 @@ main {
 
     margin-left: 25%;
     margin-top: 4%;
+
+}
+
+.btn{
+    height: 20px;
+    width: 20px;
+    display: flex;
+    margin-top: 20px;
+}
+
+.footeer {
+
+    margin-bottom: 0;
 
 }

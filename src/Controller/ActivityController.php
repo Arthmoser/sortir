@@ -11,12 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/activity', name: 'main_')]
+#[Route('/activity', name: 'activity_')]
 class ActivityController extends AbstractController
 {
 
     #[Route('/add', name: 'add')]
-    public function add(ActivityRepository $activityRepository,
+    #[Route('/{id}', name: 'update')]
+    public function add(int $id = 0, ActivityRepository $activityRepository,
                         Request            $request): Response
     {
 
@@ -28,15 +29,26 @@ class ActivityController extends AbstractController
 
         dump($user);
 
-        $activity = new Activity();
+        if ($id != 0) {
+
+            $activity = $activityRepository->find($id);
+
+            if ($user != $activity->getUser()) {
+                return $this->redirectToRoute('activity_show', ['id' => $id]);
+            }
+        } else {
+            $activity = new Activity();
+        }
 
         $activityForm = $this->createForm(ActivityType::class, $activity);
         $activityForm->handleRequest($request);
 
         if ($activityForm->isSubmitted() && $activityForm->isValid()) {
 
-            $activity->setUser($user);
-            $activity->setCampus($user->getCampus());
+            if ($id != 0) {
+                $activity->setUser($user);
+                $activity->setCampus($user->getCampus());
+            }
 
             $activityRepository->save($activity, true);
             $this->addFlash("success", "Activité créée ! ");
@@ -46,13 +58,14 @@ class ActivityController extends AbstractController
         dump($activity);
 
 
-        return $this->render('activity.html.twig', [
-            'activityForm' => $activityForm->createView()
+        return $this->render('activity/activity.html.twig', [
+            'activityForm' => $activityForm->createView(),
+            'activity' => $activity
         ]);
     }
 
 //function which allows user to see an activity's informations
-    #[Route('/show/{id}', name: 'showActivity', requirements: ['id' => '\d+'])]
+    #[Route('/show/{id}', name: 'show', requirements: ['id' => '\d+'])]
     public function showActivity(
         int $id, ActivityRepository $activityRepository): Response
     {

@@ -5,9 +5,11 @@ namespace App\Form;
 use App\Entity\Activity;
 
 use App\Entity\Campus;
+use App\Entity\City;
 use App\Entity\Location;
 use App\Entity\Status;
 use App\Repository\CampusRepository;
+use App\Repository\CityRepository;
 use App\Repository\LocationRepository;
 use App\Repository\StatusRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,23 +27,26 @@ class ActivityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Nom : '
+            ])
             ->add('startingDateTime', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie : ',
                 'html5' => true,
                 'widget' => 'single_text'
             ])
-            ->add('duration', NumberType::class, [
-                'label' => 'Durée : '
-            ])
+
             ->add('registrationDeadLine', DateType::class, [
                 'label' => 'Date limite d\'inscription : ',
                 'html5' => true,
                 'widget' => 'single_text'
             ])
             ->add('maxRegistrationNb', NumberType::class, [
-                'label' => 'Nombre de place : ',
+                'label' => 'Nombre de places : ',
                 "post_max_size_message" => '30'
+            ])
+            ->add('duration', NumberType::class, [
+                'label' => 'Durée : '
             ])
             ->add('overview', TextareaType::class, [
                 'label' => 'Description : ',
@@ -49,6 +54,17 @@ class ActivityType extends AbstractType
                 'attr' => [
                     'class' => "row"
                 ]
+            ])
+            ->add('city', EntityType::class, [
+                'class' => City::class,
+                'choice_label' => 'name',
+                'mapped' => false,
+                'label' => 'Ville : ',
+                'query_builder' => function (CityRepository $cityRepository) {
+                    $qb = $cityRepository->createQueryBuilder("c");
+                    $qb->addOrderBy("c.name");
+                    return $qb;
+                }
             ])
             ->add('location', EntityType::class, [
                 'class' => Location::class,
@@ -64,7 +80,7 @@ class ActivityType extends AbstractType
             ->add('status', EntityType::class, [
                 'class' => Status::class,
                 'choice_label' => 'type',
-                'label' => 'status : ',
+                'label' => 'Etat : ',
                 'query_builder' => function (StatusRepository $statusRepository) {
                     $qb = $statusRepository->createQueryBuilder("s");
                     $qb->addOrderBy("s.type");
