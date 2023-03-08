@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Lieux {% endblock %}
+
+{% block body %}
+
+    <h2>Ajouter un lieu</h2>
+
+    <div class="form">
+
+        {{ form_label(locationForm.name) }}
+        {{ form_widget(locationForm.name) }}
+        {{ form_errors(locationForm.name) }}
+    </div>
+
+
+    {{ form_rest(locationForm) }}
+
+    <button type="submit">Enregistrer</button>
+    <button>Publier le lieu </button>
+    <button>Annuler</button>
+
+
+    {{ form_end(locationForm) }}
+
+{% endblock %}
+
+
+

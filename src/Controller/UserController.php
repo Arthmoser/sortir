@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\ActivityRepository;
 use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
 use App\Utils\Uploader;
@@ -78,4 +79,5 @@ class UserController extends AbstractController
                 'user' => $user
             ]);
         }
-}
+
+    }

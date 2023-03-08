@@ -39,7 +39,7 @@ class ActivityController extends AbstractController
             $activity->setCampus($user->getCampus());
 
             $activityRepository -> save($activity, true);
-            $this->addFlash("success", "Activité créer ! ");
+            $this->addFlash("success", "Activité créée ! ");
 
             return $this->redirectToRoute('main_home', ['id' => $activity->getId()]);
         }
