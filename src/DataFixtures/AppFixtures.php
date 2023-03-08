@@ -52,11 +52,11 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-//        $this->addCampuses();
-//        $this->addStatuses();
-//        $this->addUsers($this->number);
-//        $this->addCities($this->number);
-//        $this->addLocations($this->number);
+        $this->addCampuses();
+        $this->addStatuses();
+        $this->addUsers($this->number);
+        $this->addCities($this->number);
+        $this->addLocations($this->number);
         $this->addActivities($this->number);
     }
 

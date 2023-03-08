@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}  {% endblock %}
+
+{% block body %}
+
+    <h2>Informations concernant la sortie</h2>
+
+    <div>
+        <h2>Nom de la sortie : {{ activity.name }}</h2>
+        <div>Date (et heure) de la sortie : {{ activity.startingDateTime | date('Y-m-d') }}</div>
+        <div>Date limite d'inscription: {{ activity.registrationDeadLine | date('Y-m-d') }}</div>
+        <div>Nombre de places : {{ activity.maxRegistrationNb }}</div>
+        <div>Durée : {{ activity.duration }}</div>
+
+        <div>Description et infos : {{ activity.overview }}</div>
+        <div>Campus : {{ activity.campus.name }}</div>
+        <div>Lieu : {{ activity.location.name }}</div>
+        <div>Rue : {{ activity.location.street }}</div>
+        <div>Code postal : {{ activity.location.city.zipCode }} </div>
+        <div>Latitude : {{ activity.location.latitude }}</div>
+        <div>Longitude : {{ activity.location.longitude }}</div>
+
+
+        <div>Status : {{ activity.status.type }}</div>
+
+
+        <h2>Liste des participants inscrits à cette sortie :</h2>
+
+
+        <div>Personne n'est inscrit à cette sortie</div>
+        {% for user in activity.users %}
+
+            {% if (activity.user.id) %}
+
+            <div>Pseudo : {{ activity.user.nickname }}</div>
+            <div>Prénom : {{ activity.user.firstname }}</div>
+            <div>Nom : {{ activity.user.lastname }}</div>
+
+            {% else %}
+                <div>Personne n'est inscrit à cette sortie</div>
+
+            {% endif%}
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
+
+

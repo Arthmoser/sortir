@@ -52,7 +52,7 @@ class ActivityController extends AbstractController
     }
 
 //function which allows user to see an activity's informations
-    #[Route('/show/activity/{id}', name: 'showActivity', requirements: ['id' => '\d+'])]
+    #[Route('/show/{id}', name: 'showActivity', requirements: ['id' => '\d+'])]
     public function showActivity(
         int $id, ActivityRepository $activityRepository): Response
     {
