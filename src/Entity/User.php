@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -21,6 +22,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(
+        message: "Un email est requis pour ce champ")]
+    #[Assert\Email(
+        message: 'Le mail {{ value }} ne fonctionne pas')]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -31,17 +36,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(
+        message: "Un mot de passe est requis pour ce champ")]
+    #[Assert\Length(
+        min: 8,
+        max: 25,
+        minMessage: "Minimum {{ limit }} caractères !",
+        maxMessage: "Maximum {{ limit }} caractères !"
+    )]
     private ?string $password = null;
 
+
+    #[Assert\NotBlank(
+        message: "Un pseudo est requis pour ce champ")]
+    #[Assert\Length(
+        min: 8,
+        max: 25,
+        minMessage: "Minimum {{ limit }} caractères !",
+        maxMessage: "Maximum {{ limit }} caractères !"
+    )]
     #[ORM\Column(length: 50, unique: true)]
     private ?string $nickname = null;
 
+
+    #[Assert\NotBlank(
+        message: "Ce champ ne peut pas être vide")]
     #[ORM\Column(length: 50)]
     private ?string $lastname = null;
 
+    #[Assert\NotBlank(
+        message: "Ce champ ne peut pas être vide")]
     #[ORM\Column(length: 50)]
     private ?string $firstname = null;
 
+
+    #[Assert\NotBlank(
+        message: "Ce champ ne peut pas être vide")]
     #[ORM\Column(length: 20)]
     private ?string $phone = null;
 
