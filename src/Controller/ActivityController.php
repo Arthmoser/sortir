@@ -21,7 +21,6 @@ class ActivityController extends AbstractController
                         Request            $request): Response
     {
 
-
         /**
          * @var User $user
          */
