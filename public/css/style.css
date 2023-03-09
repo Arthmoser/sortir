@@ -1,7 +1,8 @@
 
 body
 {
-    background: linear-gradient(80deg, #FFFFFF, #97DECE);
+    background: linear-gradient(70deg, #62B6B7, #97DECE,#CBEDD5);
+
 }
 
 header
@@ -47,6 +48,12 @@ a
     border-radius: 10px;
     border: 1px solid black;
     text-align: center;
+    margin-top: 2px;
+}
+
+table
+{
+    border-radius: 2px;
 }
 
 td
@@ -54,6 +61,12 @@ td
     font-family: 'Fragment Mono', monospace;
     font-size: 15px;
     text-align: center;
+    padding: 2px;
+
+}
+
+.activityLine td {
+    border-bottom: #439A97 1px solid;
 }
 
 h1
@@ -78,12 +91,13 @@ h1
     box-sizing: border-box;
     height: 500px;
     padding: 20px;
-    width: 70%;
+    width: 74%;
     overflow: hidden;
     overflow-y: scroll;
     scrollbar-width: thin;
     border : 1px solid #439A97;
 }
+
 
 main
 {

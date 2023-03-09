@@ -20,9 +20,11 @@
             </tr>
             </thead>
 
-            <tbody class="down">
+
+            <tbody class="down"  >
+
             {% for activity in activities %}
-                <tr>
+                <tr class="activityLine" >
                     <td>{{ activity.name }}</td>
                     <td>{{ activity.startingDateTime  | date('d-m-Y H:i') }}</td>
                     <td>{{ activity.registrationDeadLine  | date('d-m-Y') }}</td>
