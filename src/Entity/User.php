@@ -36,8 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(
-        message: "Un mot de passe est requis pour ce champ")]
+
     #[Assert\Length(
         min: 8,
         max: 25,
