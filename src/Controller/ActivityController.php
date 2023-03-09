@@ -16,7 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActivityController extends AbstractController
 {
 
-
     #[Route('/home', name: 'home')]
     #[Route('/', name: 'home2')]
     public function index(ActivityRepository $activityRepository, UpdateStatus $updateStatus): Response
@@ -32,19 +31,19 @@ class ActivityController extends AbstractController
     }
 
 
-
     #[Route('/activity/add', name: 'add')]
     #[Route('/activity/{id}', name: 'update')]
-    public function add(int $id = 0, ActivityRepository $activityRepository,
-                        Request            $request): Response
+    public function add(ActivityRepository $activityRepository,
+                        Request $request, int $id = 0): Response
     {
+        $pathAdd = '/activity/add';
+        $pathUpdate = '/activity/' . $id;
+        $messageFlash = 'L\'activité a bien été modifiée !';
 
         /**
          * @var User $user
          */
         $user = $this->getUser();
-        $messageFlash = 'L\'activité a bien été modifiée !';
-        dump($user);
 
         if ($id != 0) {
 
@@ -53,8 +52,15 @@ class ActivityController extends AbstractController
             if ($user != $activity->getUser()) {
                 return $this->redirectToRoute('activity_show', ['id' => $id]);
             }
+
         } else {
             $activity = new Activity();
+        }
+
+        if ($request->getPathInfo() == $pathUpdate && $user != $activity->getUser()) {
+
+                return $this->redirectToRoute('activity_show', ['id' => $id]);
+
         }
 
         $activityForm = $this->createForm(ActivityType::class, $activity);
@@ -63,7 +69,7 @@ class ActivityController extends AbstractController
         //TODO garder les informations déjà remplies dans le activity add si je clique sur ajouter un lieu
         if ($activityForm->isSubmitted() && $activityForm->isValid()) {
             dump($activity);
-            if ($id == 0) {
+            if ($request->getPathInfo() == $pathAdd) {
                 $activity->setUser($user);
                 $activity->setCampus($user->getCampus());
                 $activity->addUser($user);
@@ -101,7 +107,8 @@ class ActivityController extends AbstractController
     }
 
     #[Route('/activity/remove/{id}', name: 'remove', requirements: ['id' => '\d+'])]
-    public function removeActivity(int $id, ActivityRepository $activityRepository){
+    public function removeActivity(int $id, ActivityRepository $activityRepository)
+    {
 
         $activity = $activityRepository->find($id);
 
@@ -115,4 +122,49 @@ class ActivityController extends AbstractController
 
         return $this->redirectToRoute('activity_home');
     }
+
+    #[Route('/register/{id}', name: 'register')]
+    #[Route('/unregister/{id}', name: 'unregister')]
+    public function registerActivity(int $id, ActivityRepository $activityRepository, Request $request)
+    {
+        $pathRegister = '/register/' . $id;
+        $pathUnRegister = '/unregister/' . $id;
+        $status = 'Ouverte';
+
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        $activity = $activityRepository->find($id);
+
+        if($activity && $activity->getStatus()->getType() == $status) {
+
+            //when the user tries to register for the activity
+            if ($request->getPathInfo() == $pathRegister) {
+                if ($activity->getUsers()->contains($user)) {
+                    $this->addFlash("error", 'Vous êtes déjà inscrit !');
+                    return $this->redirectToRoute('activity_home');
+                } else {
+                    $activity->addUser($user);
+                    $this->addFlash("success", "Vous êtes bien inscrit !");
+                }
+
+                //when the user tries to unregister for the activity
+            } elseif ($request->getPathInfo() == $pathUnRegister) {
+                if ($activity->getUsers()->contains($user)) {
+                    $activity->removeUser($user);
+                } else {
+                    $this->addFlash("error", 'Vous n\'êtes pas inscrit à l\'activité !');
+                    return $this->redirectToRoute('activity_home');
+                }
+            }
+
+            $activityRepository->save($activity, true);
+
+        }
+
+        return $this->redirectToRoute('activity_home');
+    }
+
 }

@@ -234,9 +234,9 @@ class AppFixtures extends Fixture
 
                 $numberOfParticipants = $this->faker->numberBetween(2, $activity->getMaxRegistrationNb());
 
-                for ($i = 0; $i < $numberOfParticipants; $i++) {
-                    $activity->addUser($users[$this->faker->numberBetween(0, (count($users) - 1))]);
-                }
+//                for ($i = 0; $i < $numberOfParticipants; $i++) {
+                    $activity->addUser($this->faker->randomElement($users));
+//                }
             }
 
             $this->entityManager->persist($activity);
