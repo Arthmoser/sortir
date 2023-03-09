@@ -15,7 +15,7 @@
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
-    <label for="inputEmail">Email ou pseudo</label>
+    <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email"
            id="inputEmail" class="form-control" autocomplete="email ou pseudo"
            required autofocus>
@@ -35,5 +35,8 @@
     <button type="submit">
         Se connecter
     </button>
+
+    {#    TODO Finir le lien qui marche pas !#}
+    <a href="{{ path('app_reset_password') }}">J'ai oublié mon mot de passe</a>
 </form>
 {% endblock %}

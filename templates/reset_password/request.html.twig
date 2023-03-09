@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rééditer un nouveau mot de passe{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <h1>Rééditer un nouveau mot de passe</h1>
+
+    {{ form_start(requestForm) }}
+        {{ form_row(requestForm.email) }}
+        <div>
+            <small>
+               Veuillez entrer votre mail afin de recevoir un lien
+                pour éditer votre nouveau mot de passe.
+            </small>
+        </div>
+
+        <button class="">Envoyer le mail</button>
+    {{ form_end(requestForm) }}
+{% endblock %}
