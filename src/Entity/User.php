@@ -37,12 +37,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
 
-    #[Assert\Length(
-        min: 8,
-        max: 25,
-        minMessage: "Minimum {{ limit }} caractères !",
-        maxMessage: "Maximum {{ limit }} caractères !"
-    )]
+//    #[Assert\Length(
+//        min: 8,
+//        max: 25,
+//        minMessage: "Minimum {{ limit }} caractères !",
+//        maxMessage: "Maximum {{ limit }} caractères !"
+//    )]
     private ?string $password = null;
 
 
