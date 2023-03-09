@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\User;
+use App\Form\CampusType;
 use App\Form\RegistrationFormType;
 use App\Repository\CampusRepository;
 use App\Security\UserAuthenticator;
@@ -14,6 +16,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function PHPUnit\Framework\throwException;
 
 
 #[Route('/admin', name: 'admin_')]
@@ -27,7 +30,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
+    public function register(Request                    $request, UserPasswordHasherInterface $userPasswordHasher,
                              UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -70,4 +73,44 @@ class AdminController extends AbstractController
             'campuses' => $campuses
         ]);
     }
+
+
+    #[Route('/campus/remove/{id}', name: 'remove')]
+    public function removeCampus(int $id, CampusRepository $campusRepository): Response
+    {
+        $campuses = $campusRepository->find($id);
+
+        if ($campuses) {
+            $campusRepository->remove($campuses, true);
+            $this->addFlash("warning", "Le campus a été supprimé ! ");
+        } else {
+            throw $this->createNotFoundException("Ce campus ne peut pas être supprimé !");
+        }
+        return $this->redirectToRoute('admin_campus_list');
+
+    }
+
+    #[Route('/campus/add', name: 'add')]
+    public function addCampus(CampusRepository $campusRepository,
+                              Request $request): Response
+    {
+        $campus = new Campus();
+        $campusForm = $this->createForm(CampusType::class, $campus);
+
+        $campusForm->handleRequest($request);
+
+        if ($campusForm->isSubmitted() && $campusForm->isValid()) {
+            $campusRepository->save($campus, true);
+            $this->addFlash("success", "campus ajouter ! ");
+
+            return $this->redirectToRoute('admin_campus_list', ['id' => $campus->getName()]);
+
+        }
+
+        return $this->render('admin/campus/list.html.twig', [
+            'campusForm' => $campusForm->createView(),
+        ]);
+
+    }
+
 }

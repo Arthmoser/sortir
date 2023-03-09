@@ -42,12 +42,13 @@
                 </thead>
 
                 <tbody class="down">
-                <tr>
-                    {% for user in activity.users %}
+
+                {% for user in activity.users %}
+                    <tr>
                         <td>{{ user.nickname }}</td>
                         <td> {{ user.lastname }}</td>
-                    {% endfor %}
-                </tr>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>

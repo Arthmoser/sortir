@@ -9,8 +9,8 @@
             <thead class="head">
 
             <tr>
-                <td>Nom de la sortie</td>
-                <td>Date de la sortie</td>
+                <td>Activité</td>
+                <td>Date </td>
                 <td>Clôture</td>
                 <td>Inscrits/Places</td>
                 <td>Etat</td>
@@ -26,8 +26,8 @@
             {% for activity in activities %}
                 <tr class="activityLine" >
                     <td>{{ activity.name }}</td>
-                    <td>{{ activity.startingDateTime  | date('d-m-Y H:i') }}</td>
-                    <td>{{ activity.registrationDeadLine  | date('d-m-Y') }}</td>
+                    <td>{{ activity.startingDateTime  | date('d/m/Y H:i') }}</td>
+                    <td>{{ activity.registrationDeadLine  | date('d/m/Y ') }}</td>
                     <td>{{ activity.users | length }} / {{ activity.maxRegistrationNb }}</td>
                     <td>{{ activity.status.type }}</td>
                     <td>

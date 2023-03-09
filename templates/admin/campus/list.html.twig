@@ -6,22 +6,29 @@
 
     <h1>Gérer les Campus</h1>
 
-<div>
-    <table>
-        <thead>
-        <tr>
-            <td>Campus</td>
-            <td>Actions</td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for campus in campuses %}
+    <div class="box2l">
+        <table>
+            <thead>
             <tr>
-                <td>{{ campus.name }}</td>
-                <td>TODO bouttons modifications</td>
+                <td>Campus</td>
+                <td>Actions</td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            {% for campus in campuses %}
+                <tr>
+                    <td>{{ campus.name }}</td>
+                    <td>
+                        {{ form_row(campus.name) }}
+                    </td>
+                    <td>
+                        <a href="">Modifier</a>
+                        <a href="">Supprimer</a>
+                        <a href="">Ajouter</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -15,7 +15,7 @@ header
 
 hr
 {
-    border : 3px solid black;
+    border : 3px solid #62B6B7;
     margin-top: 0;
 }
 
@@ -36,8 +36,9 @@ li a {
 
 a
 {
+
     font-family: 'Fragment Mono', monospace;
-    font-size: 17px;
+    font-size: 20px;
     text-decoration: none;
     margin-inline: 15px;
     color: #439A97;
@@ -103,7 +104,7 @@ main
 {
     margin-top: 10%;
     margin-left: 25%;
-    margin-bottom : 6%;
+    margin-bottom :3.2%;
 }
 
 p
@@ -126,3 +127,17 @@ p
     overflow: hidden;
 }
 
+.box2
+{
+    align-items: center;
+    background-color: #CBEDD5;
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 500px;
+    padding: 20px;
+    width: 74%;
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    border : 1px solid #439A97;
+}
