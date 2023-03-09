@@ -55,11 +55,11 @@ class AppFixtures extends Fixture
     {
         $number = 50;
 
-        $this->addCampuses();
-        $this->addStatuses();
-        $this->addUsers();
-        $this->addCities();
-        $this->addLocations();
+//        $this->addCampuses();
+//        $this->addStatuses();
+//        $this->addUsers();
+//        $this->addCities();
+//        $this->addLocations();
         $this->addActivities();
     }
 
@@ -186,6 +186,8 @@ class AppFixtures extends Fixture
             'Partez en road trip pour la journée', 'Parc d’attraction, fête foraine ou parc aquatique', 'Pédicure ou manucure', 'Promenade en bateau ou en barque',
             'Jouez aux fléchettes', 'Boire un verre dans un bar à chats'];
 
+            $users = $this->userRepository->findAll();
+            $statuses = $this->statusRepository->findAll();
 
         for($i=0; $i < count($activities); $i++){
 
@@ -193,10 +195,8 @@ class AppFixtures extends Fixture
 
             $activity = new Activity();
 
-            $statuses = $this->statusRepository->findAll();
             $campus = $this->campusRepository->find($this->faker->numberBetween(1,4));
             $location = $this->locationRepository->find($this->faker->numberBetween(1,$this->number));
-            $user = $this->userRepository->find($this->faker->numberBetween(1,$this->number));
 
             $activity
                 ->setName($activities[$i])
@@ -210,11 +210,15 @@ class AppFixtures extends Fixture
                 ->setMaxRegistrationNb($this->faker->numberBetween(2, 25))
                 ->setOverview(implode(" ", $this->faker->words(50)));
 
-            if ($activity->getStartingDateTime() < date('Y=m=d H:i:s', strtotime('-1 month'))) {
+            $currentDate = new \DateTime;
+            $oneMonthBeforeCurrentDate = clone $currentDate;
+            $oneMonthBeforeCurrentDate->modify('-1 month');
+
+            if ($activity->getStartingDateTime() < $oneMonthBeforeCurrentDate ) {
                 $index = 2;
-            } elseif ($activity->getStartingDateTime() < date('Y=m=d H:i:s')) {
+            } elseif ($activity->getStartingDateTime() < $currentDate) {
                 $index = 4;
-            } elseif ($activity->getStartingDateTime() == date('Y=m=d H:i:s')) {
+            } elseif ($activity->getStartingDateTime() == $currentDate) {
                 $index = 3;
             } else {
                 $index = $this->faker->randomElement([0, 1, 5]);
@@ -224,10 +228,22 @@ class AppFixtures extends Fixture
                 ->setStatus($statuses[$index])
                 ->setLocation($location)
                 ->setCampus($campus)
-                ->setUser($user);
+                ->setUser($users[$this->faker->numberBetween(0, (count($users) - 1))]);
+
+            if ($index != 0 && $index != 5) {
+
+                $numberOfParticipants = $this->faker->numberBetween(2, $activity->getMaxRegistrationNb());
+
+                for ($i = 0; $i < $numberOfParticipants; $i++) {
+                    $activity->addUser($users[$this->faker->numberBetween(0, (count($users) - 1))]);
+                }
+            }
 
             $this->entityManager->persist($activity);
         }
         $this->entityManager->flush();
     }
+
+
+
 }

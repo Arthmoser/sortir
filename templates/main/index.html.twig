@@ -33,7 +33,7 @@
                             X
                         {% endif %}
                     </td>
-                    <td>{{ activity.user.nickname }}</td>
+                    <td><a href="{{ path('user_profil', {'id': activity.user.id}) }}">{{ activity.user.nickname }}</a></td>
                     <td>
                         {% if activity.user.id == app.user.id %}
                             {% if activity.status.type == 'Créée' %}
