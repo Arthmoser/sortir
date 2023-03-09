@@ -100,7 +100,7 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route('/activity/remove/{id}', name: 'remove')]
+    #[Route('/activity/remove/{id}', name: 'remove', requirements: ['id' => '\d+'])]
     public function removeActivity(int $id, ActivityRepository $activityRepository){
 
         $activity = $activityRepository->find($id);
@@ -108,7 +108,7 @@ class ActivityController extends AbstractController
         if($activity){
 
             $activityRepository->remove($activity, true);
-            $this->addFlash("warning", "La sortie a été supprimée !");
+            $this->addFlash("warning", "La sortie a bien été supprimée !");
         }else{
             throw $this->createNotFoundException("Cette sortie ne peut pas être supprimée !");
         }

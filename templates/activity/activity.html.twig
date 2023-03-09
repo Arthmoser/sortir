@@ -40,6 +40,16 @@
     <button>Publier la sortie </button>
     <button>Annuler</button>
 
+        <div>
+
+            {% if activity.id != null %}
+
+                <a class="" href="{{ path('activity_remove', {'id': activity.id})}}"
+                   onclick="return confirm('Etes-vous sûr.e de vouloir supprimer cette sortie ?')">Supprimer cette sortie</a>
+
+            {% endif %}
+        </div>
+
     {{ form_end(activityForm) }}
 
 {% endblock %}
