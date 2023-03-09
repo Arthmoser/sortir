@@ -41,11 +41,11 @@ class LocationController extends AbstractController
             $locationRepository->save($location, true);
             $this->addFlash("success", "Lieu ajouté !");
 
-            return $this->redirectToRoute('main_home', ['id' => $location->getCity()->getId()]);
+            return $this->redirectToRoute('activity_home', ['id' => $location->getCity()->getId()]);
         }
    //     dump($location);
 
-            return $this->render('location.html.twig', [
+            return $this->render('location/location.html.twig', [
                 'locationForm' => $locationForm->createView()
             ]);
 
