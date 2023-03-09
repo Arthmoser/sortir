@@ -5,18 +5,36 @@ namespace App\Controller;
 use App\Entity\Activity;
 use App\Form\ActivityType;
 use App\Repository\ActivityRepository;
+use App\Utils\UpdateStatus;
 use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/activity', name: 'activity_')]
+#[Route('', name: 'activity_')]
 class ActivityController extends AbstractController
 {
 
-    #[Route('/add', name: 'add')]
-    #[Route('/{id}', name: 'update')]
+
+    #[Route('/home', name: 'home')]
+    #[Route('/', name: 'home2')]
+    public function index(ActivityRepository $activityRepository, UpdateStatus $updateStatus): Response
+    {
+
+        //$updateStatus->updateStatusByCriteria($this);
+
+        $activities = $activityRepository->findAll();
+
+        return $this->render('main/index.html.twig', [
+            'activities' => $activities
+        ]);
+    }
+
+
+
+    #[Route('/activity/add', name: 'add')]
+    #[Route('/activity/{id}', name: 'update')]
     public function add(int $id = 0, ActivityRepository $activityRepository,
                         Request            $request): Response
     {
@@ -65,7 +83,7 @@ class ActivityController extends AbstractController
     }
 
 //function which allows user to see an activity's informations
-    #[Route('/show/{id}', name: 'show', requirements: ['id' => '\d+'])]
+    #[Route('/activity/show/{id}', name: 'show', requirements: ['id' => '\d+'])]
     public function showActivity(
         int $id, ActivityRepository $activityRepository): Response
     {
@@ -80,7 +98,7 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'remove')]
+    #[Route('/activity/remove/{id}', name: 'remove')]
     public function removeActivity(int $id, ActivityRepository $activityRepository){
 
         $activity = $activityRepository->find($id);
@@ -93,6 +111,6 @@ class ActivityController extends AbstractController
             throw $this->createNotFoundException("Cette sortie ne peut pas être supprimée !");
         }
 
-        return $this->redirectToRoute('main_home');
+        return $this->redirectToRoute('activity_home');
     }
 }
