@@ -8,10 +8,10 @@
 
     <div>
         <h2>Nom de la sortie : {{ activity.name }}</h2>
-        <div>Date et heure de la sortie : {{ activity.startingDateTime | date('Y-m-d H:i:s') }}</div>
-        <div>Date limite d'inscription: {{ activity.registrationDeadLine | date('Y-m-d') }}</div>
+        <div>Date et heure de la sortie : {{ activity.startingDateTime | date('d-m-Y H:i:s') }}</div>
+        <div>Date limite d'inscription: {{ activity.registrationDeadLine | date('d-m-Y') }}</div>
         <div>Nombre de places : {{ activity.maxRegistrationNb }}</div>
-        <div>Durée : {{ activity.duration }}</div>
+        <div>Durée : {{ activity.duration }} minutes</div>
 
         <div>Description et infos : {{ activity.overview }}</div>
         <div>Campus : {{ activity.campus.name }}</div>
@@ -27,23 +27,33 @@
 
         <h2>Liste des participants inscrits à cette sortie :</h2>
 
-
-        <div>Personne n'est inscrit à cette sortie</div>
-        {% for user in activity.users %}
-
-            {% if (activity.user.id) %}
-
-            <div>Pseudo : {{ activity.user.nickname }}</div>
-            <div>Prénom : {{ activity.user.firstname }}</div>
-            <div>Nom : {{ activity.user.lastname }}</div>
-
-            {% else %}
-                <div>Personne n'est inscrit à cette sortie</div>
-
-            {% endif%}
-        {% endfor %}
-
     </div>
+
+    {% if activity.users | length > 0 %}
+        <div class="box1">
+
+            <table>
+                <thead class="head">
+
+                <tr>
+                    <td>Pseudo</td>
+                    <td>Nom</td>
+                </tr>
+                </thead>
+
+                <tbody class="down">
+                <tr>
+                    {% for user in activity.users %}
+                        <td>{{ user.nickname }}</td>
+                        <td> {{ user.lastname }}</td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div>Personne n'est inscrit à cette sortie</div>
+    {% endif %}
 
 {% endblock %}
 

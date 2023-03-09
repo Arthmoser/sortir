@@ -46,7 +46,10 @@ class ActivityType extends AbstractType
                 "post_max_size_message" => '30'
             ])
             ->add('duration', NumberType::class, [
-                'label' => 'Durée : '
+                'label' => 'Durée : ',
+                'html5' => true,
+                'attr' => array(
+                    'placeholder' => 'minutes')
             ])
             ->add('overview', TextareaType::class, [
                 'label' => 'Description : ',
