@@ -43,7 +43,7 @@ class ActivityController extends AbstractController
          * @var User $user
          */
         $user = $this->getUser();
-
+        $messageFlash = 'L\'activité a bien été modifiée !';
         dump($user);
 
         if ($id != 0) {
@@ -60,18 +60,20 @@ class ActivityController extends AbstractController
         $activityForm = $this->createForm(ActivityType::class, $activity);
         $activityForm->handleRequest($request);
 
+        //TODO garder les informations déjà remplies dans le activity add si je clique sur ajouter un lieu
         if ($activityForm->isSubmitted() && $activityForm->isValid()) {
-
-            if ($id != 0) {
+            dump($activity);
+            if ($id == 0) {
                 $activity->setUser($user);
                 $activity->setCampus($user->getCampus());
                 $activity->addUser($user);
+                $messageFlash = 'L\'activité a bien été créée !';
             }
 
             $activityRepository->save($activity, true);
-            $this->addFlash("success", "Activité créée ! ");
+            $this->addFlash("success", $messageFlash);
 
-            return $this->redirectToRoute('main_home', ['id' => $activity->getId()]);
+            return $this->redirectToRoute('activity_home', ['id' => $activity->getId()]);
         }
         dump($activity);
 

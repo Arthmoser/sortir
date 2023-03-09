@@ -75,6 +75,16 @@ class ActivityType extends AbstractType
                     $qb->addOrderBy("l.name");
                     return $qb;
                 }
+                ])
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'name',
+                'label' => 'Campus : ',
+                'query_builder' => function (CampusRepository $campusRepository) {
+                    $qb = $campusRepository->createQueryBuilder("c");
+                    $qb->addOrderBy("c.name");
+                    return $qb;
+                }
             ])
 
             ->add('status', EntityType::class, [

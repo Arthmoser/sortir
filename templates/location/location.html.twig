@@ -1,4 +1,4 @@
-{% extends '../base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}{{ parent() }} | Lieux {% endblock %}
 
@@ -9,7 +9,6 @@
     {{ form_start(locationForm) }}
 
     <div class="form">
-
 
         {{ form_label(locationForm.name) }}
         {{ form_widget(locationForm.name) }}

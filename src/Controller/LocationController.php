@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\Location;
 use App\Form\LocationType;
+use App\Repository\ActivityRepository;
 use App\Repository\LocationRepository;
 use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,10 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/location', name: 'main_')]
+#[Route('/location', name: 'location_')]
 class LocationController extends AbstractController
 {
-    #[Route('/add', name: 'addLocation')]
+    #[Route('/add', name: 'add')]
     public function addLocation(
         LocationRepository $locationRepository,
         Request $request): Response
@@ -41,7 +42,8 @@ class LocationController extends AbstractController
             $locationRepository->save($location, true);
             $this->addFlash("success", "Lieu ajouté !");
 
-            return $this->redirectToRoute('activity_home', ['id' => $location->getCity()->getId()]);
+
+            return $this->redirectToRoute('activity_add', ['id' => $location->getCity()->getId()]);
         }
    //     dump($location);
 
@@ -50,4 +52,20 @@ class LocationController extends AbstractController
             ]);
 
         }
+
+    //function which allows user to see an activity's informations
+    #[Route('/location/show/{id}', name: 'show', requirements: ['id' => '\d+'])]
+    public function showLocation(
+        int $id, LocationRepository $locationRepository): Response
+    {
+        $location = $locationRepository->find($id);
+
+        if(!$location){
+            throw $this->createNotFoundException("Ce lieu n'existe pas ! ");
+        }
+
+        return $this->render('activity/showActivity.html.twig', [
+            'location' => $location
+        ]);
+    }
 }
