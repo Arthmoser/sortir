@@ -33,6 +33,9 @@ class ActivityController extends AbstractController
 
 //            /** @var FilterModel $filterModel */
 //            $filterModel = $filterForm->getData();
+
+//           TODO Maddy : appeler la fonction $filterActivites = $ActivityRepository->filterActivities();
+
             return $this->redirectToRoute('activity_home');
         }
 
@@ -41,6 +44,7 @@ class ActivityController extends AbstractController
         return $this->render('main/index.html.twig', [
             'activities' => $activities,
             'filterForm' => $filterForm->createView()
+//            TODO Maddy : renvoyer les données de ma fonction à la vue :    'filterActivites' => $filterActivites,
         ]);
     }
 

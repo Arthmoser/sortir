@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FilterType extends AbstractType
@@ -25,6 +26,11 @@ class FilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+//TODO les addEventListener
+//            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
+//            ->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'))
+
+
             ->add('campus', EntityType::class,[
                 'class' => Campus::class,
                 'choice_label' => 'name',
