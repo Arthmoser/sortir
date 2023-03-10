@@ -31,6 +31,19 @@ class AppFixtures extends Fixture
     private CityRepository $cityRepository;
     private Generator $faker;
 
+    private $campuses;
+    private $statuses;
+    private $locations;
+    private $users;
+
+    private $statusCreated = 'CRE';
+    private $statusOpened = 'OUV';
+    private $statusClosed = 'CLO';
+    private $statusInProgress = 'AEC';
+    private $statusFinished = 'PAS';
+    private $statusCanceled = 'ANN';
+    private $statusArchived = 'HIS';
+
     private $number = 50;
 
 
@@ -48,6 +61,10 @@ class AppFixtures extends Fixture
         $this->locationRepository = $locationRepository;
         $this->userRepository = $userRepository;
         $this->cityRepository = $cityRepository;
+        $this->campuses = $this->campusRepository->findAll();
+        $this->users = $this->userRepository->findAll();
+        $this->statuses = $this->statusRepository->findAll();
+        $this->locations = $this->locationRepository->findAll();
     }
 
 
@@ -83,12 +100,13 @@ class AppFixtures extends Fixture
 
     public function addStatuses(){
 
-        $statusList = ['Créée', 'Ouverte', 'Clôturée', 'Activité en cours', 'passée', 'Annulée'];
+        $statusList = ['CRE' => 'Créée', 'OUV' => 'Ouverte', 'CLO' => 'Clôturée', 'AEC' => 'Activité en cours', 'PAS' => 'Passée', 'ANN' => 'Annulée', 'HIS' => 'Historisée'];
 
-        foreach ($statusList as  $status){
+        foreach ($statusList as $key => $status){
 
             $currentStatus = new Status();
             $currentStatus->setType($status);
+            $currentStatus->setStatusCode($key);
 
             $this->entityManager->persist($currentStatus);
 
@@ -108,14 +126,15 @@ class AppFixtures extends Fixture
             ->setFirstname('Sylvain')
             ->setPhone('0620304050')
             ->setIsAllowed(true)
-            ->setCampus($this->campusRepository->find(2))
+            ->setCampus($this->faker->randomElement($this->campuses))
             ->setProfilePicture('profilePicture.png');
 
         $this->entityManager->persist($userAdmin);
 
+
+
         for($i=0; $i < $this->number; $i++){
 
-            $campus = $this->campusRepository->find($this->faker->numberBetween(1,4));
 
             $user = new User();
 
@@ -128,7 +147,7 @@ class AppFixtures extends Fixture
                 ->setFirstname($this->faker->firstName)
                 ->setPhone($this->faker->phoneNumber)
                 ->setIsAllowed($this->faker->boolean(90))
-                ->setCampus($campus)
+                ->setCampus($this->faker->randomElement($this->campuses))
                 ->setProfilePicture('profilePicture.png');
 
             $this->entityManager->persist($user);
@@ -154,9 +173,10 @@ class AppFixtures extends Fixture
 
     public function addLocations(){
 
+        $cities = $this->cityRepository->findAll();
+
         for($i=0; $i < $this->number; $i++){
 
-            $city = $this->cityRepository->find($this->faker->numberBetween(1,$this->number));
 
             $location = new Location();
 
@@ -165,7 +185,7 @@ class AppFixtures extends Fixture
                 ->setStreet($this->faker->streetAddress)
                 ->setLatitude($this->faker->latitude)
                 ->setLongitude($this->faker->longitude)
-                ->setCity($city);
+                ->setCity($this->faker->randomElement($cities));
 
             $this->entityManager->persist($location);
         }
@@ -186,17 +206,13 @@ class AppFixtures extends Fixture
             'Partez en road trip pour la journée', 'Parc d’attraction, fête foraine ou parc aquatique', 'Pédicure ou manucure', 'Promenade en bateau ou en barque',
             'Jouez aux fléchettes', 'Boire un verre dans un bar à chats'];
 
-            $users = $this->userRepository->findAll();
-            $statuses = $this->statusRepository->findAll();
 
         for($i=0; $i < count($activities); $i++){
 
-            $index = 0;
+            $statusCode = '';
 
             $activity = new Activity();
 
-            $campus = $this->campusRepository->find($this->faker->numberBetween(1,4));
-            $location = $this->locationRepository->find($this->faker->numberBetween(1,$this->number));
 
             $activity
                 ->setName($activities[$i])
@@ -215,27 +231,30 @@ class AppFixtures extends Fixture
             $oneMonthBeforeCurrentDate->modify('-1 month');
 
             if ($activity->getStartingDateTime() < $oneMonthBeforeCurrentDate ) {
-                $index = 2;
+                $statusCode = $this->statusArchived;
             } elseif ($activity->getStartingDateTime() < $currentDate) {
-                $index = 4;
-            } elseif ($activity->getStartingDateTime() == $currentDate) {
-                $index = 3;
+                $statusCode = $this->statusFinished;
+            } elseif($activity->getRegistrationDeadLine() < $currentDate && $activity->getStartingDateTime() > $currentDate) {
+                $statusCode = $this->statusClosed;
             } else {
-                $index = $this->faker->randomElement([0, 1, 5]);
+                $statusCode = $this->faker->randomElement([$this->statusCreated, $this->statusOpened, $this->statusCanceled]);
             }
 
-            $activity
-                ->setStatus($statuses[$index])
-                ->setLocation($location)
-                ->setCampus($campus)
-                ->setUser($users[$this->faker->numberBetween(0, (count($users) - 1))]);
 
-            if ($index != 0 && $index != 5) {
+            $activity
+                ->setStatus($this->statuses[array_search($statusCode, array_column($this->statuses, 'statusCode'))]);
+
+            $activity
+                ->setLocation($this->faker->randomElement($this->locations))
+                ->setCampus($this->faker->randomElement($this->campuses))
+                ->setUser($this->faker->randomElement($this->users));
+
+            if ($statusCode != $this->statusCreated && $statusCode != $this->statusCanceled) {
 
                 $numberOfParticipants = $this->faker->numberBetween(2, $activity->getMaxRegistrationNb());
 
 //                for ($i = 0; $i < $numberOfParticipants; $i++) {
-                    $activity->addUser($this->faker->randomElement($users));
+                    $activity->addUser($this->faker->randomElement($this->users));
 //                }
             }
 

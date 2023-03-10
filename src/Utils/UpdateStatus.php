@@ -25,7 +25,6 @@ class UpdateStatus
             $activity->setStatus($statuses[2]);
         }
 
-
         return $activities;
 
     }

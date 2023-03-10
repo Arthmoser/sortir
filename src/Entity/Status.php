@@ -21,6 +21,9 @@ class Status
     #[ORM\OneToMany(mappedBy: 'status', targetEntity: Activity::class)]
     private Collection $activities;
 
+    #[ORM\Column(length: 10)]
+    private ?string $statusCode = null;
+
     public function __construct()
     {
         $this->activities = new ArrayCollection();
@@ -69,6 +72,18 @@ class Status
                 $activity->setStatus(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatusCode(): ?string
+    {
+        return $this->statusCode;
+    }
+
+    public function setStatusCode(string $statusCode): self
+    {
+        $this->statusCode = $statusCode;
 
         return $this;
     }

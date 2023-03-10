@@ -44,7 +44,10 @@ class ActivityRepository extends ServiceEntityRepository
     {
         $statusClosed = 'Clôturée';
         $statusInProgress = 'Activité en cours';
-        $statusPast = 'passée';
+        $statusPast = 'Passée';
+        $statusArchived = 'Historisée';
+        $oneMonthBeforeCurrentDate = clone $date;
+        $oneMonthBeforeCurrentDate->modify('-1 month');
 
 
         $qb = $this->createQueryBuilder('a');
@@ -62,11 +65,20 @@ class ActivityRepository extends ServiceEntityRepository
                 ->andWhere('a.startingDateTime >= :val')
                 ->andWhere('a.startingDateTime + a.duration < :val')
                 ->setParameter('val', $date);
+        } elseif ($statusToUpdate == $statusPast){
+
+            $qb
+                ->andWhere('a.startingDateTime <= :val')
+                ->andWhere('a.startingDateTime > :val2')
+                ->setParameter('val', $date)
+                ->setParameter('val2', $oneMonthBeforeCurrentDate);
+
+        } elseif ($statusToUpdate == $statusArchived){
+
+            $qb
+                ->andWhere('a.startingDateTime < :val')
+                ->setParameter('val', $oneMonthBeforeCurrentDate);
         }
-
-
-
-
 
         $qb
             ->leftJoin('a.status', 'sta')
