@@ -5,6 +5,19 @@
 {% block body %}
     <div class="box">
 
+
+        {{ form_start(filterForm) }}
+
+        <div class="form">
+            {{ form_label(filterForm) }}
+            {{ form_widget(filterForm) }}
+            {{ form_errors(filterForm) }}
+        </div>
+
+        {{ form_rest(filterForm) }}
+
+        {{ form_end(filterForm) }}
+
         <table>
             <thead class="head">
 

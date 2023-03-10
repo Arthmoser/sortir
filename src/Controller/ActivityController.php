@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Activity;
 use App\Form\ActivityType;
+use App\Form\FilterType;
+use App\Form\Model\FilterModel;
 use App\Repository\ActivityRepository;
 use App\Repository\StatusRepository;
 use App\Utils\UpdateStatus;
@@ -18,18 +20,29 @@ class ActivityController extends AbstractController
 {
     #[Route('/home', name: 'home')]
     #[Route('/', name: 'home2')]
-    public function index(StatusRepository $statusRepository, ActivityRepository $activityRepository, UpdateStatus $updateStatus): Response
+    public function index(StatusRepository $statusRepository, ActivityRepository $activityRepository, UpdateStatus $updateStatus, Request $request): Response
     {
 
         $activities = $updateStatus->updateStatusByCriteria($statusRepository, $activityRepository);
 
 
-        dump($activities);
+        $filterModel = new FilterModel();
 
-//        $activities = $activityRepository->findAll();
+        $filterForm = $this->createForm(FilterType::class, $filterModel);
+        $filterForm->handleRequest($request);
+
+        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+
+//            /** @var FilterModel $filterModel */
+//            $filterModel = $filterForm->getData();
+            return $this->redirectToRoute('activity_home');
+        }
+
+        $activities = $activityRepository->findAll();
 
         return $this->render('main/index.html.twig', [
-            'activities' => $activities
+            'activities' => $activities,
+            'filterForm' => $filterForm->createView()
         ]);
     }
 
