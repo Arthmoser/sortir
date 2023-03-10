@@ -38,8 +38,10 @@
                     <td><a href="{{ path('user_profil', {'id': activity.user.id}) }}">{{ activity.user.nickname }}</a></td>
                     <td>
                         {% if activity.user.id == app.user.id %}
-                            {% if activity.status.type == 'Créée' %}
+                            {% if activity.status.type == ('Créée' or 'Ouverte') %}
                                 <a href="{{ path('activity_update', {'id': activity.id}) }}">Modifier</a>
+                            {% endif %}
+                            {% if activity.status.type == 'Créée' %}
                                 <a>Publier</a>
                             {% endif %}
                         {% else %}

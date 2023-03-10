@@ -35,17 +35,14 @@
                onclick="return confirm('Voulez-vous ajouter un nouveau lieu ?')">Ajouter un lieu</a>
         </div>
 
-
-    <button type="submit">Enregistrer</button>
-    <button>Publier la sortie </button>
-    <button>Annuler</button>
+    <a href="{{ path('activity_home') }}">Annuler</a>
 
         <div>
 
             {% if activity.id != null %}
 
                 <a class="" href="{{ path('activity_remove', {'id': activity.id})}}"
-                   onclick="return confirm('Etes-vous sûr.e de vouloir supprimer cette sortie ?')">Supprimer cette sortie</a>
+                   onclick="return confirm('Etes-vous sûr de de vouloir supprimer cette sortie ?')">Supprimer cette sortie</a>
 
             {% endif %}
         </div>

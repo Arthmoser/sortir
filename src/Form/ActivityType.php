@@ -17,6 +17,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -89,16 +90,11 @@ class ActivityType extends AbstractType
                     return $qb;
                 }
             ])
-
-            ->add('status', EntityType::class, [
-                'class' => Status::class,
-                'choice_label' => 'type',
-                'label' => 'Etat : ',
-                'query_builder' => function (StatusRepository $statusRepository) {
-                    $qb = $statusRepository->createQueryBuilder("s");
-                    $qb->addOrderBy("s.type");
-                    return $qb;
-                }
+            ->add('save', SubmitType::class, [
+                'label' => 'Enregistrer'
+            ])
+            ->add('publish', SubmitType::class, [
+                'label' => 'Publier'
             ]);
     }
 

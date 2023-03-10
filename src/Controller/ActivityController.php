@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Activity;
 use App\Form\ActivityType;
 use App\Repository\ActivityRepository;
+use App\Repository\StatusRepository;
 use App\Utils\UpdateStatus;
 use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('', name: 'activity_')]
 class ActivityController extends AbstractController
 {
-
     #[Route('/home', name: 'home')]
     #[Route('/', name: 'home2')]
     public function index(ActivityRepository $activityRepository, UpdateStatus $updateStatus): Response
@@ -34,6 +34,7 @@ class ActivityController extends AbstractController
     #[Route('/activity/add', name: 'add')]
     #[Route('/activity/{id}', name: 'update')]
     public function add(ActivityRepository $activityRepository,
+                        StatusRepository $statusRepository,
                         Request $request, int $id = 0): Response
     {
         $pathAdd = '/activity/add';
@@ -59,7 +60,7 @@ class ActivityController extends AbstractController
 
         if ($request->getPathInfo() == $pathUpdate && $user != $activity->getUser()) {
 
-                return $this->redirectToRoute('activity_show', ['id' => $id]);
+            return $this->redirectToRoute('activity_show', ['id' => $id]);
 
         }
 
@@ -68,8 +69,20 @@ class ActivityController extends AbstractController
 
         //TODO garder les informations déjà remplies dans le activity add si je clique sur ajouter un lieu
         if ($activityForm->isSubmitted() && $activityForm->isValid()) {
-            dump($activity);
-            if ($request->getPathInfo() == $pathAdd) {
+
+            $statuses = $statusRepository->findAll();
+
+            if ($activityForm->get('save')->isClicked())
+            {
+                $activity->setStatus($statuses[0]);
+            }
+            elseif ($activityForm->get('publish')->isClicked())
+            {
+                $activity->setStatus($statuses[1]);
+            }
+
+            if ($request->getPathInfo() == $pathAdd)
+            {
                 $activity->setUser($user);
                 $activity->setCampus($user->getCampus());
                 $activity->addUser($user);
@@ -81,7 +94,6 @@ class ActivityController extends AbstractController
 
             return $this->redirectToRoute('activity_home', ['id' => $activity->getId()]);
         }
-        dump($activity);
 
 
         return $this->render('activity/activity.html.twig', [
@@ -130,6 +142,9 @@ class ActivityController extends AbstractController
         $pathRegister = '/register/' . $id;
         $pathUnRegister = '/unregister/' . $id;
         $status = 'Ouverte';
+        $currentDate = new \DateTime;
+        $messageType = 'error';
+        $flashMessage = 'Vous êtes bien inscrit !';
 
         /**
          * @var User $user
@@ -138,32 +153,41 @@ class ActivityController extends AbstractController
 
         $activity = $activityRepository->find($id);
 
-        if($activity && $activity->getStatus()->getType() == $status) {
-
+        if($activity)
+        {
             //when the user tries to register for the activity
             if ($request->getPathInfo() == $pathRegister) {
                 if ($activity->getUsers()->contains($user)) {
-                    $this->addFlash("error", 'Vous êtes déjà inscrit !');
-                    return $this->redirectToRoute('activity_home');
+                    $flashMessage = 'Vous êtes déjà inscrit !';
+                } elseif($activity->getStatus()->getType() != $status) {
+                    $flashMessage = 'Cette activité n\'est pas ouverte à l\'inscription !';
+                } elseif($activity->getRegistrationDeadLine() < $currentDate) {
+                    $flashMessage =  'Cette activité n\'est plus ouverte à l\'inscription !';
+                } elseif(count($activity->getUsers()) >= $activity->getMaxRegistrationNb()) {
+                    $flashMessage = 'Cette activité est complète !';
                 } else {
                     $activity->addUser($user);
-                    $this->addFlash("success", "Vous êtes bien inscrit !");
+                    $messageType = 'success';
+                    $activityRepository->save($activity, true);
                 }
 
                 //when the user tries to unregister for the activity
             } elseif ($request->getPathInfo() == $pathUnRegister) {
                 if ($activity->getUsers()->contains($user)) {
                     $activity->removeUser($user);
+                    $messageType = 'success';
+                    $flashMessage = 'Vous êtes bien désinscrit !';
+                    $activityRepository->save($activity, true);
                 } else {
-                    $this->addFlash("error", 'Vous n\'êtes pas inscrit à l\'activité !');
-                    return $this->redirectToRoute('activity_home');
+                    $flashMessage = 'Vous n\'êtes pas inscrit à l\'activité !';
                 }
             }
 
-            $activityRepository->save($activity, true);
-
+        } else {
+            $flashMessage = 'L\'activité n\'éxiste pas !';
         }
 
+        $this->addFlash($messageType, $flashMessage);
         return $this->redirectToRoute('activity_home');
     }
 
