@@ -18,12 +18,15 @@ class ActivityController extends AbstractController
 {
     #[Route('/home', name: 'home')]
     #[Route('/', name: 'home2')]
-    public function index(ActivityRepository $activityRepository, UpdateStatus $updateStatus): Response
+    public function index(StatusRepository $statusRepository, ActivityRepository $activityRepository, UpdateStatus $updateStatus): Response
     {
 
-        //$updateStatus->updateStatusByCriteria($this);
+        $activities = $updateStatus->updateStatusByCriteria($statusRepository, $activityRepository);
 
-        $activities = $activityRepository->findAll();
+
+        dump($activities);
+
+//        $activities = $activityRepository->findAll();
 
         return $this->render('main/index.html.twig', [
             'activities' => $activities

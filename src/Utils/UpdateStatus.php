@@ -11,10 +11,22 @@ class UpdateStatus
 
     public function updateStatusByCriteria(StatusRepository $statusRepository, ActivityRepository $activityRepository)
     {
+        $currentDate = new \DateTime;
 
         $statuses = $statusRepository->findAll();
 
-        $activityRepository->findBy();
+        $status = '';
+
+        $activities = $activityRepository->findBySomeField($currentDate, $status);
+
+
+        foreach ($activities as $activity)
+        {
+            $activity->setStatus($statuses[2]);
+        }
+
+
+        return $activities;
 
     }
 

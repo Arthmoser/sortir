@@ -39,32 +39,51 @@ class ActivityRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Activity[] Returns an array of Activity objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-    public function findBySomeField($value): ?Activity
+    public function findBySomeField($date, $statusToUpdate)
     {
+        $statusClosed = 'Clôturée';
+        $statusInProgress = 'Activité en cours';
+        $statusPast = 'passée';
+
+
         $qb = $this->createQueryBuilder('a');
+
+        if ($statusToUpdate == $statusClosed) {
+
+            $qb
+                ->andWhere('a.registrationDeadLine < :val')
+                ->andWhere('a.startingDateTime > :val')
+                ->setParameter('val', $date);
+
+        } elseif ($statusToUpdate == $statusInProgress){
+
+            $qb
+                ->andWhere('a.startingDateTime >= :val')
+                ->andWhere('a.startingDateTime + a.duration < :val')
+                ->setParameter('val', $date);
+        }
+
+
+
+
+
         $qb
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value);
+            ->leftJoin('a.status', 'sta')
+            ->leftJoin('a.location', 'loc')
+            ->leftJoin('a.campus', 'cam')
+            ->leftJoin('a.user', "use")
+            ->leftJoin('a.users', 'users')
+            ->addSelect('sta')
+            ->addSelect('loc')
+            ->addSelect('cam')
+            ->addSelect('use')
+            ->addSelect('users')
+        ;
 
         $query = $qb->getQuery();
 
-        return $query;
+        return $query->getResult();
 
-        //TODO
     }
 }
