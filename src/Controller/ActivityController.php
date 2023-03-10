@@ -24,8 +24,6 @@ class ActivityController extends AbstractController
     {
 
         $activities = $updateStatus->updateStatusByCriteria($statusRepository, $activityRepository);
-
-
         $filterModel = new FilterModel();
 
         $filterForm = $this->createForm(FilterType::class, $filterModel);

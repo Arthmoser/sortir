@@ -3,20 +3,32 @@
 {% block title %}{{ parent() }} | Home{% endblock %}
 
 {% block body %}
-    <div class="box">
 
+    <div class="form">
+        <h2>Filtrer les sorties</h2>
 
         {{ form_start(filterForm) }}
+        {{ form_row(filterForm.campus) }}
+        {{ form_row(filterForm.activity) }}
+        {{ form_row(filterForm.startingDateTime) }}
+        {{ form_row(filterForm.endingDateTime) }}
+    </div>
 
         <div class="form">
-            {{ form_label(filterForm) }}
-            {{ form_widget(filterForm) }}
-            {{ form_errors(filterForm) }}
+
+        {{form_row(filterForm.isOrganiser)}}
+        {{form_row(filterForm.isRegistered)}}
+        {{form_row(filterForm.isNotRegistered)}}
+        {{form_row(filterForm.availableActivity)}}
+
         </div>
 
+    </div>
         {{ form_rest(filterForm) }}
-
         {{ form_end(filterForm) }}
+    </div>
+
+    <div class="box">
 
         <table>
             <thead class="head">
