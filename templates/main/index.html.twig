@@ -3,30 +3,31 @@
 {% block title %}{{ parent() }} | Home{% endblock %}
 
 {% block body %}
+    <h1 class="title">Filtrer les sorties</h1>
 
+    {{ form_start(filterForm) }}
     <div class="form">
-        <h2>Filtrer les sorties</h2>
 
-        {{ form_start(filterForm) }}
+
         {{ form_row(filterForm.campus) }}
         {{ form_row(filterForm.activity) }}
         {{ form_row(filterForm.startingDateTime) }}
-        {{ form_row(filterForm.endingDateTime) }}
-    </div>
-
-        <div class="form">
-
-        {{form_row(filterForm.isOrganiser)}}
-        {{form_row(filterForm.isRegistered)}}
-        {{form_row(filterForm.isNotRegistered)}}
-        {{form_row(filterForm.availableActivity)}}
-
-        </div>
 
     </div>
+
+    <div class="form">
+
+        {{ form_row(filterForm.isOrganiser) }}
+        {{ form_row(filterForm.isRegistered) }}
+        {{ form_row(filterForm.isNotRegistered) }}
+        {{ form_row(filterForm.availableActivity) }}
+
+
         {{ form_rest(filterForm) }}
-        {{ form_end(filterForm) }}
+
     </div>
+
+    {{ form_end(filterForm) }}
 
     <div class="box">
 
@@ -35,7 +36,7 @@
 
             <tr>
                 <td>Activité</td>
-                <td>Date </td>
+                <td>Date</td>
                 <td>Clôture</td>
                 <td>Inscrits/Places</td>
                 <td>Etat</td>
@@ -46,10 +47,10 @@
             </thead>
 
 
-            <tbody class="down"  >
+            <tbody class="down">
 
             {% for activity in activities %}
-                <tr class="activityLine" >
+                <tr class="activityLine">
                     <td>{{ activity.name }}</td>
                     <td>{{ activity.startingDateTime  | date('d/m/Y H:i') }}</td>
                     <td>{{ activity.registrationDeadLine  | date('d/m/Y ') }}</td>
@@ -60,7 +61,8 @@
                             X
                         {% endif %}
                     </td>
-                    <td><a href="{{ path('user_profil', {'id': activity.user.id}) }}">{{ activity.user.nickname }}</a></td>
+                    <td><a href="{{ path('user_profil', {'id': activity.user.id}) }}">{{ activity.user.nickname }}</a>
+                    </td>
                     <td>
                         {% if activity.user.id == app.user.id %}
                             {% if activity.status.type == ('Créée' or 'Ouverte') %}
@@ -87,6 +89,8 @@
         </table>
     </div>
 
-    <a href="{{ path('activity_add') }}"><button>Créer une sortie</button></a>
+    <a href="{{ path('activity_add') }}">
+        <button>Créer une sortie</button>
+    </a>
 
 {% endblock %}

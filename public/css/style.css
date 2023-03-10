@@ -1,9 +1,11 @@
 
+/*--------------------------------------------------------------------------BODY----------------------------------------------------------------------*/
+
 body {
     background: linear-gradient(70deg, #62B6B7, #97DECE, #CBEDD5);
 
 }
-
+/*--------------------------------------------------------------------------HEADER/NAVBAR----------------------------------------------------------------------*/
 header {
     background: linear-gradient(80deg, #FFFFFF, #FFFFFF, #CBEDD5, #97DECE, #62B6B7);
     display: flex;
@@ -30,14 +32,13 @@ li a {
 }
 
 a {
-
-    font-family: 'Fragment Mono', monospace;
-    font-size: 20px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 18px;
     text-decoration: none;
     margin-inline: 15px;
     color: #439A97;
 }
-
+/*--------------------------------------------------------------------------TABLE----------------------------------------------------------------------*/
 .head td {
     border-radius: 10px;
     border: 1px solid black;
@@ -47,11 +48,12 @@ a {
 
 table {
     border-radius: 2px;
+    align-items: center;
 }
 
 td {
-    font-family: 'Fragment Mono', monospace;
-    font-size: 15px;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
     text-align: center;
     padding: 2px;
 
@@ -59,6 +61,7 @@ td {
 
 .activityLine td {
     border-bottom: #439A97 1px solid;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1 {
@@ -72,7 +75,7 @@ h1 {
     margin-right: 10px;
     margin-bottom: -10px;
 }
-
+/*--------------------------------------------------------------------------CONTAINTS----------------------------------------------------------------------*/
 .box {
     align-items: center;
     background-color: #CBEDD5;
@@ -141,18 +144,34 @@ p {
 }
 
 .content1 {
+
+    align-items: center;
+    background-color: #CBEDD5;
+    border-radius: 20px;
+    box-sizing: border-box;
+    height:500px;
+    padding: 20px;
+    width: 40%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    margin-left: 15%;
+    margin-top: -1%;
+}
+
+.content2 {
     align-items: center;
     background-color: #CBEDD5;
     border-radius: 20px;
     box-sizing: border-box;
     height: 520px;
     padding: 20px;
-    width: 74%;
+    width: 70%;
     overflow: hidden;
     border: 1px solid #439A97;
-    margin-top: 0%;
-}
+    margin-top: -2%;
 
+}
+/*--------------------------------------------------------------------------TEXT/OTHERS----------------------------------------------------------------------*/
 .pp .content {
     display: inline;
 }
@@ -172,17 +191,30 @@ input {
     display: grid;
     margin-left: 13%;
     margin-top: -2%;
-
-
 }
 
 label {
 
-    font-family: 'Tilt Warp', cursive;
+    /*font-family: 'Tilt Warp', cursive;*/
+    font-family: 'Quicksand', sans-serif;
 }
 
 select {
     margin-left: 47px;
 }
 
+.title {
+    color: #ff43fe;
+}
 
+/*--------------------------------------------------------------------------FORM----------------------------------------------------------------------*/
+
+.form  {
+  color : red;
+  display: inline-grid;
+  margin-bottom: 3%;
+}
+
+.form > label {
+    color : yellow;
+}
