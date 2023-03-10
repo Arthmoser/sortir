@@ -1,31 +1,26 @@
 
-body
-{
-    background: linear-gradient(70deg, #62B6B7, #97DECE,#CBEDD5);
+body {
+    background: linear-gradient(70deg, #62B6B7, #97DECE, #CBEDD5);
 
 }
 
-header
-{
-    background: linear-gradient(80deg, #FFFFFF, #FFFFFF, #CBEDD5,#97DECE, #62B6B7);
+header {
+    background: linear-gradient(80deg, #FFFFFF, #FFFFFF, #CBEDD5, #97DECE, #62B6B7);
     display: flex;
     justify-content: space-between;
 
 }
 
-hr
-{
-    border : 3px solid #62B6B7;
+hr {
+    border: 3px solid #62B6B7;
     margin-top: 0;
 }
 
-.list
-{
+.list {
     display: flex;
 }
 
-ul
-{
+ul {
     list-style: none;
     margin-top: 90px;
 }
@@ -34,8 +29,7 @@ li a {
     color: black;
 }
 
-a
-{
+a {
 
     font-family: 'Fragment Mono', monospace;
     font-size: 20px;
@@ -44,21 +38,18 @@ a
     color: #439A97;
 }
 
-.head td
-{
+.head td {
     border-radius: 10px;
     border: 1px solid black;
     text-align: center;
     margin-top: 2px;
 }
 
-table
-{
+table {
     border-radius: 2px;
 }
 
-td
-{
+td {
     font-family: 'Fragment Mono', monospace;
     font-size: 15px;
     text-align: center;
@@ -70,22 +61,19 @@ td
     border-bottom: #439A97 1px solid;
 }
 
-h1
-{
+h1 {
     font-family: 'Rampart One', cursive;
     color: #439A97;
     font-size: 3em;
 }
 
-.logo
-{
+.logo {
     border-radius: 3px;
     margin-right: 10px;
     margin-bottom: -10px;
 }
 
-.box
-{
+.box {
     align-items: center;
     background-color: #CBEDD5;
     border-radius: 20px;
@@ -96,26 +84,24 @@ h1
     overflow: hidden;
     overflow-y: scroll;
     scrollbar-width: thin;
-    border : 1px solid #439A97;
+    border: 1px solid #439A97;
 }
 
 
-main
-{
+main {
     margin-top: 10%;
     margin-left: 25%;
-    margin-bottom :3.2%;
+    margin-bottom: 3.2%;
 }
 
-p
-{
+p {
     height: 20px;
     width: 20px;
     display: inline;
     margin-top: 20px;
 }
 
-.box1{
+.box1 {
 
     align-items: flex-start;
     background-color: #EDF1D6;
@@ -127,8 +113,7 @@ p
     overflow: hidden;
 }
 
-.box2
-{
+.box2 {
     align-items: center;
     background-color: #CBEDD5;
     border-radius: 20px;
@@ -139,5 +124,65 @@ p
     overflow: hidden;
     overflow-y: scroll;
     scrollbar-width: thin;
-    border : 1px solid #439A97;
+    border: 1px solid #439A97;
 }
+
+.content {
+    align-items: center;
+    background-color: #CBEDD5;
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 520px;
+    padding: 20px;
+    width: 74%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    margin-top: -16%;
+}
+
+.content1 {
+    align-items: center;
+    background-color: #CBEDD5;
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 520px;
+    padding: 20px;
+    width: 74%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    margin-top: 0%;
+}
+
+.pp .content {
+    display: inline;
+}
+
+.pp {
+    margin-left: 50%;
+}
+
+.txt {
+    text-align: left;
+    margin-left: 10%;
+}
+
+input {
+    border-radius: 6px;
+    border: 1px solid black;
+    display: grid;
+    margin-left: 13%;
+    margin-top: -2%;
+
+
+}
+
+label {
+
+    font-family: 'Tilt Warp', cursive;
+}
+
+select {
+    margin-left: 47px;
+}
+
+

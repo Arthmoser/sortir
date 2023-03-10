@@ -14,8 +14,7 @@ class CampusType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Ajouter un campus',
-                'HTML5' => true
+                'label' => 'Ajouter un campus'
             ])
         ;
     }
@@ -23,8 +22,7 @@ class CampusType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Campus::class,
-            'required' => false
+            'data_class' => Campus::class
         ]);
     }
 }

@@ -65,12 +65,33 @@ class AdminController extends AbstractController
     }
 
     #[Route('/campus', name: 'campus_list')]
-    public function list(CampusRepository $campusRepository): Response
+    #[Route('/campus/{id}', name: 'update')]
+    public function list(CampusRepository $campusRepository, Request $request, int $id = 0): Response
     {
-        $campuses = $campusRepository->findBy([], ['name' => 'ASC']);
+        $pathCampus = '/admin/campus';
+        $pathUpdate = '/admin/campus/' . $id;
 
+//        if ($request->getPathInfo() == $pathAdd) {
+//        }
+        $campus = new Campus();
+
+        $campusForm = $this->createForm(CampusType::class, $campus);
+
+        $campusForm->handleRequest($request);
+
+        if ($campusForm->isSubmitted()) {//TODO isValid condition
+        dump($campus);
+            $campusRepository->save($campus, true);
+            $this->addFlash("success", "campus ajouter ! ");
+
+            return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
+
+        }
+
+        $campuses = $campusRepository->findBy([], ['name' => 'ASC']);
         return $this->render('admin/campus/list.html.twig', [
-            'campuses' => $campuses
+            'campuses' => $campuses,
+            'campusForm' => $campusForm->createView()
         ]);
     }
 
@@ -87,29 +108,6 @@ class AdminController extends AbstractController
             throw $this->createNotFoundException("Ce campus ne peut pas être supprimé !");
         }
         return $this->redirectToRoute('admin_campus_list');
-
-    }
-
-    #[Route('/campus/add', name: 'add')]
-    public function addCampus(CampusRepository $campusRepository,
-                              Request $request): Response
-    {
-        $campus = new Campus();
-        $campusForm = $this->createForm(CampusType::class, $campus);
-
-        $campusForm->handleRequest($request);
-
-        if ($campusForm->isSubmitted() && $campusForm->isValid()) {
-            $campusRepository->save($campus, true);
-            $this->addFlash("success", "campus ajouter ! ");
-
-            return $this->redirectToRoute('admin_campus_list', ['id' => $campus->getName()]);
-
-        }
-
-        return $this->render('admin/campus/list.html.twig', [
-            'campusForm' => $campusForm->createView(),
-        ]);
 
     }
 

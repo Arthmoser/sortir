@@ -4,9 +4,10 @@
 
 {% block body %}
 
-    <h1>Gérer les Campus</h1>
 
-    <div class="box2l">
+
+    <div class="content1">
+        <h1>Gérer les Campus</h1>
         <table>
             <thead>
             <tr>
@@ -19,15 +20,22 @@
                 <tr>
                     <td>{{ campus.name }}</td>
                     <td>
-                        {{ form_row(campus.name) }}
-                    </td>
-                    <td>
                         <a href="">Modifier</a>
                         <a href="">Supprimer</a>
-                        <a href="">Ajouter</a>
+
                     </td>
                 </tr>
             {% endfor %}
+                <tr>
+                    <td>
+                        {{ form_start(campusForm.name) }}
+                        {{ form_widget(campusForm.name) }}
+                    </td>
+                    <td>
+                        <button type="submit">Ajouter</button>
+                        {{ form_end(campusForm.name) }}
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
