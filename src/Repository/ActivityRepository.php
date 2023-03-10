@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\Activity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @extends ServiceEntityRepository<Activity>
@@ -86,4 +89,41 @@ class ActivityRepository extends ServiceEntityRepository
         return $query->getResult();
 
     }
+
+//    public function filterActivities(FormInterface $form, Campus $campus = null)
+//    {
+//
+//        $form->add('campus', EntityType::class, array(
+//            'required' => true,
+//            'data' => $campus,
+//            'class' => 'AppBundle:Campus'
+//        ));
+//
+//        $activity = array();
+//
+//        if ($campus) {
+//            $ActivityRepository = $this->_em->getRepository('AppBundle:Activity');
+//
+//            $activity = $ActivityRepository->createQueryBuilder("q")
+//                ->where("q.campus = :campusid")
+//                ->setParameter("campusid", $campus->getId())
+//                ->getQuery()
+//                ->getResult();
+//        }
+//
+//        $form->add('activity', EntityType::class, array(
+//            'required' => true,
+//            'class' => 'AppBundle:Activity',
+//            'choices' => $activity
+//        ));
+//    }
+//        function onPreSubmit(FormEvent $event){
+//
+//            $form = $event->getForm();
+//            $data = $event->getData();
+//
+//            $campus = $this->_em->getRepository('AppBundle:Campus')->find($data['campus']);
+//            $this->addElements($form, $campus);
+//        }
+
 }

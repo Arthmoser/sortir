@@ -5,23 +5,22 @@ namespace App\Form\Model;
 class FilterModel
 {
 
-    public $campus;
+    private $campus;
 
-    public $activity;
+    private $activity;
 
-    public $startingDateTime;
+    private $startingDateTime;
+    private $endingDateTime;
 
-    public $endingDateTime;
+    private $isOrganiser;
 
-    public $isOrganiser;
+    private $isRegistered;
 
-    public $isRegistered;
+    private $isNotRegistered;
 
-    public $isNotRegistered;
+    private $availableActivity;
 
-    public $availableActivity;
-
-    public $search;
+    private $search;
 
 
 }
