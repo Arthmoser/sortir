@@ -23,6 +23,7 @@ class ActivityController extends AbstractController
     public function index(StatusRepository $statusRepository, ActivityRepository $activityRepository, UpdateStatus $updateStatus, Request $request): Response
     {
         $currentDate = new \DateTime();
+        $user = $this->getUser();
         $activities = $activityRepository->findNonArchivedActivity($currentDate);
 
         $updateStatus->updateStatusByCriteria($statusRepository, $activityRepository, $activities);
@@ -33,22 +34,18 @@ class ActivityController extends AbstractController
         $filterForm = $this->createForm(FilterType::class, $filterModel);
         $filterForm->handleRequest($request);
 
-        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+        if ($filterForm->isSubmitted()) //TODO set form is valid
+        {
+            dump($filterModel);
 
-//            /** @var FilterModel $filterModel */
-//            $filterModel = $filterForm->getData();
+           $activities = $activityRepository->filterActivities($filterModel, $user);
 
-//           TODO Maddy : appeler la fonction $filterActivites = $ActivityRepository->filterActivities();
-
-            return $this->redirectToRoute('activity_home');
         }
-
-
 
         return $this->render('main/index.html.twig', [
             'activities' => $activities,
             'filterForm' => $filterForm->createView()
-//            TODO Maddy : renvoyer les données de ma fonction à la vue :    'filterActivites' => $filterActivites,
+
         ]);
     }
 

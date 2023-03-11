@@ -26,11 +26,6 @@ class FilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//TODO les addEventListener
-//            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
-//            ->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'))
-
-
             ->add('campus', EntityType::class,[
                 'class' => Campus::class,
                 'choice_label' => 'name',
@@ -42,9 +37,8 @@ class FilterType extends AbstractType
                 }
             ])
 
-            ->add('activity', SearchType::class,[
+            ->add('search', SearchType::class,[
                 'empty_data' => ' ',
-                'mapped' => false,
                 'trim' => true,
                 'label' => 'Le nom de la sortie contient : '
             ])
@@ -75,11 +69,11 @@ class FilterType extends AbstractType
 
             ->add('availableActivity', CheckboxType::class, [
                 'label' => 'Sorties passées : ',
-            ])
+            ]);
 
-        ->add('search', SubmitType::class, [
-        'label' => 'Rechercher'
-    ]);
+//        ->add('search', SubmitType::class, [
+//        'label' => 'Rechercher'
+//    ]);
 
     }
 

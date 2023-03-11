@@ -10,7 +10,7 @@
 
 
         {{ form_row(filterForm.campus) }}
-        {{ form_row(filterForm.activity) }}
+        {{ form_row(filterForm.search) }}
         {{ form_row(filterForm.startingDateTime) }}
 
     </div>
@@ -25,6 +25,10 @@
 
         {{ form_rest(filterForm) }}
 
+    </div>
+
+    <div>
+        <button type="submit">Rechercher</button>
     </div>
 
     {{ form_end(filterForm) }}

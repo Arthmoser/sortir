@@ -28,6 +28,9 @@ class ActivityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            //TODO les addEventListener
+//            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
+//            ->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'))
             ->add('name', TextType::class, [
                 'label' => 'Nom : '
             ])
