@@ -22,8 +22,12 @@ class ActivityController extends AbstractController
     #[Route('/', name: 'home2')]
     public function index(StatusRepository $statusRepository, ActivityRepository $activityRepository, UpdateStatus $updateStatus, Request $request): Response
     {
+        $currentDate = new \DateTime();
+        $activities = $activityRepository->findNonArchivedActivity($currentDate);
 
-        $activities = $updateStatus->updateStatusByCriteria($statusRepository, $activityRepository);
+        $updateStatus->updateStatusByCriteria($statusRepository, $activityRepository, $activities);
+
+
         $filterModel = new FilterModel();
 
         $filterForm = $this->createForm(FilterType::class, $filterModel);
@@ -39,7 +43,7 @@ class ActivityController extends AbstractController
             return $this->redirectToRoute('activity_home');
         }
 
-        $activities = $activityRepository->findAll();
+
 
         return $this->render('main/index.html.twig', [
             'activities' => $activities,

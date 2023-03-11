@@ -42,16 +42,42 @@ class ActivityRepository extends ServiceEntityRepository
         }
     }
 
-
-    public function findBySomeField($date, $statusToUpdate)
+    public function findNonArchivedActivity($date)
     {
-        $statusClosed = 'Clôturée';
-        $statusInProgress = 'Activité en cours';
-        $statusPast = 'Passée';
-        $statusArchived = 'Historisée';
-        $oneMonthBeforeCurrentDate = clone $date;
-        $oneMonthBeforeCurrentDate->modify('-1 month');
+        $oneMonthBeforeDate = clone $date;
+        $oneMonthBeforeDate->modify('-1 month');
 
+        $qb = $this->createQueryBuilder('a');
+
+        $qb
+            ->andWhere('a.startingDateTime > :val')
+            ->setParameter('val', $oneMonthBeforeDate)
+            ->leftJoin('a.status', 'sta')
+            ->leftJoin('a.location', 'loc')
+            ->leftJoin('a.campus', 'cam')
+            ->leftJoin('a.user', "use")
+            ->leftJoin('a.users', 'users')
+            ->addSelect('sta')
+            ->addSelect('loc')
+            ->addSelect('cam')
+            ->addSelect('use')
+            ->addSelect('users');
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+
+    }
+
+
+    public function findBySomeField($date, $statusToUpdate = '')
+    {
+        $statusClosed = 'CLO';
+        $statusInProgress = 'AEC';
+        $statusPast = 'PAS';
+        $statusArchived = 'HIS';
+        $oneMonthBeforeDate = clone $date;
+        $oneMonthBeforeDate->modify('-1 month');
 
         $qb = $this->createQueryBuilder('a');
 
@@ -74,13 +100,13 @@ class ActivityRepository extends ServiceEntityRepository
                 ->andWhere('a.startingDateTime <= :val')
                 ->andWhere('a.startingDateTime > :val2')
                 ->setParameter('val', $date)
-                ->setParameter('val2', $oneMonthBeforeCurrentDate);
+                ->setParameter('val2', $oneMonthBeforeDate);
 
         } elseif ($statusToUpdate == $statusArchived){
 
             $qb
                 ->andWhere('a.startingDateTime < :val')
-                ->setParameter('val', $oneMonthBeforeCurrentDate);
+                ->setParameter('val', $oneMonthBeforeDate);
         }
 
         $qb

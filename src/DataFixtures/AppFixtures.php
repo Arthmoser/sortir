@@ -33,6 +33,7 @@ class AppFixtures extends Fixture
 
     private $campuses;
     private $statuses;
+    private $cities;
     private $locations;
     private $users;
 
@@ -61,10 +62,6 @@ class AppFixtures extends Fixture
         $this->locationRepository = $locationRepository;
         $this->userRepository = $userRepository;
         $this->cityRepository = $cityRepository;
-        $this->campuses = $this->campusRepository->findAll();
-        $this->users = $this->userRepository->findAll();
-        $this->statuses = $this->statusRepository->findAll();
-        $this->locations = $this->locationRepository->findAll();
     }
 
 
@@ -72,12 +69,13 @@ class AppFixtures extends Fixture
     {
         $number = 50;
 
-//        $this->addCampuses();
-//        $this->addStatuses();
-//        $this->addUsers();
-//        $this->addCities();
-//        $this->addLocations();
+        $this->addCampuses();
+        $this->addStatuses();
+        $this->addCities();
+        $this->addLocations();
+        $this->addUsers();
         $this->addActivities();
+
     }
 
 
@@ -95,6 +93,9 @@ class AppFixtures extends Fixture
             }
 
         $this->entityManager->flush();
+
+        $this->campuses = $this->campusRepository->findAll();
+
     }
 
 
@@ -113,6 +114,50 @@ class AppFixtures extends Fixture
         }
 
         $this->entityManager->flush();
+
+        $this->statuses = $this->statusRepository->findAll();
+    }
+
+    public function addCities(){
+
+        for($i=0; $i < $this->number; $i++){
+
+            $city = new City();
+
+            $city
+                ->setName($this->faker->city)
+                ->setZipCode($this->faker->postcode);
+
+            $this->entityManager->persist($city);
+        }
+        $this->entityManager->flush();
+
+        $this->cities = $this->cityRepository->findAll();
+
+    }
+
+
+    public function addLocations(){
+
+        for($i=0; $i < $this->number; $i++){
+
+
+            $location = new Location();
+
+            $location
+                ->setName($this->faker->name)
+                ->setStreet($this->faker->streetAddress)
+                ->setLatitude($this->faker->latitude)
+                ->setLongitude($this->faker->longitude)
+                ->setCity($this->faker->randomElement($this->cities));
+
+            $this->entityManager->persist($location);
+        }
+        $this->entityManager->flush();
+
+
+        $this->locations = $this->locationRepository->findAll();
+
     }
 
     public function addUsers(){
@@ -153,44 +198,11 @@ class AppFixtures extends Fixture
             $this->entityManager->persist($user);
         }
         $this->entityManager->flush();
+
+        $this->users = $this->userRepository->findAll();
+
     }
 
-
-    public function addCities(){
-
-        for($i=0; $i < $this->number; $i++){
-
-            $city = new City();
-
-            $city
-                ->setName($this->faker->city)
-                ->setZipCode($this->faker->postcode);
-
-            $this->entityManager->persist($city);
-        }
-        $this->entityManager->flush();
-    }
-
-    public function addLocations(){
-
-        $cities = $this->cityRepository->findAll();
-
-        for($i=0; $i < $this->number; $i++){
-
-
-            $location = new Location();
-
-            $location
-                ->setName($this->faker->name)
-                ->setStreet($this->faker->streetAddress)
-                ->setLatitude($this->faker->latitude)
-                ->setLongitude($this->faker->longitude)
-                ->setCity($this->faker->randomElement($cities));
-
-            $this->entityManager->persist($location);
-        }
-        $this->entityManager->flush();
-    }
 
     public function addActivities(){
 
@@ -206,6 +218,7 @@ class AppFixtures extends Fixture
             'Partez en road trip pour la journée', 'Parc d’attraction, fête foraine ou parc aquatique', 'Pédicure ou manucure', 'Promenade en bateau ou en barque',
             'Jouez aux fléchettes', 'Boire un verre dans un bar à chats'];
 
+        $participants = [];
 
         for($i=0; $i < count($activities); $i++){
 
@@ -240,29 +253,42 @@ class AppFixtures extends Fixture
                 $statusCode = $this->faker->randomElement([$this->statusCreated, $this->statusOpened, $this->statusCanceled]);
             }
 
-
-            $activity
-                ->setStatus($this->statuses[array_search($statusCode, array_column($this->statuses, 'statusCode'))]);
-
+            foreach ($this->statuses as $status) {
+                if ($status->getStatusCode() == $statusCode) {
+                    $activity
+                        ->setStatus($status);
+                }
+            }
             $activity
                 ->setLocation($this->faker->randomElement($this->locations))
                 ->setCampus($this->faker->randomElement($this->campuses))
                 ->setUser($this->faker->randomElement($this->users));
 
-            if ($statusCode != $this->statusCreated && $statusCode != $this->statusCanceled) {
-
-                $numberOfParticipants = $this->faker->numberBetween(2, $activity->getMaxRegistrationNb());
-
-//                for ($i = 0; $i < $numberOfParticipants; $i++) {
-                    $activity->addUser($this->faker->randomElement($this->users));
-//                }
-            }
 
             $this->entityManager->persist($activity);
         }
         $this->entityManager->flush();
+
+//        $this->addParticipants();
     }
 
-
+//    public function addParticipants()
+//    {
+//
+//
+//        if ($statusCode != $this->statusCreated && $statusCode != $this->statusCanceled) {
+//
+//            $numberOfParticipants = $this->faker->numberBetween(2, $activity->getMaxRegistrationNb());
+//
+//            for ($i = 0; $i < $numberOfParticipants; $i++) {
+//
+//                $participant = $this->faker->randomElement($this->users);
+//                $activity->setUsers($participant);
+//            }
+//
+//            $this->entityManager->persist($activity);
+//        }
+//        $this->entityManager->flush();
+//    }
 
 }

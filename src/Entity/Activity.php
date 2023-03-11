@@ -204,6 +204,13 @@ class Activity
         return $this;
     }
 
+    public function setUsers($user)
+    {
+            $this->users[] = $user;
+
+        return $this;
+    }
+
     public function removeUser(User $user): self
     {
         if ($this->users->removeElement($user)) {
@@ -212,13 +219,7 @@ class Activity
 
         return $this;
     }
-//
-//
-//    #[ORM\PrePersist]
-//    public function setStatusAtValue(): void
-//    {
-//        $this->setStatus(new Status(1, 'Créée'));
-//    }
+
 
 
 }
