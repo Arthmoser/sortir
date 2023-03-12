@@ -58,49 +58,16 @@ class FilterType extends AbstractType
             ])
 
             ->add('isRegistered', CheckboxType::class, [
-                'label' => 'Sorties auxquelles je suis inscrit.e : ',
-                'attr' => [
-                    'id' => 'isRegistered'
-                ]
+                'label' => 'Sorties auxquelles je suis inscrit.e : '
             ])
 
             ->add('isNotRegistered', CheckboxType::class, [
-                'label' => 'Sorties auxquelles je ne suis pas inscrit.e : ',
-                'attr' => [
-                    'id' => 'isNotRegistered'
-                ]
+                'label' => 'Sorties auxquelles je ne suis pas inscrit.e : '
             ])
 
             ->add('availableActivity', CheckboxType::class, [
                 'label' => 'Sorties passées : ',
-            ])
-
-            // 3. Add 1 event listeners for the form
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-
-
-//                $filter = $event->getData();
-//                $form = $event->getForm();
-//
-//                if (!$filter)
-//                {
-//                    return;
-//                }
-//
-//                if (isset($filter['isRegistered']))
-//                {
-//                    unset($filter['isNotRegistered']);
-//                } elseif (isset($filter['isNotRegistered']))
-//                {
-//                    unset($filter['isRegistered']);
-//                }
-            });
-
-    }
-
-    public function onPreSetData(FormEvent $event): void
-    {
-
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
