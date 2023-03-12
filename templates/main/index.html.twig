@@ -2,6 +2,25 @@
 
 {% block title %}{{ parent() }} | Home{% endblock %}
 
+
+ {% block js %}
+     <script>
+
+         let buttonIsRegistered = document.getElementById('filter_isRegistered')
+         let buttonIsNotRegistered = document.getElementById('filter_isNotRegistered')
+
+         buttonIsRegistered.addEventListener('click', function() {
+            buttonIsNotRegistered.checked=false
+         })
+
+         buttonIsNotRegistered.addEventListener('click', function() {
+             buttonIsRegistered.checked=false
+         })
+
+     </script>
+
+ {% endblock %}
+
 {% block body %}
     <h1 class="title">Filtrer les sorties</h1>
 

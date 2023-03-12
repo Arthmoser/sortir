@@ -137,7 +137,7 @@ class ActivityRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder("a");
 
-        if ($form->getCampus() != "")
+        if ($form->getCampus())
         {
             $qb
                 ->andWhere("a.campus = :campusid")
