@@ -41,19 +41,22 @@ class UserController extends AbstractController
 
                 if ($form->isSubmitted() && $form->isValid()) {
 
-                    //upload photo
-                    /**
-                     * @var UploadedFile $file
-                     */
+                    if ($form->get('profilePicture')->getData())
+                    {
+                        //upload photo
+                        /**
+                         * @var UploadedFile $file
+                         */
 
-                    $file = $form->get('profilePicture')->getData();
+                        $file = $form->get('profilePicture')->getData();
 
-                    $newFileName = $uploader->upload(
-                      $file,
-                      $this->getParameter('upload_user_picture'),
-                      $user->getNickname() );
+                        $newFileName = $uploader->upload(
+                          $file,
+                          $this->getParameter('upload_user_picture'),
+                          $user->getNickname() );
 
-                    $user->setProfilePicture($newFileName);
+                        $user->setProfilePicture($newFileName);
+                    }
 
                     $password = $form->get('password')->getData();
 
