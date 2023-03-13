@@ -81,7 +81,7 @@ class AppFixtures extends Fixture
 
     public function addCampuses(){
 
-            $campusList = ['Nantes', 'Rennes', 'Quimper', 'Niort'];
+            $campusList = ['-Tous les campus-', 'Nantes', 'Rennes', 'Quimper', 'Niort'];
 
             foreach ($campusList as  $campus){
 
