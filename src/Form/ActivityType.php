@@ -28,9 +28,7 @@ class ActivityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            //TODO les addEventListener
-//            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
-//            ->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'))
+
             ->add('name', TextType::class, [
                 'label' => 'Nom : '
             ])
@@ -65,7 +63,9 @@ class ActivityType extends AbstractType
             ->add('city', EntityType::class, [
                 'class' => City::class,
                 'choice_label' => 'name',
+                'placeholder' => '-Veuillez choisir une ville-',
                 'mapped' => false,
+                'required'=> true,
                 'label' => 'Ville : ',
                 'query_builder' => function (CityRepository $cityRepository) {
                     $qb = $cityRepository->createQueryBuilder("c");
@@ -73,8 +73,10 @@ class ActivityType extends AbstractType
                     return $qb;
                 }
             ])
+
             ->add('location', EntityType::class, [
                 'class' => Location::class,
+                'placeholder' => '-Veuillez choisir un lieu-',
                 'choice_label' => 'name',
                 'label' => 'Lieu : ',
                 'query_builder' => function (LocationRepository $locationRepository) {
@@ -83,6 +85,7 @@ class ActivityType extends AbstractType
                     return $qb;
                 }
                 ])
+
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'name',

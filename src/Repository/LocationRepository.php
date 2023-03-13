@@ -39,4 +39,18 @@ class LocationRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCityId(int $cityId)
+    {
+
+        $qb = $this->createQueryBuilder('l');
+
+        $qb
+            ->andWhere('l.city = :cityId')
+            ->setParameter('cityId', $cityId);
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+
+    }
 }
