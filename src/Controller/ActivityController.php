@@ -81,7 +81,7 @@ class ActivityController extends AbstractController
             $activity = new Activity();
         }
 
-        if ($request->getPathInfo() == $pathUpdate && $user != $activity->getUser()) {
+        if ($request->getPathInfo() == $pathUpdate && $user !== $activity->getUser()) {
 
             return $this->redirectToRoute('activity_show', ['id' => $id]);
 
