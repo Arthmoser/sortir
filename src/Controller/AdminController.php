@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use function PHPUnit\Framework\throwException;
 
 
 #[Route('/admin', name: 'admin_')]
@@ -68,30 +66,58 @@ class AdminController extends AbstractController
     #[Route('/campus/{id}', name: 'update')]
     public function list(CampusRepository $campusRepository, Request $request, int $id = 0): Response
     {
-        $pathCampus = '/admin/campus';
-        $pathUpdate = '/admin/campus/' . $id;
-
-//        if ($request->getPathInfo() == $pathAdd) {
-//        }
         $campus = new Campus();
+        $campus2 = new Campus();
+        $isUpdate = false;
+        $campuses = $campusRepository->findBy([], ['name' => 'ASC']);
 
-        $campusForm = $this->createForm(CampusType::class, $campus);
-
-        $campusForm->handleRequest($request);
-
-        if ($campusForm->isSubmitted()) {//TODO isValid condition
-        dump($campus);
-            $campusRepository->save($campus, true);
-            $this->addFlash("success", "campus ajouter ! ");
-
-            return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
-
+        foreach ($campuses as $camp)
+        {
+            if ($camp->getId() == $id)
+            {
+                $campus2 = $camp;
+            }
         }
 
-        $campuses = $campusRepository->findBy([], ['name' => 'ASC']);
+        $campusForm = $this->createForm(CampusType::class, $campus);
+        $campusForm2 = $this->createForm(CampusType::class, $campus2);
+        $campusForm->handleRequest($request);
+        $campusForm2->handleRequest($request);
+
+
+        if ($request->getPathInfo() == '/admin/campus/' . $id && !$campusForm2->isSubmitted()) {
+            $isUpdate = true;
+//            $this->entityManager = $entityManager;
+            return $this->render('admin/campus/list.html.twig', [
+                'campuses' => $campuses,
+                'campusForm' => $campusForm->createView(),
+                'campusForm2' => $campusForm2->createView(),
+                'isUpdate' => $isUpdate,
+                'id' => $id
+            ]);
+        }
+
+
+        if ($campusForm2->isSubmitted()) {//TODO isValid condition
+            dump($campus2);
+            $campusRepository->save($campus2, true);
+            $this->addFlash("success", "campus modifié ! ");
+            $campus2 = $campusForm->getData();
+            return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
+        }
+
+        if ($campusForm->isSubmitted()) {//TODO isValid condition
+            dump($campus);
+            $campusRepository->save($campus, true);
+            $this->addFlash("success", "campus ajouter ! ");
+            $campus = $campusForm->getData();
+            return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
+        }
+
         return $this->render('admin/campus/list.html.twig', [
             'campuses' => $campuses,
-            'campusForm' => $campusForm->createView()
+            'campusForm' => $campusForm->createView(),
+            'isUpdate' => $isUpdate
         ]);
     }
 
@@ -112,3 +138,31 @@ class AdminController extends AbstractController
     }
 
 }
+
+//public function editAction(Request $request, $id)
+//{
+//    // Récupère l'objet à modifier depuis la base de données
+//    $objet = $this->getDoctrine()->getRepository(Objet::class)->find($id);
+//
+//    // Crée le formulaire de modification
+//    $form = $this->createForm(ObjetType::class, $objet);
+//
+//    // Traite la soumission du formulaire
+//    $form->handleRequest($request);
+//
+//    // Vérifie si le formulaire a été soumis et est valide
+//    if ($form->isSubmitted() && $form->isValid()) {
+//        // Enregistre l'objet modifié dans la base de données
+//        $entityManager = $this->getDoctrine()->getManager();
+//        $entityManager->persist($objet);
+//        $entityManager->flush();
+//
+//        // Redirige l'utilisateur vers la page d'affichage de l'objet modifié
+//        return $this->redirectToRoute('objet_show', ['id' => $objet->getId()]);
+//    }
+//
+//    // Affiche le formulaire de modification
+//    return $this->render('objet/edit.html.twig', [
+//        'objet' => $objet,
+//        'form' => $form->createView(),
+//    ]);
