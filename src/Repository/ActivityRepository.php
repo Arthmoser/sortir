@@ -56,6 +56,7 @@ class ActivityRepository extends ServiceEntityRepository
         $qb
             ->andWhere('a.startingDateTime > :val')
             ->setParameter('val', $oneMonthBeforeDate)
+            ->addOrderBy('a.startingDateTime', 'DESC')
             ->leftJoin('a.status', 'sta')
             ->leftJoin('a.location', 'loc')
             ->leftJoin('a.campus', 'cam')
@@ -133,8 +134,6 @@ class ActivityRepository extends ServiceEntityRepository
 
     public function filterActivities(FilterModel $form, User $user)
     {
-
-
         $qb = $this->createQueryBuilder("a");
 
         if ($form->getCampus())

@@ -325,6 +325,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setProfilePictureAtValue(): void
     {
         $this->setProfilePicture('profilePicture.png');
+        $this->setIsAllowed(true);
     }
 
 }

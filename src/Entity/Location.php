@@ -5,29 +5,37 @@ namespace App\Entity;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
 {
 
-
+    #[Groups("location_api")]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups("location_api")]
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
+    #[Groups("location_api")]
     #[ORM\Column(length: 255)]
     private ?string $street = null;
 
+    #[Groups("location_api")]
     #[ORM\Column(nullable: true)]
     private ?float $latitude = null;
 
+    #[Groups("location_api")]
     #[ORM\Column(nullable: true)]
     private ?float $longitude = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
@@ -35,6 +43,7 @@ class Location
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Activity::class)]
     private Collection $activities;
+
 
     public function __construct()
     {

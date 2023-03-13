@@ -6,17 +6,23 @@
 <div class="content2">
     <h1>Création utilisateur</h1>
 
+    {{ form_start(registrationForm) }}
+
+    <div>
         {{ form_row(registrationForm.nickname) }}
         {{ form_row(registrationForm.lastname) }}
         {{ form_row(registrationForm.firstname) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.phone) }}
+    </div>
+    <div>
         {{ form_row(registrationForm.password) }}
-        {{ form_row(registrationForm.isAllowed) }}
         {{ form_row(registrationForm.campus) }}
         {{ form_row(registrationForm.roles) }}
-
-
+    </div>
         <button type="submit" class="btn">Inscription</button>
+
+    {{ form_end(registrationForm) }}
+
 </div>
 {% endblock %}

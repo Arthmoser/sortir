@@ -2,6 +2,26 @@
 
 {% block title %}{{ parent() }} | Activités {% endblock %}
 
+{% block js %}
+    <script>
+
+        let selectCity = document.getElementById('activity_city')
+        let selectLocation = document.getElementById('activity_location')
+
+
+        selectCity.addEventListener('change', function() {
+            let cityId =  selectCity.value;
+            // console.log(cityId);
+        })
+
+
+
+    </script>
+
+{% endblock %}
+
+
+
 {% block body %}
     <h2>
         {% if activity.id == null %}
@@ -22,11 +42,6 @@
     <div>{{ form_row(activityForm.overview) }}</div>
     <div>{{ form_row((activityForm.campus)) }}</div>
     <div>{{ form_row((activityForm.city)) }}</div>
-
-
-        {% block js%}
-        {#affichage dynamique : au sélect de ma ville, affiche les lieux qui lui appartiennent#}
-        {%  endblock %}
 
         <div>{{ form_row(activityForm.location) }}</div>
 

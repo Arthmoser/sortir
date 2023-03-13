@@ -77,6 +77,7 @@ class UpdateStatus
                 $activityRepository->save($activity, true);
             }
         }
-
     }
+
+
 }
