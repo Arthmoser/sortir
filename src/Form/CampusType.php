@@ -16,6 +16,7 @@ class CampusType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Ajouter un campus'
             ])
+
         ;
     }
 
