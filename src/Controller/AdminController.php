@@ -30,7 +30,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request                    $request, UserPasswordHasherInterface $userPasswordHasher,
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
                              UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -50,13 +50,9 @@ class AdminController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            $this->addFlash('success', 'L\'utilisateur a bien été rentré !');
+
         }
 
         return $this->render('registration/register.html.twig', [

@@ -102,8 +102,8 @@
                                 <a href="{{ path('activity_register', {'id': activity.id}) }}">S'inscrire</a>
                             {% endif %}
                         {% endif %}
-                        {% if is_granted('ROLE_ADMIN') and activity.status.type == 'Ouverte' and (activity.users | length) == 0 %}
-                            <a href="{{ path('activity_remove', {'id': activity.id}) }}">Annuler</a>
+                        {% if activity.user.id == app.user.id and activity.status.type == 'Ouverte' and (activity.users | length) == 0 %}
+                            <a href="{{ path('activity_canceled', {'id': activity.id}) }}">Annuler</a>
                         {% endif %}
                     </td>
                 </tr>

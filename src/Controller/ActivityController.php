@@ -23,6 +23,10 @@ class ActivityController extends AbstractController
     public function index(StatusRepository $statusRepository, ActivityRepository $activityRepository, UpdateStatus $updateStatus, Request $request): Response
     {
         $currentDate = new \DateTime();
+
+        /**
+         * @var User $user
+         */
         $user = $this->getUser();
         $activities = $activityRepository->findNonArchivedActivity($currentDate);
 
@@ -69,7 +73,7 @@ class ActivityController extends AbstractController
 
             $activity = $activityRepository->find($id);
 
-            if ($user != $activity->getUser()) {
+            if ($user !== $activity->getUser()) {
                 return $this->redirectToRoute('activity_show', ['id' => $id]);
             }
 
@@ -121,7 +125,7 @@ class ActivityController extends AbstractController
         ]);
     }
 
-//function which allows user to see an activity's informations
+    //function which allows user to see an activity's informations
     #[Route('/activity/show/{id}', name: 'show', requirements: ['id' => '\d+'])]
     public function showActivity(
         int $id, ActivityRepository $activityRepository): Response
@@ -208,6 +212,39 @@ class ActivityController extends AbstractController
 
         $this->addFlash($messageType, $flashMessage);
         return $this->redirectToRoute('activity_home');
+    }
+
+    #[Route('/canceled/{id}', name: 'canceled')]
+    public function canceled($id, ActivityRepository $activityRepository, StatusRepository $statusRepository) {
+
+        $statusCodeCanceled = 'ANN';
+        $messageType = 'error';
+        $flashMessage = '';
+
+        $activity = $activityRepository->find($id);
+
+       if ($activity)
+       {
+            $statuses = $statusRepository->findAll();
+           foreach ($statuses as $status)
+           {
+               if ($status->getStatusCode() == $statusCodeCanceled)
+               {
+                   $activity->setStatus($status);
+                   $activityRepository->save($activity, true);
+                   $flashMessage = 'L\'activité est bien annulé';
+                   $messageType = 'success';
+                   break;
+               }
+           }
+       } else
+       {
+           $flashMessage = 'Une erreur est survenue pendant le processus d\'annulation';
+       }
+
+        $this->addFlash($messageType, $flashMessage);
+        return $this->redirectToRoute('activity_home');
+
     }
 
 }

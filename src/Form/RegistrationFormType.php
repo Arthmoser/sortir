@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -95,6 +97,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
 
+            ->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
+                $user = $event->getData();
+                $form = $event->getForm()->getConfig()->getRequestHandler();
+//                dd($form);
+            })
+
             ->add('roles', ChoiceType::class, [
             'label'    => 'Niveau d\'acréditation : ',
             'multiple' => true,
@@ -104,7 +112,6 @@ class RegistrationFormType extends AbstractType
                 'User' => 'ROLE_USER'
             ],
             ]);
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

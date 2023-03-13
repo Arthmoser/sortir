@@ -12,8 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FilterType extends AbstractType
@@ -26,7 +24,7 @@ class FilterType extends AbstractType
                 'choice_label' => function ($campus) {
                 return $campus->getName();
                 },
-                'empty_data' => null,
+                'empty_data' => '',
                 'label' => 'Campus : ',
                 'query_builder' => function (CampusRepository $campusRepository) {
                     $qb = $campusRepository->createQueryBuilder("c");
