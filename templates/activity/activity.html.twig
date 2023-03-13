@@ -57,11 +57,17 @@
     <div>{{ form_row((activityForm.campus)) }}</div>
     <div>{{ form_row((activityForm.city)) }}</div>
 
+
         <div>{{ form_row(activityForm.location) }}</div>
 
         <div>
-            <a class="" href="{{ path('location_add') }}"
-               onclick="return confirm('Voulez-vous ajouter un nouveau lieu ?')">Ajouter un lieu</a>
+            <a class="" href="
+            {% if activity.id == null %}
+                {{ path('location_add') }}
+            {% else %}
+                {{ path('location_update_add', {'id': activity.id}) }}
+            {% endif %}
+            " onclick="return confirm('Voulez-vous ajouter un nouveau lieu ?')">Ajouter un lieu</a>
         </div>
 
     <a href="{{ path('activity_home') }}">Annuler</a>
