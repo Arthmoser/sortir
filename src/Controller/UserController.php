@@ -70,10 +70,10 @@ class UserController extends AbstractController
                         );
                     }
 
-                    dump($user);
-
                     $entityManager->persist($user);
                     $entityManager->flush();
+
+                    $this->addFlash('success', 'Votre profil a bien été modifié !');
 
                 }
 

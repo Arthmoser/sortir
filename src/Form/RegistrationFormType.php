@@ -61,7 +61,6 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-
             ])
 
             ->add('isAllowed', ChoiceType::class, [

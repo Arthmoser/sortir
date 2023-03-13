@@ -21,6 +21,7 @@ class FilterType extends AbstractType
         $builder
             ->add('campus', EntityType::class,[
                 'class' => Campus::class,
+                'placeholder' => '-Tous les campus-',
                 'choice_label' => function ($campus) {
                 return $campus->getName();
                 },

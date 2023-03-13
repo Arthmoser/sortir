@@ -134,22 +134,13 @@ class ActivityRepository extends ServiceEntityRepository
 
     public function filterActivities(FilterModel $form, User $user)
     {
-        $allCampusName = '-Tous les campus-';
-
         $qb = $this->createQueryBuilder("a");
 
         if ($form->getCampus())
         {
-            if ($form->getCampus()->getName() == $allCampusName)
-            {
-
-            }
-            else
-            {
             $qb
                 ->andWhere("a.campus = :campusid")
                 ->setParameter("campusid", $form->getCampus()->getId());
-            }
         }
 
         if ($form->getSearch())
