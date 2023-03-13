@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Repository\ResetPasswordRequestRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,8 +18,12 @@ class ResetPasswordRequestFormType extends AbstractType
                 'attr' => ['autocomplete' => 'email'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Merci de renseigner vtre adresse mail',
+                        'message' => 'Merci de renseigner votre adresse mail',
                     ]),
+//                'query_builder'=>function(ResetPasswordRequestRepository $resetPasswordRequestRepository){
+//                $qb = $resetPasswordRequestRepository->createQueryBuilder("r");
+//                return $qb;
+//                }
                 ],
             ])
         ;

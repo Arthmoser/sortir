@@ -17,10 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class LocationController extends AbstractController
 {
     #[Route('/add', name: 'add')]
+    #[Route('/update/add/{id}', name: 'update_add')]
     public function addLocation(
         LocationRepository $locationRepository,
-        Request $request): Response
+        Request $request, int $id = 0): Response
     {
+
+        $updatePath = '/location/update/add/' . $id;
 
         $location = new Location();
 
@@ -42,8 +45,18 @@ class LocationController extends AbstractController
             $locationRepository->save($location, true);
             $this->addFlash("success", "Lieu ajouté !");
 
+            dump($request->getPathInfo());
+            dump($updatePath);
 
-            return $this->redirectToRoute('activity_add', ['id' => $location->getCity()->getId()]);
+            if ($request->getPathInfo() == $updatePath)
+            {
+                dump($id);
+                return $this->redirectToRoute('activity_update', ['id' => $id]);
+            }
+            else
+            {
+                return $this->redirectToRoute('activity_add', ['id' => $location->getCity()->getId()]);
+            }
         }
    //     dump($location);
 
