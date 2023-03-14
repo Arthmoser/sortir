@@ -30,15 +30,12 @@ class LocationController extends AbstractController
         $locationForm = $this->createForm(LocationType::class, $location);
         $locationForm->handleRequest($request);
 
-//        dump($location);
         if ($locationForm->isSubmitted() && $locationForm->isValid()) {
-           // dump($location);
+
 
             $location
 
-//                ->setCity($locationForm->get('city')->getData());
-//                ->setName($locationForm->get('name')->getData())
-//                ->setStreet($locationForm->get('street')->getData())
+
                 ->setLongitude(floatval($locationForm->get('longitude')->getData()))
                 ->setLatitude(floatval($locationForm->get('latitude')->getData()));
 
