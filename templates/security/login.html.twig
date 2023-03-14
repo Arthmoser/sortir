@@ -30,12 +30,13 @@
             <label>
                 <input type="checkbox" name="_remember_me"> Se souvenir de moi
             </label>
+            <a href="{{ path('app_forgot_password_request') }}">J'ai oublié mon mot de passe</a>
         </div>
 
     <button type="submit">
         Se connecter
     </button>
 
-    <a href="{{ path('app_forgot_password_request') }}">J'ai oublié mon mot de passe</a>
+
 </form>
 {% endblock %}
