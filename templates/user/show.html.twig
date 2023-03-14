@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-
-{% endblock %}
-
+{% block title %} {{ parent() }} | Mon profil{% endblock %}
 
 {% block body %}
 
@@ -31,30 +28,35 @@
                             {{ form_row(registrationForm.phone) }}
                             {{ form_row(registrationForm.email) }}
                         </div>
-                        <div>
+
+{#                        <div>#}
                             {{ form_row(registrationForm.password, {required: 'false'}) }}
-                            {{ form_row(registrationForm.campus) }}
-                            {{ form_row(registrationForm.profilePicture) }}
-                                {% if is_granted("ROLE_ADMIN") %}
-                                    {{ form_row(registrationForm.roles) }}
-                                    {{ form_row(registrationForm.isAllowed) }}
-                                {% endif %}
-                        </div>
-                        <button type="submit" class="btn">Enregistrer</button>
+{#                            {{ form_row(registrationForm.campus) }}#}
+                            {{ form_row(registrationForm.profilePicture, {required: 'false'}) }}
+
+{#                                {% if is_granted("ROLE_ADMIN") %}#}
+{#                                    {{ form_row(registrationForm.roles) }}#}
+{#                                    {{ form_row(registrationForm.isAllowed) }}#}
+{#                                {% endif %}#}
+
+{#                        </div>#}
+                        <button type="submit" class="btn">Enregistrer les modifications</button>
+
                         {{ form_end(registrationForm) }}
+                        {% endif %}
                     </div>
                 </div>
 
-            {% else %}
-                <div class="txt">
-                    <h1>{{ user.nickname }}</h1>
-                    <div> Prénom : {{ user.firstname }}</div>
-                    <div> Nom : {{ user.lastname }}</div>
-                    <div> Téléphone : {{ user.phone }}</div>
-                    <div> Email : {{ user.email }}</div>
-                    <div> Campus : {{ user.campus.name }}</div>
-                </div>
-            {% endif %}
+{#            {% else %}#}
+{#                <div class="txt">#}
+{#                    <h1>{{ user.nickname }}</h1>#}
+{#                    <div> Prénom : {{ user.firstname }}</div>#}
+{#                    <div> Nom : {{ user.lastname }}</div>#}
+{#                    <div> Téléphone : {{ user.phone }}</div>#}
+{#                    <div> Email : {{ user.email }}</div>#}
+{#                    <div> Campus : {{ user.campus.name }}</div>#}
+{#                </div>#}
+
         </div>
 
     </div>

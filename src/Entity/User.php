@@ -87,7 +87,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Activity::class, inversedBy: 'users')]
     private Collection $activities;
 
-    #[ORM\Column(length: 50, nullable: false)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $profilePicture = null;
 
     public function __construct()

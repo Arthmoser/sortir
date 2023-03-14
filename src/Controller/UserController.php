@@ -32,7 +32,7 @@ class UserController extends AbstractController
 
         if(!$user){
             //throws 404 if user doesn't exist
-            throw $this->createNotFoundException("Oops ! Utilisateur inconnu !");
+            throw $this->createNotFoundException("Utilisateur inconnu !");
         }
 
         $form = $this->createForm(RegistrationFormType::class, $user);

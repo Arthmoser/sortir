@@ -90,7 +90,6 @@ class RegistrationFormType extends AbstractType
                     new Image([
                             "maxSize" => '5000k',
                             "mimeTypesMessage" => "Image format not allowed !",
-
                         ]
                     )
                 ]

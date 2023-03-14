@@ -38,6 +38,7 @@
                 <tr>
                     <td>Pseudo</td>
                     <td>Nom</td>
+                    <td>Actions</td>
                 </tr>
                 </thead>
 
@@ -47,6 +48,13 @@
                     <tr>
                         <td>{{ user.nickname }}</td>
                         <td> {{ user.lastname }}</td>
+
+                        {% if (user == app.user) %}
+                        <td><a class="" href="{{ path('activity_unregister', {'id': activity.id}) }}">Se désister</a></td>
+                            {% else %}
+                                <td><a class="" href="{{ path('activity_register', {'id': activity.id}) }}">S'inscrire</a></td>
+                        {% endif%}
+
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -54,18 +62,11 @@
         </div>
     {% else %}
         <div>Personne n'est inscrit à cette sortie</div>
+
     {% endif %}
 
+    <a class="" href="{{ path('activity_home') }}">Retour à la liste des sorties</a>
 
-{#    <div>#}
-
-{#        {% if activity.id != null %}#}
-
-{#            <a class="" href="{{ path('activity_remove', {'id': activity.id})}}"#}
-{#               onclick="return confirm('Etes-vous sûr de de vouloir supprimer cette sortie ?')">Supprimer cette sortie</a>#}
-
-{#        {% endif %}#}
-{#    </div>#}
 
 {% endblock %}
 

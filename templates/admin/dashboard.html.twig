@@ -1,7 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Dashboard{% endblock %}
+{% block title %}{{ parent() }} | Page administrateur{% endblock %}
 
 {% block body %}
 
+    <h1>Bonjour {{ controller_name }}, </h1>
+
+    <h2>Que souhaitez-vous faire ?</h2>
+
+
+    <a href="{{ path('admin_register') }}">Gérer les utilisateurs</a>
+    <br>
+    <a href="{{ path('admin_campus_list') }}">Gérer les campus</a>
+    <br>
+{#    <a href="{{ path('') }}">Gérer les activités</a>#}
+    <br>
+    <a href="{{ path('activity_home') }}">Retourner à la page d'accueil</a>
 {% endblock %}
