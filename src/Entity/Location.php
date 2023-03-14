@@ -41,7 +41,7 @@ class Location
     #[ORM\JoinColumn(nullable: false)]
     private ?City $city = null;
 
-    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Activity::class, cascade: ["remove", "persist"])]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Activity::class)]
     private Collection $activities;
 
 

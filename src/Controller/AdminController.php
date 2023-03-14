@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Campus;
+use App\Entity\City;
 use App\Entity\User;
 use App\Form\CampusType;
+use App\Form\CityType;
 use App\Form\RegistrationFormType;
 use App\Repository\CampusRepository;
+use App\Repository\CityRepository;
 use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,7 +65,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/campus', name: 'campus_list')]
-    #[Route('/campus/{id}', name: 'update')]
+    #[Route('/campus/{id}', name: 'campus_update')]
     public function list(CampusRepository $campusRepository, Request $request, int $id = 0): Response
     {
         $campus = new Campus();
@@ -121,7 +124,7 @@ class AdminController extends AbstractController
     }
 
 
-    #[Route('/campus/remove/{id}', name: 'remove')]
+    #[Route('/campus/remove/{id}', name: 'campus_remove')]
     public function removeCampus(int $id, CampusRepository $campusRepository): Response
     {
         $campuses = $campusRepository->find($id);
@@ -134,6 +137,44 @@ class AdminController extends AbstractController
         }
         return $this->redirectToRoute('admin_campus_list');
 
+    }
+
+    #[Route('/display/{id}', name: 'city_display')]
+    public function displayCity(CityRepository $cityRepository, Request $request, int $id = 0): Response
+    {
+        $city = new City();
+
+        $cities = $cityRepository->findAll();
+        $cityForm = $this->createForm(CityType::class, $city);
+        $cityForm->handleRequest($request);
+        if($cityForm->isSubmitted() && $cityForm->isValid()){
+            dump($city);
+
+            $cityRepository->save($city, true );
+            $this->addFlash('success', 'Ville ajoutée ! ');
+
+            return $this->redirectToRoute('city_display', ['id' => $id]);
+        }
+        return $this->render('city/city.html.twig', [
+            'cityForm' => $cityForm->createView(),
+            'cities' => $cities
+        ]);
+    }
+
+
+    #[Route('/remove/{id}', name : 'city_remove')]
+    public function removeCity(int $id, CityRepository $cityRepository, EntityManagerInterface $entityManager) : Response
+    {
+        $citie = $cityRepository->find($id);
+        $citie = $entityManager->getRepository(City::class)->find($id);
+        try {
+            $entityManager->remove($citie);
+            $entityManager->flush();
+            $this->addFlash("warning", "La ville a été supprimé ! ");
+        }catch (\Exception $e) {
+            $this->addFlash("error", 'Cette ville ne peut pas être supprimé ! ');
+        }
+        return $this->redirectToRoute('city_display');
     }
 
 }
