@@ -29,7 +29,8 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('nickname', TextType::class, [
-                'label' => 'Pseudo : '
+                'label' => 'Pseudo : ',
+                'required' => false
             ])
             ->add('lastname',TextType::class, [
                 'label' => 'Nom : '
@@ -46,17 +47,17 @@ class RegistrationFormType extends AbstractType
 
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Attention le mot de passe doit être identique !',
+                'invalid_message' => 'Attention les deux mots de passe doivent être identiques !',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => false,
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'first_options'  => ['label' => 'Mot de passe : '],
-                'second_options' => ['label' => 'confirmation : '],
+                'second_options' => ['label' => 'Confirmation : '],
                 'constraints' => [
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
+                        'minMessage' => 'Votre mot de passe doit avoir au moins {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -95,14 +96,8 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
 
-            ->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) {
-                $user = $event->getData();
-                $form = $event->getForm()->getConfig()->getRequestHandler();
-//                dd($form);
-            })
-
             ->add('roles', ChoiceType::class, [
-            'label'    => 'Niveau d\'acréditation : ',
+            'label'    => 'Niveau d\'accréditation : ',
             'multiple' => true,
             'expanded' => false,
             'choices' => [
