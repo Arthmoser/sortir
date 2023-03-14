@@ -64,7 +64,7 @@ td {
     font-family: 'Roboto', sans-serif;
 }
 
-h1 {
+h1, h2{
     font-family: 'Rampart One', cursive;
     color: #439A97;
     font-size: 3em;

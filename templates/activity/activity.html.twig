@@ -27,6 +27,8 @@
                 .then((resp) => resp.json())
                 .then(function (resp) {
                     let locations = resp;
+                    console.log(selectLocation)
+                    console.log(locations)
                     selectLocation.innerHTML = ''
                     let placeHolder = createNode('option');
                     placeHolder.innerHTML = '-Veuillez choisir un lieu-'
@@ -60,30 +62,37 @@
                 const url2 = `http://localhost/sortir/public/api/location/${locationId}`;
 
                 fetch(url2)
-                    .then((resp) => resp.json())
-                    .then(function (resp) {
-                        let locationDetails = resp;
+                    .then((resp2) => resp2.json())
+                    .then(function (resp2) {
+                        let locationDetails = resp2;
                         console.log(divLocationDetail)
                         console.log(locationDetails)
                         divLocationDetail.innerHTML = ""
-                        return locationDetails.map(function (location) {
                             let pStreet = createNode('p');
-                          // let pLongitude = createNode('p');
-                          //   let pLatitude = createNode('p');
-                            pStreet.innerHTML = 'Rue : ' + location.street
-                            // pLongitude.innerHTML = 'Longitude : ' + location.longitude
-                            // pLatitude.innerHTML = 'Latitude : ' + location.latitude
+                            let pLongitude = createNode('p');
+                            let pLatitude = createNode('p');
+                            // pStreet.innerHTML = location.street
+                            pStreet.innerHTML = 'Rue : ' + locationDetails.street + '<br>'
+                            pLongitude.innerHTML = 'Longitude : ' + locationDetails.longitude + '<br>'
+                            pLatitude.innerHTML = 'Latitude : ' + locationDetails.latitude + '<br>'
 
                             append(divLocationDetail, pStreet);
-                            // append(divLocationDetail, pLongitude);
-                            // append(divLocationDetail, pLatitude);
+                            append(divLocationDetail, pLongitude);
+                            append(divLocationDetail, pLatitude);
                         })
-                    })
+
                     .catch(function (error) {
                         console.log(error);
                     });
             }
         })
+
+        for (let key in places) {
+            let option = document.createElement('option')
+            option.value = places[key].id
+            option.textContent = places[key].nom
+            placeSelect.appendChild(option)                }
+
     </script>
 
 {% endblock %}
@@ -114,9 +123,7 @@
             <select id="activity_location"></select>
         </div>
 
-        <div id="location_detail">
-            <p>Prout</p>
-        </div>
+        <div id="location_detail"></div>
 
         <div>
             <a class="" href="
