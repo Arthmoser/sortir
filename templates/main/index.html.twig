@@ -69,10 +69,18 @@
             </tr>
             </thead>
 
+            {% set userRole = '' %}
+            {% set adminRole = 'ROLE_ADMIN' %}
+
+            {% for role in  app.user.roles %}
+                {% set userRole = role %}
+            {% endfor %}
+
 
             <tbody class="down">
 
             {% for activity in activities %}
+
                 <tr class="activityLine">
                     <td>{{ activity.name }}</td>
                     <td>{{ activity.startingDateTime  | date('d/m/Y H:i') }}</td>
@@ -102,7 +110,7 @@
                                 <a href="{{ path('activity_register', {'id': activity.id}) }}">S'inscrire</a>
                             {% endif %}
                         {% endif %}
-                        {% if activity.user.id == app.user.id and activity.status.type == 'Ouverte' and (activity.users | length) == 0 %}
+                        {% if (activity.user.id == app.user.id or userRole == adminRole) and activity.status.type == 'Ouverte' and (activity.users | length) == 0 %}
                             <a href="{{ path('activity_canceled', {'id': activity.id}) }}">Annuler</a>
                         {% endif %}
                     </td>
