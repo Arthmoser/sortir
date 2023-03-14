@@ -15,9 +15,7 @@ class LocationController extends AbstractController
     public function retrieveByCityId(int $id, LocationRepository $locationRepository): Response
     {
         $locations = $locationRepository->findByCityId( $id);
-//        dump($locations);
-//        $locations = json_encode($locations);
-//        dd($locations);
+
         return $this->json($locations, 200, [], ['groups' => 'location_api']);
     }
 
