@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}  {% endblock %}
+{% block title %} {{ parent()}} | Informations sortie {% endblock %}
 
 {% block body %}
 
-    <h2>Informations concernant la sortie</h2>
+    <h1>Informations concernant la sortie</h1>
 
     <div>
         <h2>Nom de la sortie : {{ activity.name }}</h2>
@@ -51,8 +51,6 @@
 
                         {% if (user == app.user) %}
                         <td><a class="" href="{{ path('activity_unregister', {'id': activity.id}) }}">Se désister</a></td>
-                            {% else %}
-                                <td><a class="" href="{{ path('activity_register', {'id': activity.id}) }}">S'inscrire</a></td>
                         {% endif%}
 
                     </tr>
@@ -64,6 +62,14 @@
         <div>Personne n'est inscrit à cette sortie</div>
 
     {% endif %}
+
+    {% for user in activity.users %}
+
+        {% if (app.user != user) %}
+            <td><a class="" href="{{ path('activity_register', {'id': activity.id}) }}">S'inscrire</a></td>
+        {% endif%}
+
+    {% endfor %}
 
     <a class="" href="{{ path('activity_home') }}">Retour à la liste des sorties</a>
 

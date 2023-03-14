@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\CampusType;
 use App\Form\RegistrationFormType;
 use App\Repository\CampusRepository;
+use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +31,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
+    public function register(Request                    $request, UserPasswordHasherInterface $userPasswordHasher,
                              UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -72,10 +73,8 @@ class AdminController extends AbstractController
         $isUpdate = false;
         $campuses = $campusRepository->findBy([], ['name' => 'ASC']);
 
-        foreach ($campuses as $camp)
-        {
-            if ($camp->getId() == $id)
-            {
+        foreach ($campuses as $camp) {
+            if ($camp->getId() == $id) {
                 $campus2 = $camp;
             }
         }
@@ -138,7 +137,7 @@ class AdminController extends AbstractController
 
     }
 
-}
+
 
 //public function editAction(Request $request, $id)
 //{
@@ -167,3 +166,35 @@ class AdminController extends AbstractController
 //        'objet' => $objet,
 //        'form' => $form->createView(),
 //    ]);
+
+    #[Route('/user', name: 'userList')]
+    public function userList(UserRepository $userRepository): Response
+    {
+//        $users = $userRepository->findAll();
+
+        $users = $userRepository->findBy([], ['lastname' => 'ASC']);
+
+
+//        foreach ($users as $user)
+//        {
+//            if ($camp->getId() == $id)
+//            {
+//                $campus2 = $camp;
+//            }
+//        }
+//
+//        $campusForm = $this->createForm(CampusType::class, $campus);
+//        $campusForm2 = $this->createForm(CampusType::class, $campus2);
+//        $campusForm->handleRequest($request);
+//        $campusForm2->handleRequest($request);
+//
+//
+//        if ($request->getPathInfo() == '/admin/campus/' . $id && !$campusForm2->isSubmitted()) {
+//            $isUpdate = true;
+////            $this->entityManager = $entityManager;
+
+        return $this->render('admin/user/userList.html.twig', [
+            'users' => $users
+        ]);
+    }
+}

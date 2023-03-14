@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Page administrateur{% endblock %}
+{% block title %}{{ parent() }} | Page administrateur {% endblock %}
 
 {% block body %}
 
-    <h1>Bonjour ! </h1>
+    <h1>Bonjour {{ app.user.nickname }} ! </h1>
 
-    <h2>Que souhaitez-vous faire ?</h2>
+    <h2>En tant qu'administrateur, que souhaitez-vous faire ?</h2>
 
 
-    <a href="{{ path('admin_register') }}">Gérer les utilisateurs</a>
+    <a href="{{ path('admin_userList') }}">Gérer les utilisateurs</a>
     <br>
     <a href="{{ path('admin_campus_list') }}">Gérer les campus</a>
     <br>

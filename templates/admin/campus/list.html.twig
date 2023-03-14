@@ -32,7 +32,7 @@
                         <a class="link_button" href="{{ path('admin_update', {'id' : campus.id}) }}"
                            onclick="return confirm('Changer le nom du campus : {{ campus.name }}')">Modifier</a>
                         <a class="link_button" href="{{ path('admin_remove', {'id': campus.id}) }}"
-                           onclick="return confirm('Etes vous sur de vouloir supprimer le campus : {{ campus.name }}')">Supprimer</a>
+                           onclick="return confirm('Etes vous sur de vouloir supprimer le campus : {{ campus.name }} ?')">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -44,6 +44,8 @@
                 <td>
                     <button type="submit">Ajouter</button>
                     {{ form_end(campusForm.name) }}
+
+                    <a href="{{ path('admin_campus_list') }}">Annuler</a>
                 </td>
             </tr>
             </tbody>
