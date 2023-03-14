@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Campus{% endblock %}
+
+{% block body %}
+
+    <div class="content1">
+        <h1>Gérer les Villes</h1>
+        <table>
+            <thead>
+            <tr class="activityLine">
+                <td>Villes</td>
+                <td>Code Postale</td>
+                <td>Actions</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for city in cities %}
+                <tr>
+                    <td>{{ city.name }}</td>
+                    <td>{{ city.zipCode }}</td>
+                    <td>
+
+                        <a class="link_button" href="{{ path('city_remove', {'id': city.id}) }}"
+                           onclick="return confirm('Changer le nom du campus : {{ city.name }}')">Supprimer</a>
+{#                        <a class="link_button" href="{{ path('admin_remove', {'id': campus.id}) }}"#}
+{#                           onclick="return confirm('Etes vous sur de vouloir supprimer le campus : {{ campus.name }}')#}
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

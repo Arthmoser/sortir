@@ -137,31 +137,3 @@ class AdminController extends AbstractController
     }
 
 }
-
-//public function editAction(Request $request, $id)
-//{
-//    // Récupère l'objet à modifier depuis la base de données
-//    $objet = $this->getDoctrine()->getRepository(Objet::class)->find($id);
-//
-//    // Crée le formulaire de modification
-//    $form = $this->createForm(ObjetType::class, $objet);
-//
-//    // Traite la soumission du formulaire
-//    $form->handleRequest($request);
-//
-//    // Vérifie si le formulaire a été soumis et est valide
-//    if ($form->isSubmitted() && $form->isValid()) {
-//        // Enregistre l'objet modifié dans la base de données
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $entityManager->persist($objet);
-//        $entityManager->flush();
-//
-//        // Redirige l'utilisateur vers la page d'affichage de l'objet modifié
-//        return $this->redirectToRoute('objet_show', ['id' => $objet->getId()]);
-//    }
-//
-//    // Affiche le formulaire de modification
-//    return $this->render('objet/edit.html.twig', [
-//        'objet' => $objet,
-//        'form' => $form->createView(),
-//    ]);

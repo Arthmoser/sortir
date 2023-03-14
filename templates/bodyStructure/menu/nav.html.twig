@@ -3,8 +3,8 @@
         <ul>
             {% if app.user %}
                 <div class="list">
-                    <li><a href="#">Villes</a></li>
                     {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('city_display') }}">Villes</a></li>
                         <li><a href="{{ path('admin_campus_list') }}">Campus</a></li>
                         <li><a href="{{ path('admin_register') }}">Créer un profil</a></li>
                     {% endif %}

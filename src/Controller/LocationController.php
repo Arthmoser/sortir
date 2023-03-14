@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Location;
 use App\Form\LocationType;
 use App\Repository\ActivityRepository;
+use App\Repository\CityRepository;
 use App\Repository\LocationRepository;
 use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,7 @@ class LocationController extends AbstractController
     #[Route('/update/add/{id}', name: 'update_add')]
     public function addLocation(
         LocationRepository $locationRepository,
-        Request $request, int $id = 0): Response
+        Request            $request, int $id = 0): Response
     {
 
         $updatePath = '/location/update/add/' . $id;
@@ -32,7 +33,7 @@ class LocationController extends AbstractController
 
 //        dump($location);
         if ($locationForm->isSubmitted() && $locationForm->isValid()) {
-           // dump($location);
+            // dump($location);
 
             $location
 
@@ -48,32 +49,28 @@ class LocationController extends AbstractController
             dump($request->getPathInfo());
             dump($updatePath);
 
-            if ($request->getPathInfo() == $updatePath)
-            {
+            if ($request->getPathInfo() == $updatePath) {
                 dump($id);
                 return $this->redirectToRoute('activity_update', ['id' => $id]);
-            }
-            else
-            {
+            } else {
                 return $this->redirectToRoute('activity_add', ['id' => $location->getCity()->getId()]);
             }
         }
-   //     dump($location);
+        //     dump($location);
 
-            return $this->render('location/location.html.twig', [
-                'locationForm' => $locationForm->createView()
-            ]);
+        return $this->render('location/location.html.twig', [
+            'locationForm' => $locationForm->createView()
+        ]);
 
-        }
+    }
 
     //function which allows user to see an activity's informations
     #[Route('/location/show/{id}', name: 'show', requirements: ['id' => '\d+'])]
-    public function showLocation(
-        int $id, LocationRepository $locationRepository): Response
+    public function showLocation(int $id, LocationRepository $locationRepository): Response
     {
         $location = $locationRepository->find($id);
 
-        if(!$location){
+        if (!$location) {
             throw $this->createNotFoundException("Ce lieu n'existe pas ! ");
         }
 
@@ -81,4 +78,6 @@ class LocationController extends AbstractController
             'location' => $location
         ]);
     }
+
+
 }
