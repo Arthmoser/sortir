@@ -233,14 +233,14 @@ class ActivityController extends AbstractController
                {
                    $activity->setStatus($status);
                    $activityRepository->save($activity, true);
-                   $flashMessage = 'L\'activité est bien annulé';
+                   $flashMessage = 'L\'activité est bien annulée';
                    $messageType = 'success';
                    break;
                }
            }
        } else
        {
-           $flashMessage = 'Une erreur est survenue pendant le processus d\'annulation';
+           $flashMessage = 'Une erreur est survenue pendant le processus d\'annulation !';
        }
 
         $this->addFlash($messageType, $flashMessage);

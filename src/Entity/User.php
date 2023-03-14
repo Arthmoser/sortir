@@ -23,9 +23,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[Assert\NotBlank(
-        message: "Un email est requis pour ce champ")]
+        message: 'Un email est requis pour ce champ')]
     #[Assert\Email(
-        message: 'Le mail {{ value }} ne fonctionne pas')]
+        message: 'Cette adresse {{ value }} n\'est pas valable')]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -36,7 +36,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-
+//    #[Assert\NotBlank(
+//        message: "Mot de passe requis")]
 //    #[Assert\Length(
 //        min: 8,
 //        max: 25,
@@ -45,15 +46,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 //    )]
     private ?string $password = null;
 
-
-    #[Assert\NotBlank(
-        message: "Un pseudo est requis pour ce champ")]
-    #[Assert\Length(
-        min: 8,
-        max: 25,
-        minMessage: "Minimum {{ limit }} caractères !",
-        maxMessage: "Maximum {{ limit }} caractères !"
-    )]
+//
+//    #[Assert\NotBlank(
+//        message: "Un pseudo est requis pour ce champ")]
+//    #[Assert\Length(
+//        min: 8,
+//        max: 25,
+//        minMessage: "Minimum {{ limit }} caractères !",
+//        maxMessage: "Maximum {{ limit }} caractères !"
+//    )]
     #[ORM\Column(length: 50, unique: true)]
     private ?string $nickname = null;
 
@@ -87,7 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Activity::class, inversedBy: 'users')]
     private Collection $activities;
 
-    #[ORM\Column(length: 50, nullable: false)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $profilePicture = null;
 
     public function __construct()

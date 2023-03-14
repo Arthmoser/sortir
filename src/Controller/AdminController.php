@@ -27,7 +27,9 @@ class AdminController extends AbstractController
     #[Route('/dashboard', name: 'dashboard')]
     public function index(): Response
     {
-        return $this->render('admin/dashboard.html.twig');
+        return $this->render('admin/dashboard.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
     }
 
     #[Route('/register', name: 'register')]
@@ -55,7 +57,7 @@ class AdminController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'L\'utilisateur a bien été rentré !');
+            $this->addFlash('success', 'L\'utilisateur a bien été créé !');
 
         }
 
@@ -103,7 +105,7 @@ class AdminController extends AbstractController
         if ($campusForm2->isSubmitted()) {//TODO isValid condition
             dump($campus2);
             $campusRepository->save($campus2, true);
-            $this->addFlash("success", "campus modifié ! ");
+            $this->addFlash("success", "Le campus a bien été modifié ! ");
             $campus2 = $campusForm->getData();
             return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
         }
@@ -111,7 +113,7 @@ class AdminController extends AbstractController
         if ($campusForm->isSubmitted()) {//TODO isValid condition
             dump($campus);
             $campusRepository->save($campus, true);
-            $this->addFlash("success", "campus ajouter ! ");
+            $this->addFlash("success", "Le campus a bien été ajouté ! ");
             $campus = $campusForm->getData();
             return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
         }
@@ -131,7 +133,7 @@ class AdminController extends AbstractController
 
         if ($campuses) {
             $campusRepository->remove($campuses, true);
-            $this->addFlash("warning", "Le campus a été supprimé ! ");
+            $this->addFlash("warning", "Le campus a bien été supprimé ! ");
         } else {
             throw $this->createNotFoundException("Ce campus ne peut pas être supprimé !");
         }

@@ -40,7 +40,7 @@ class LocationController extends AbstractController
                 ->setLatitude(floatval($locationForm->get('latitude')->getData()));
 
             $locationRepository->save($location, true);
-            $this->addFlash("success", "Lieu ajouté !");
+            $this->addFlash("success", "Le lieu a bien été ajouté !");
 
             dump($request->getPathInfo());
             dump($updatePath);

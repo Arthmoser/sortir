@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-
+{% block title %} {{ parent() }} |
+{% if app.user.id == user.id %}
+    Mon profil
+{% else %}
+    Profil
+{% endif %}
 {% endblock %}
-
 
 {% block body %}
 
@@ -17,9 +20,24 @@
         </article>
 
         <div class="content">
-            {% if app.user.id == user.id %}
+
+            {% set userRole = '' %}
+            {% set adminRole = 'ROLE_ADMIN' %}
+
+            {% for role in  app.user.roles %}
+                {% set userRole = role %}
+            {% endfor %}
+
+            {% if app.user.id == user.id or userRole == adminRole %}
                 <div class="txt">
-                    <h1>Mon profil</h1>
+                    <h1>
+                        {% if app.user.id == user.id %}
+                            Mon profil : {{ user.nickname }}
+                        {% else %}
+                            Profil de {{ user.nickname }}
+                        {% endif %}
+                    </h1>
+
                     <div>
 
                         {{ form_start(registrationForm) }}
@@ -31,30 +49,33 @@
                             {{ form_row(registrationForm.phone) }}
                             {{ form_row(registrationForm.email) }}
                         </div>
-                        <div>
+
                             {{ form_row(registrationForm.password, {required: 'false'}) }}
-                            {{ form_row(registrationForm.campus) }}
-                            {{ form_row(registrationForm.profilePicture) }}
-                                {% if is_granted("ROLE_ADMIN") %}
-                                    {{ form_row(registrationForm.roles) }}
-                                    {{ form_row(registrationForm.isAllowed) }}
-                                {% endif %}
-                        </div>
-                        <button type="submit" class="btn">Enregistrer</button>
+
+                            {{ form_row(registrationForm.profilePicture, {required: 'false'}) }}
+
+                        <div>Mon campus : {{ user.campus.name }}</div>
+                        <br>
+
+
+
+                        <button type="submit" class="btn">Enregistrer les modifications</button>
                         {{ form_end(registrationForm) }}
+                        {% else %}
+                            <div class="txt">
+                                <h1>{{ user.nickname }}</h1>
+                                <div> Prénom : {{ user.firstname }}</div>
+                                <div> Nom : {{ user.lastname }}</div>
+                                <div> Téléphone : {{ user.phone }}</div>
+                                <div> Email : {{ user.email }}</div>
+                                <div> Campus : {{ user.campus.name }}</div>
+                            </div>
+                        {% endif %}
+
+                        <a href="{{ path('activity_home') }}">Retourner à la page d'accueil</a>
                     </div>
                 </div>
 
-            {% else %}
-                <div class="txt">
-                    <h1>{{ user.nickname }}</h1>
-                    <div> Prénom : {{ user.firstname }}</div>
-                    <div> Nom : {{ user.lastname }}</div>
-                    <div> Téléphone : {{ user.phone }}</div>
-                    <div> Email : {{ user.email }}</div>
-                    <div> Campus : {{ user.campus.name }}</div>
-                </div>
-            {% endif %}
         </div>
 
     </div>

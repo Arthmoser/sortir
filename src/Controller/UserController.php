@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Form\UserFormType;
 use App\Repository\ActivityRepository;
 use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
@@ -29,20 +30,29 @@ class UserController extends AbstractController
                                          EntityManagerInterface $entityManager): Response
     {
         $user = $userRepository->find($id);
+        $currentUser = $this->getUser();
+        $userRole = 'ROLE_USER';
 
         if(!$user){
             //throws 404 if user doesn't exist
-            throw $this->createNotFoundException("Oops ! Utilisateur inconnu !");
+            throw $this->createNotFoundException("Utilisateur inconnu !");
         }
 
         $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
 
+        foreach ($currentUser->getRoles() as $role) {
+
+            if ($role == $userRole){
+                $form->remove('isAllowed');
+                $form->remove('roles');
+                $form->remove('campus');
+            }
+        }
+        $form->handleRequest($request);
 
                 if ($form->isSubmitted() && $form->isValid()) {
 
-                    if ($form->get('profilePicture')->getData())
-                    {
+                    if ($form->get('profilePicture')->getData()) {
                         //upload photo
                         /**
                          * @var UploadedFile $file
@@ -51,9 +61,9 @@ class UserController extends AbstractController
                         $file = $form->get('profilePicture')->getData();
 
                         $newFileName = $uploader->upload(
-                          $file,
-                          $this->getParameter('upload_user_picture'),
-                          $user->getNickname() );
+                            $file,
+                            $this->getParameter('upload_user_picture'),
+                            $user->getNickname());
 
                         $user->setProfilePicture($newFileName);
                     }

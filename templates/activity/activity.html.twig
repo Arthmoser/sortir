@@ -4,16 +4,15 @@
 
 {% block js %}
     <script>
-
-        let selectCity = document.getElementById('activity_city')
-        let selectLocation = document.getElementById('activity_location')
-
+        const selectCity = document.getElementById('activity_city');
+        const selectLocation = document.getElementById('activity_location');
+        const divLocationDetail = document.getElementById('location_detail');
 
         selectCity.addEventListener('change', function(element) {
             let cityId = selectCity.value;
-            console.log(cityId);
-            if (cityId != null)
 
+            if (cityId != null)
+            {
                 function createNode(element) {
                     return document.createElement(element);
                 }
@@ -22,72 +21,72 @@
                 return parent.appendChild(el);
             }
 
-            const selectLocation = document.getElementById('activity_location');
             const url = `http://localhost/sortir/public/api/location/city/${cityId}`;
 
             fetch(url)
                 .then((resp) => resp.json())
                 .then(function (resp) {
                     let locations = resp;
-                    selectLocation.remove(selectLocation.childNodes)
+                    selectLocation.innerHTML = ''
+                    let placeHolder = createNode('option');
+                    placeHolder.innerHTML = '-Veuillez choisir un lieu-'
+                    append(selectLocation, placeHolder);
                     return locations.map(function (location) {
                         let newOption = createNode('option');
                         newOption.innerHTML = location.name
                         newOption.value = location.id
-                        // selectLocation.options.add (newOption);
                         append(selectLocation, newOption);
                     })
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            }
         })
 
-            // {
+        selectLocation.addEventListener('change', function () {
+            let locationId = selectLocation.value;
 
-        {#        #}{#let test = "{{ path('api_location_retrieve_by_cityId', {'id' : }) }}/" + 2;#}
-        {#        #}{#let test = "{{ path('api_location_retrieve_by_cityId', {'id' : cityId }) }}" ;#}
-        {#        #}{#console.log(test);#}
-        {#        #}{#let url = Routing.generate('api_location_retrieve_by_cityId', {'id' : cityId});#}
+            if (locationId != null)
+            {
+                function createNode(element) {
+                    return document.createElement(element);
+                }
 
-        {#    //appel asynchrone#}
-        //     fetch(window.location.href=`http://localhost/sortir/public/api/location/city/${cityId}`
-        {#        , {method: 'GET', headers: {#}
-        {#                'Accept': 'application/json'#}
-        {#            }#}
-        {#    }#}
-        {#    )#}
-        {#        .then(response => response.json())#}
-        {#        // .then(response => JSON.stringify(response))#}
-        {#        .then(function (data) {#}
-        {#            let arrayLocation = data.results#}
-        {#            let selectLocation = document.getElementById ("activity_location")#}
-        {#            return arrayLocation.map(function (Location) {#}
-        {#                let newOption = new Option (Location.name, Location.id);#}
-        {#                selectLocation.options.add (newOption);#}
-        {#            })#}
-        {#        })#}
-        {#        // console.log(response)#}
-        {#        //#}
-        {#        // let array = [{"id":115,"name":"Laure Caron","street":"855, chemin Beno\u00eet Fontaine","latitude":-62.183813,"longitude":-148.150155},{"id":151,"name":"zrsdfvxcw","street":"jrthsd","latitude":25741,"longitude":68325714}]#}
-        {#        //#}
-        {#        // let selectLocation = document.getElementById ("activity_location");#}
-        {#        // for(let i=0;i<array.length;i++){#}
-        {#        //     let newOption = new Option (array[i].name, array[i].id);#}
-        {#        //     selectLocation.options.add (newOption);#}
-        {#        // }#}
-        {#        // console.log(array[0].id);#}
-        {#        // console.log(array.length);#}
+                function append(parent, el) {
+                    return parent.appendChild(el);
+                }
 
-        {#    }#}
+                const url2 = `http://localhost/sortir/public/api/location/${locationId}`;
 
-        {#})#}
+                fetch(url2)
+                    .then((resp) => resp.json())
+                    .then(function (resp) {
+                        let locationDetails = resp;
+                        console.log(divLocationDetail)
+                        console.log(locationDetails)
+                        divLocationDetail.innerHTML = ""
+                        return locationDetails.map(function (location) {
+                            let pStreet = createNode('p');
+                          // let pLongitude = createNode('p');
+                          //   let pLatitude = createNode('p');
+                            pStreet.innerHTML = 'Rue : ' + location.street
+                            // pLongitude.innerHTML = 'Longitude : ' + location.longitude
+                            // pLatitude.innerHTML = 'Latitude : ' + location.latitude
 
+                            append(divLocationDetail, pStreet);
+                            // append(divLocationDetail, pLongitude);
+                            // append(divLocationDetail, pLatitude);
+                        })
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        })
     </script>
 
 {% endblock %}
-
-
 
 {% block body %}
     <h2>
@@ -101,20 +100,23 @@
 
     <div class="form">
 
-    <div>{{ form_row(activityForm.name) }}</div>
-    <div>{{ form_row(activityForm.startingDateTime) }}</div>
-    <div>{{ form_row(activityForm.registrationDeadLine) }}</div>
-    <div>{{ form_row(activityForm.maxRegistrationNb) }}</div>
-    <div>{{ form_row(activityForm.duration) }}</div>
-    <div>{{ form_row(activityForm.overview) }}</div>
-    <div>{{ form_row((activityForm.campus)) }}</div>
-    <div>{{ form_row((activityForm.city)) }}</div>
+        <div>{{ form_row(activityForm.name) }}</div>
+        <div>{{ form_row(activityForm.startingDateTime) }}</div>
+        <div>{{ form_row(activityForm.registrationDeadLine) }}</div>
+        <div>{{ form_row(activityForm.maxRegistrationNb) }}</div>
+        <div>{{ form_row(activityForm.duration) }}</div>
+        <div>{{ form_row(activityForm.overview) }}</div>
+        <div>{{ form_row((activityForm.campus)) }}</div>
+        <div>{{ form_row((activityForm.city)) }}</div>
 
-    <label for="activity_location">Lieu : </label>
-    <select id="activity_location"></select>
+        <div>
+            <label for="activity_location">Lieu : </label>
+            <select id="activity_location"></select>
+        </div>
 
-
-{#        <div>{{ form_row(activityForm.location) }}</div>#}
+        <div id="location_detail">
+            <p>Prout</p>
+        </div>
 
         <div>
             <a class="" href="
@@ -126,7 +128,7 @@
             " onclick="return confirm('Voulez-vous ajouter un nouveau lieu ?')">Ajouter un lieu</a>
         </div>
 
-    <a href="{{ path('activity_home') }}">Annuler</a>
+        <a href="{{ path('activity_home') }}">Annuler</a>
 
         <div>
 
@@ -137,6 +139,7 @@
 
             {% endif %}
         </div>
+    </div>
 
     {{ form_end(activityForm) }}
 
