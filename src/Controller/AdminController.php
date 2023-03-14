@@ -178,10 +178,10 @@ class AdminController extends AbstractController
         }catch (\Exception $e) {
             $this->addFlash("error", 'Cette ville ne peut pas être supprimé ! ');
         }
-        return $this->redirectToRoute('city_display');
+        return $this->redirectToRoute('admin_city_display');
     }
 
-}
+
 
     #[Route('/user', name: 'userList')]
     public function userList(UserRepository $userRepository): Response
