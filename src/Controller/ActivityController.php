@@ -81,13 +81,14 @@ class ActivityController extends AbstractController
             $activity = new Activity();
         }
 
-        if ($request->getPathInfo() == $pathUpdate && $user != $activity->getUser()) {
+        if ($request->getPathInfo() == $pathUpdate && $user !== $activity->getUser()) {
 
             return $this->redirectToRoute('activity_show', ['id' => $id]);
 
         }
 
         $activityForm = $this->createForm(ActivityType::class, $activity);
+        $activityForm->remove('loc');
         $activityForm->handleRequest($request);
 
         //TODO garder les informations déjà remplies dans le activity add si je clique sur ajouter un lieu
