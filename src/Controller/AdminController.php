@@ -170,31 +170,47 @@ class AdminController extends AbstractController
     #[Route('/user', name: 'userList')]
     public function userList(UserRepository $userRepository): Response
     {
-//        $users = $userRepository->findAll();
 
         $users = $userRepository->findBy([], ['lastname' => 'ASC']);
-
-
-//        foreach ($users as $user)
-//        {
-//            if ($camp->getId() == $id)
-//            {
-//                $campus2 = $camp;
-//            }
-//        }
-//
-//        $campusForm = $this->createForm(CampusType::class, $campus);
-//        $campusForm2 = $this->createForm(CampusType::class, $campus2);
-//        $campusForm->handleRequest($request);
-//        $campusForm2->handleRequest($request);
-//
-//
-//        if ($request->getPathInfo() == '/admin/campus/' . $id && !$campusForm2->isSubmitted()) {
-//            $isUpdate = true;
-////            $this->entityManager = $entityManager;
-
         return $this->render('admin/user/userList.html.twig', [
             'users' => $users
         ]);
     }
+
+
+//TODO finir la méthode (FK constraint)
+    #[Route('/user/remove/{id}', name: 'removeUser')]
+    public function removeUser(int $id, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->find($id);
+
+        if ($user) {
+            $userRepository->remove($user, true);
+            $this->addFlash("warning", "L'\utilisateur a bien été supprimé !");
+        } else {
+            throw $this->createNotFoundException("Cet utilisateur ne peut pas être supprimé !");
+        }
+        return $this->redirectToRoute('admin_dashboard');
+
+    }
+
+    //TODO finir la méthode disable user
+    #[Route('/user/disable/{id}', name: 'disableUser')]
+    public function disableUser(int $id, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->find($id);
+
+        if ($user) {
+            $userRepository->remove($user, true);
+            $this->addFlash("warning", "Les droits de l'utilisateur ont bien été modifiés !");
+        } else {
+            throw $this->createNotFoundException("Les droits de cet utilisateur ne peuvent pas être modifiés !");
+        }
+        return $this->redirectToRoute('admin_dashboard');
+
+    }
+
+
 }
+
+
