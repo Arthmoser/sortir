@@ -30,13 +30,13 @@
 
             {% if app.user.id == user.id or userRole == adminRole %}
                 <div class="txt">
-                    <h1>
+                    <h2>
                         {% if app.user.id == user.id %}
                             Mon profil : {{ user.nickname }}
                         {% else %}
                             Profil de {{ user.nickname }}
                         {% endif %}
-                    </h1>
+                    </h2>
 
                     <div>
 
