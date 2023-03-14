@@ -27,10 +27,10 @@
     {{ form_start(filterForm) }}
     <div class="form">
 
-
         {{ form_row(filterForm.campus) }}
         {{ form_row(filterForm.search) }}
         {{ form_row(filterForm.startingDateTime) }}
+        {{ form_row(filterForm.endingDateTime) }}
 
     </div>
 
@@ -40,7 +40,6 @@
         {{ form_row(filterForm.isRegistered) }}
         {{ form_row(filterForm.isNotRegistered) }}
         {{ form_row(filterForm.availableActivity) }}
-
 
         {{ form_rest(filterForm) }}
 

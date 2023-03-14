@@ -40,7 +40,7 @@ class FilterType extends AbstractType
                 'label' => 'Le nom de la sortie contient : '
             ])
 
-            ->add('startingDateTime', DateTimeType::class, [
+            ->add('startingDateTime', DateType::class, [
                 'label' => 'Entre : ',
                 'html5' => true,
                 'widget' => 'single_text'
