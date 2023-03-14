@@ -47,7 +47,6 @@ class LocationController extends AbstractController
 
             if ($request->getPathInfo() == $updatePath)
             {
-                dump($id);
                 return $this->redirectToRoute('activity_update', ['id' => $id]);
             }
             else
@@ -55,7 +54,6 @@ class LocationController extends AbstractController
                 return $this->redirectToRoute('activity_add', ['id' => $location->getCity()->getId()]);
             }
         }
-   //     dump($location);
 
             return $this->render('location/location.html.twig', [
                 'locationForm' => $locationForm->createView()
@@ -65,12 +63,12 @@ class LocationController extends AbstractController
 
     //function which allows user to see an activity's informations
     #[Route('/location/show/{id}', name: 'show', requirements: ['id' => '\d+'])]
-    public function showLocation(
-        int $id, LocationRepository $locationRepository): Response
+    public function showLocation(int $id, LocationRepository $locationRepository): Response
     {
         $location = $locationRepository->find($id);
 
-        if(!$location){
+        if(!$location)
+        {
             throw $this->createNotFoundException("Ce lieu n'existe pas ! ");
         }
 

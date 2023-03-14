@@ -3,15 +3,12 @@
         <ul>
             {% if app.user %}
                 <div class="list">
-{#                    <li><a href="#">Villes</a></li>#}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ path('admin_dashboard') }}">Administrateur</a></li>
-{#                        <li><a href="{{ path('admin_campus_list') }}">Campus</a></li>#}
-{#                        <li><a href="{{ path('admin_register') }}">Créer un profil</a></li>#}
                     {% endif %}
                     <li><a href="{{ path('activity_home') }}">Liste des sorties</a></li>
-                    <li><a href="{{ path('user_profil', {'id': app.user.id}) }}">Mon profil</a></li>
-                    <li><a href="{{ path('app_logout') }}">Se Déconnecter ({{ app.user.nickname }})</a></li>
+                    <li><a href="{{ path('user_profil', {'id': app.user.id}) }}">Profil</a></li>
+                    <li><a href="{{ path('app_logout') }}">Se Déconnecter ({{ app.user.userIdentifier }})</a></li>
                 </div>
             {% endif %}
 
