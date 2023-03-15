@@ -70,7 +70,7 @@ class ActivityController extends AbstractController
 
         if ($id != 0) {
 
-            $activity = $activityRepository->find($id);
+            $activity = $activityRepository->findById($id);
 
             if ($user !== $activity->getUser()) {
                 return $this->redirectToRoute('activity_show', ['id' => $id]);
