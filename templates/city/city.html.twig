@@ -3,13 +3,13 @@
 {% block title %}{{ parent() }} | Campus{% endblock %}
 
 {% block body %}
+    <a href="{{ path('admin_dashboard') }}"><i class="fa-solid fa-arrow-left"></i></a>
     <h2>Gérer les Villes</h2>
     <div class="cities">
         {{ form_start(cityForm) }}
         {{ form_row(cityForm.name) }}
         {{ form_row(cityForm.zipCode) }}
         <button type="submit">Ajouter</button>
-        <button class="btn btn-secondary"><a href="{{ path('admin_dashboard') }}">Retour</a></button>
         {{ form_end(cityForm) }}
 
     </div>

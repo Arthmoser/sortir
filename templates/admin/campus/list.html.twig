@@ -3,11 +3,11 @@
 {% block title %}{{ parent() }} | Campus{% endblock %}
 
 {% block body %}
-
-
+    <h2>Gérer les Campus</h2>
+    <a href="{{ path('admin_dashboard') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
     <div class="content1">
-        <h2>Gérer les Campus</h2>
+
         <table>
             <thead>
             <tr class="activityLine">
@@ -46,10 +46,8 @@
                     {{ form_widget(campusForm.name) }}
                 </td>
                 <td>
-                    <button class="btn btn-secondary" type="submit">Ajouter</button>
+                    <button type="submit">Ajouter</button>
                     {{ form_end(campusForm.name) }}
-
-                    <button class="btn btn-secondary"> <a href="{{ path('admin_dashboard') }}">Retour</a></button>
 
                 </td>
             </tr>

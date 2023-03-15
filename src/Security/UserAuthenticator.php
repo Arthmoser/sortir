@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use http\Client\Curl\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,8 +49,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-
-        return new RedirectResponse($this->urlGenerator->generate('activity_home'));
+        return new RedirectResponse($this->urlGenerator->generate('activity_dispatcher'));
     }
 
     protected function getLoginUrl(Request $request): string

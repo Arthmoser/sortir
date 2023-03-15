@@ -13,7 +13,7 @@
             Vous êtes connecté.e {{ app.user.nickname }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
     {% endif %}
-
+<div class="loginForm">
     <h2 class="h3 mb-3 font-weight-normal">Se connecter</h2>
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email"
@@ -30,13 +30,13 @@
             <label>
                 <input type="checkbox" name="_remember_me"> Se souvenir de moi
             </label>
-            <a href="{{ path('app_forgot_password_request') }}">J'ai oublié mon mot de passe</a>
+            <a class="mdp" href="{{ path('app_forgot_password_request') }}">J'ai oublié mon mot de passe</a>
         </div>
 
     <button type="submit">
         Se connecter
     </button>
-
+    </div>
 
 </form>
 {% endblock %}

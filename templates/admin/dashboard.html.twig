@@ -8,14 +8,40 @@
 
     <h3>En tant qu'administrateur, que souhaitez-vous faire ?</h3>
 
+    <div class="iconAdmin">
+        <div class="user">
+            <a href="{{ path('admin_userList') }}">
 
-    <a href="{{ path('admin_userList') }}">Gérer les utilisateurs</a>
-    <br>
-    <a href="{{ path('admin_campus_list') }}">Gérer les campus</a>
-    <br>
-        <a href="{{ path('admin_city_display') }}">Gérer les villes</a>
-    <br>
-    <a href="{{ path('activity_home') }}">Gérer les activités</a>
-    <br>
-    <a href="{{ path('activity_home') }}">Retour</a>
+                <i class="fa-solid fa-users"></i>
+                Gérer les utilisateurs </a>
+        </div>
+        <br>
+        <div class="campus">
+            <a href="{{ path('admin_campus_list') }}">
+
+                <i class="fa-solid fa-school"></i>
+                Gérer les campus</a>
+        </div>
+        <br>
+        <div class="city">
+            <a href="{{ path('admin_city_display') }}">
+
+                <i class="fa-solid fa-location-dot"></i>
+                Gérer les villes</a>
+        </div>
+        <br>
+        <div class="activity">
+            <a href="{{ path('activity_home') }}">
+
+                <i class="fa-solid fa-table-tennis-paddle-ball"></i>
+                Gérer les activités</a>
+        </div>
+{#        <br>#}
+{#        <div class="home">#}
+{#            <a href="{{ path('activity_home') }}">#}
+{#                <i class="fa-solid fa-house"></i>#}
+{#                Retourner à la page d'accueil</a>#}
+{#        </div>#}
+
+    </div>
 {% endblock %}

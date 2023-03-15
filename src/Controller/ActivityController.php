@@ -18,16 +18,41 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('', name: 'activity_')]
 class ActivityController extends AbstractController
 {
+    #[Route('/dispatcher', name: 'dispatcher')]
+    public function dispatcher()
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        $adminRole = 'ROLE_ADMIN';
+
+        if (in_array($adminRole, $user->getRoles())) {
+
+            return $this->redirectToRoute('admin_dashboard');
+        }
+        else
+        {
+            return $this->redirectToRoute('activity_home');
+
+        }
+    }
+
+
     #[Route('/home', name: 'home')]
     #[Route('/', name: 'home2')]
     public function index(StatusRepository $statusRepository, ActivityRepository $activityRepository, UpdateStatus $updateStatus, Request $request): Response
     {
         $currentDate = new \DateTime();
 
+
         /**
          * @var User $user
          */
         $user = $this->getUser();
+
+
         $activities = $activityRepository->findNonArchivedActivity($currentDate);
 
         $updateStatus->updateStatusByCriteria($statusRepository, $activityRepository, $activities);
