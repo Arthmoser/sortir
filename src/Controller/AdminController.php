@@ -178,7 +178,7 @@ class AdminController extends AbstractController
 
         if ($cityForm2->isSubmitted() && $cityForm2->isValid()) {
             $cityRepository->save($city2, true);
-            $this->addFlash("success", "La ville a bien été modifié ! ");
+            $this->addFlash("success", "La ville a bien été modifiée ! ");
             //$city2 = $cityForm->getData();
             dump($city1);
             return $this->redirectToRoute('admin_city_display', ['id' => $id]);
@@ -186,7 +186,7 @@ class AdminController extends AbstractController
         if ($cityForm->isSubmitted() && $cityForm->isValid()) {
 
             $cityRepository->save($city1, true);
-            $this->addFlash('success', 'Ville ajoutée ! ');
+            $this->addFlash('success', 'La ville a bien été ajoutée ! ');
 
             return $this->redirectToRoute('admin_city_display', ['id' => $id]);
         }
