@@ -74,47 +74,13 @@ class ActivityRepository extends ServiceEntityRepository
 
     }
 
-
-    public function findBySomeField($date, $statusToUpdate = '')
+    public function findById($id)
     {
-        $statusClosed = 'CLO';
-        $statusInProgress = 'AEC';
-        $statusPast = 'PAS';
-        $statusArchived = 'HIS';
-        $oneMonthBeforeDate = clone $date;
-        $oneMonthBeforeDate->modify('-1 month');
-
         $qb = $this->createQueryBuilder('a');
 
-        if ($statusToUpdate == $statusClosed) {
-
-            $qb
-                ->andWhere('a.registrationDeadLine < :val')
-                ->andWhere('a.startingDateTime > :val')
-                ->setParameter('val', $date);
-
-        } elseif ($statusToUpdate == $statusInProgress){
-
-            $qb
-                ->andWhere('a.startingDateTime >= :val')
-                ->andWhere('a.startingDateTime + a.duration < :val')
-                ->setParameter('val', $date);
-        } elseif ($statusToUpdate == $statusPast){
-
-            $qb
-                ->andWhere('a.startingDateTime <= :val')
-                ->andWhere('a.startingDateTime > :val2')
-                ->setParameter('val', $date)
-                ->setParameter('val2', $oneMonthBeforeDate);
-
-        } elseif ($statusToUpdate == $statusArchived){
-
-            $qb
-                ->andWhere('a.startingDateTime < :val')
-                ->setParameter('val', $oneMonthBeforeDate);
-        }
-
         $qb
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $id)
             ->leftJoin('a.status', 'sta')
             ->leftJoin('a.location', 'loc')
             ->leftJoin('a.campus', 'cam')
@@ -129,8 +95,61 @@ class ActivityRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
 
         return $query->getResult();
-
     }
+//        $statusClosed = 'CLO';
+//        $statusInProgress = 'AEC';
+//        $statusPast = 'PAS';
+//        $statusArchived = 'HIS';
+//        $oneMonthBeforeDate = clone $date;
+//        $oneMonthBeforeDate->modify('-1 month');
+//
+//        $qb = $this->createQueryBuilder('a');
+//
+//        if ($statusToUpdate == $statusClosed) {
+//
+//            $qb
+//                ->andWhere('a.registrationDeadLine < :val')
+//                ->andWhere('a.startingDateTime > :val')
+//                ->setParameter('val', $date);
+//
+//        } elseif ($statusToUpdate == $statusInProgress){
+//
+//            $qb
+//                ->andWhere('a.startingDateTime >= :val')
+//                ->andWhere('a.startingDateTime + a.duration < :val')
+//                ->setParameter('val', $date);
+//        } elseif ($statusToUpdate == $statusPast){
+//
+//            $qb
+//                ->andWhere('a.startingDateTime <= :val')
+//                ->andWhere('a.startingDateTime > :val2')
+//                ->setParameter('val', $date)
+//                ->setParameter('val2', $oneMonthBeforeDate);
+//
+//        } elseif ($statusToUpdate == $statusArchived){
+//
+//            $qb
+//                ->andWhere('a.startingDateTime < :val')
+//                ->setParameter('val', $oneMonthBeforeDate);
+//        }
+//
+//        $qb
+//            ->leftJoin('a.status', 'sta')
+//            ->leftJoin('a.location', 'loc')
+//            ->leftJoin('a.campus', 'cam')
+//            ->leftJoin('a.user', "use")
+//            ->leftJoin('a.users', 'users')
+//            ->addSelect('sta')
+//            ->addSelect('loc')
+//            ->addSelect('cam')
+//            ->addSelect('use')
+//            ->addSelect('users');
+//
+//        $query = $qb->getQuery();
+//
+//        return $query->getResult();
+//
+//    }
 
     public function filterActivities(FilterModel $form, User $user)
     {
@@ -210,13 +229,4 @@ class ActivityRepository extends ServiceEntityRepository
         return $query->getResult();
 
     }
-//        function onPreSubmit(FormEvent $event){
-//
-//            $form = $event->getForm();
-//            $data = $event->getData();
-//
-//            $campus = $this->_em->getRepository('AppBundle:Campus')->find($data['campus']);
-//            $this->addElements($form, $campus);
-//        }
-
 }

@@ -41,6 +41,7 @@ class AdminController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->remove('profilePicture');
         $form->remove('isAllowed');
+        $form->remove('roles');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,8 +53,8 @@ class AdminController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-
-            $user->setRoles($form->get('roles')->getData());
+//
+//            $user->setRoles($form->get('roles')->getData());
 
             $entityManager->persist($user);
             $entityManager->flush();

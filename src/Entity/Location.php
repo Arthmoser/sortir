@@ -36,6 +36,7 @@ class Location
     private ?float $longitude = null;
 
 
+    #[Groups("location_api")]
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?City $city = null;
