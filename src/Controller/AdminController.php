@@ -255,10 +255,12 @@ class AdminController extends AbstractController
 
             if ($user->isIsAllowed()) {
                 $user->setIsAllowed(false);
+                $user->setRoles(['ROLE_PUBLIC']);
                 $this->addFlash("success", "Les droits de l'utilisateur ont bien été désactivés !");
 
             } else {
                 $user->setIsAllowed(true);
+                $user->setRoles(['ROLE_USER']);
                 $this->addFlash("success", "Les droits de l'utilisateur ont bien été réactivés !");
             }
             $userRepository->save($user, true);
