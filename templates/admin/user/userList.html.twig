@@ -30,11 +30,16 @@
         </td>
 
     <td>
-{#     TODO   faire route + méthode modifier droits isAllowed #}
-        <a class="link_button" href="{{ path('admin_disableUser', {'id' : user.id}) }}"
-           onclick="return confirm('Modifier les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname}} ?')">Désactiver</a>
 
-        {#     TODO   faire route + méthode SUPPRIMER user #}
+        <a class="link_button" href="{{ path('admin_disableUser', {'id' : user.id}) }}"
+
+           {% if user.isAllowed %}
+           onclick="return confirm('Désactiver les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname}} ?')">Désactiver</a>
+            {% else %}
+                onclick="return confirm('Réactiver les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname}} ?')">Réactiver</a>
+            {% endif %}
+
+
         <a class="link_button" href="{{ path('admin_removeUser', {'id': user.id}) }}"
            onclick="return confirm('Etes vous sur de vouloir supprimer l\'utisateur {{ user.lastname }} {{ user.firstname}}?')">Supprimer</a>
     </td>

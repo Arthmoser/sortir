@@ -34,7 +34,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
+    public function register(Request                    $request, UserPasswordHasherInterface $userPasswordHasher,
                              UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -76,10 +76,8 @@ class AdminController extends AbstractController
         $isUpdate = false;
         $campuses = $campusRepository->findBy([], ['name' => 'ASC']);
 
-        foreach ($campuses as $camp)
-        {
-            if ($camp->getId() == $id)
-            {
+        foreach ($campuses as $camp) {
+            if ($camp->getId() == $id) {
                 $campus2 = $camp;
             }
         }
@@ -151,13 +149,13 @@ class AdminController extends AbstractController
         $cities = $cityRepository->findAll();
         $cityForm = $this->createForm(CityType::class, $city);
         $cityForm->handleRequest($request);
-        if($cityForm->isSubmitted() && $cityForm->isValid()){
+        if ($cityForm->isSubmitted() && $cityForm->isValid()) {
             dump($city);
 
-            $cityRepository->save($city, true );
-            $this->addFlash('success', 'Ville ajoutée ! ');
+            $cityRepository->save($city, true);
+            $this->addFlash('success', 'La ville a bien été ajoutée ! ');
 
-            return $this->redirectToRoute('city_display', ['id' => $id]);
+            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
         }
         return $this->render('city/city.html.twig', [
             'cityForm' => $cityForm->createView(),
@@ -166,21 +164,20 @@ class AdminController extends AbstractController
     }
 
 
-    #[Route('/remove/{id}', name : 'city_remove')]
-    public function removeCity(int $id, CityRepository $cityRepository, EntityManagerInterface $entityManager) : Response
+    #[Route('/remove/{id}', name: 'city_remove')]
+    public function removeCity(int $id, CityRepository $cityRepository, EntityManagerInterface $entityManager): Response
     {
         $citie = $cityRepository->find($id);
         $citie = $entityManager->getRepository(City::class)->find($id);
         try {
             $entityManager->remove($citie);
             $entityManager->flush();
-            $this->addFlash("warning", "La ville a été supprimé ! ");
-        }catch (\Exception $e) {
-            $this->addFlash("error", 'Cette ville ne peut pas être supprimé ! ');
+            $this->addFlash("warning", "La ville a bien été supprimée ! ");
+        } catch (\Exception $e) {
+            $this->addFlash("error", 'Cette ville ne peut pas être supprimée ! ');
         }
         return $this->redirectToRoute('admin_city_display');
     }
-
 
 
     #[Route('/user', name: 'userList')]
@@ -194,39 +191,47 @@ class AdminController extends AbstractController
     }
 
 
-//TODO finir la méthode (FK constraint)
     #[Route('/user/remove/{id}', name: 'removeUser')]
     public function removeUser(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->find($id);
 
-        if ($user) {
-            $userRepository->remove($user, true);
-            $this->addFlash("warning", "L'\utilisateur a bien été supprimé !");
-        } else {
-            throw $this->createNotFoundException("Cet utilisateur ne peut pas être supprimé !");
+        try {
+            if ($user) {
+                $userRepository->remove($user, true);
+                $this->addFlash("success", "L'utilisateur a bien été supprimé !");
+            } else {
+                $this->addFlash("warning", "La suppression de l'utilisateur a échoué !");
+            }
+        } catch (\Exception $e) {
+            $this->addFlash("warning", "L'utilisateur ne peut pas être supprimé !");
         }
-        return $this->redirectToRoute('admin_dashboard');
+        return $this->redirectToRoute('admin_userList');
 
     }
 
-    //TODO finir la méthode disable user
     #[Route('/user/disable/{id}', name: 'disableUser')]
     public function disableUser(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->find($id);
 
         if ($user) {
-            $userRepository->remove($user, true);
-            $this->addFlash("warning", "Les droits de l'utilisateur ont bien été modifiés !");
-        } else {
-            throw $this->createNotFoundException("Les droits de cet utilisateur ne peuvent pas être modifiés !");
+
+            if ($user->isIsAllowed()) {
+                $user->setIsAllowed(false);
+                $this->addFlash("success", "Les droits de l'utilisateur ont bien été désactivés !");
+
+            } else {
+                $user->setIsAllowed(true);
+                $this->addFlash("success", "Les droits de l'utilisateur ont bien été réactivés !");
+            }
+            $userRepository->save($user, true);
         }
-        return $this->redirectToRoute('admin_dashboard');
-
+        else
+        {
+            $this->addFlash("warning", "La modification des droits de l'utilisateur a échoué !");
+        }
+            return $this->redirectToRoute('admin_userList');
     }
-
-
 }
-
 
