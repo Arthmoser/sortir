@@ -64,7 +64,7 @@ td {
     font-family: 'Roboto', sans-serif;
 }
 
-h1 {
+h1, h2 {
     font-family: 'Rampart One', cursive;
     color: #439A97;
     font-size: 3em;
@@ -92,7 +92,7 @@ h1 {
 
 
 main {
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: 25%;
     margin-bottom: 3.2%;
 }
@@ -239,4 +239,10 @@ select {
 
 .flash-warning {
     background-color: orangered;
+}
+
+
+#map{ /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
+    height: 400px;
+    width: 600px;
 }

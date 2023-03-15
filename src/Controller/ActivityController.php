@@ -38,9 +38,8 @@ class ActivityController extends AbstractController
         $filterForm = $this->createForm(FilterType::class, $filterModel);
         $filterForm->handleRequest($request);
 
-        if ($filterForm->isSubmitted()) //TODO set form is valid
+        if ($filterForm->isSubmitted() && $filterForm->isValid())
         {
-            dump($filterModel);
 
            $activities = $activityRepository->filterActivities($filterModel, $user);
 
@@ -91,7 +90,6 @@ class ActivityController extends AbstractController
         $activityForm->remove('loc');
         $activityForm->handleRequest($request);
 
-        //TODO garder les informations déjà remplies dans le activity add si je clique sur ajouter un lieu
         if ($activityForm->isSubmitted() && $activityForm->isValid()) {
 
             $statuses = $statusRepository->findAll();

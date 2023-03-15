@@ -22,31 +22,32 @@
  {% endblock %}
 
 {% block body %}
-    <h1 class="title">Filtrer les sorties</h1>
+    <h2 class="title">Filtrer les sorties</h2>
+    <div class="filterForm">
+        {{ form_start(filterForm) }}
+        <div class="form">
 
-    {{ form_start(filterForm) }}
-    <div class="form">
+            {{ form_row(filterForm.campus) }}
+            {{ form_row(filterForm.search) }}
+            {{ form_row(filterForm.startingDateTime) }}
+            {{ form_row(filterForm.endingDateTime) }}
 
-        {{ form_row(filterForm.campus) }}
-        {{ form_row(filterForm.search) }}
-        {{ form_row(filterForm.startingDateTime) }}
-        {{ form_row(filterForm.endingDateTime) }}
+        </div>
 
-    </div>
+        <div class="form">
 
-    <div class="form">
+            {{ form_row(filterForm.isOrganiser) }}
+            {{ form_row(filterForm.isRegistered) }}
+            {{ form_row(filterForm.isNotRegistered) }}
+            {{ form_row(filterForm.availableActivity) }}
 
-        {{ form_row(filterForm.isOrganiser) }}
-        {{ form_row(filterForm.isRegistered) }}
-        {{ form_row(filterForm.isNotRegistered) }}
-        {{ form_row(filterForm.availableActivity) }}
+            {{ form_rest(filterForm) }}
 
-        {{ form_rest(filterForm) }}
-
-    </div>
-
-    <div>
-        <button type="submit">Rechercher</button>
+        </div>
+        <div class="filterButton">
+            <button type="submit" class="btn btn-secondary">Rechercher</button>
+            <button class="btn btn-secondary"><a href="{{ path('activity_add') }}">Créer une sortie</a></button>
+        </div>
     </div>
 
     {{ form_end(filterForm) }}
@@ -118,9 +119,5 @@
             </tbody>
         </table>
     </div>
-
-    <a href="{{ path('activity_add') }}">
-        <button>Créer une sortie</button>
-    </a>
 
 {% endblock %}
