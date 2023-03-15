@@ -276,3 +276,13 @@ select {
     color : red;
 }
 
+div.form label{
+    display: inline-block;
+    width: 285px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+div.form input{
+    display: inline-block;
+}

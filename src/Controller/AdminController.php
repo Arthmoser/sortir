@@ -176,13 +176,6 @@ class AdminController extends AbstractController
             ]);
         }
 
-        if ($cityForm2->isSubmitted() && $cityForm2->isValid()) {
-            $cityRepository->save($city2, true);
-            $this->addFlash("success", "La ville a bien été modifiée ! ");
-            //$city2 = $cityForm->getData();
-            dump($city1);
-            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
-        }
         if ($cityForm->isSubmitted() && $cityForm->isValid()) {
 
             $cityRepository->save($city1, true);
@@ -190,6 +183,15 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('admin_city_display', ['id' => $id]);
         }
+
+        if ($cityForm2->isSubmitted() && $cityForm2->isValid()) {
+            $cityRepository->save($city2, true);
+            $this->addFlash("success", "La ville a bien été modifiée ! ");
+            //$city2 = $cityForm->getData();
+            dump($city1);
+            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
+        }
+
 
         return $this->render('city/city.html.twig', [
             'cityForm' => $cityForm->createView(),
