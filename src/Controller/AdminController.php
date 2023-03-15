@@ -136,7 +136,7 @@ class AdminController extends AbstractController
             $campusRepository->remove($campuses, true);
             $this->addFlash("warning", "Le campus a bien été supprimé ! ");
         } else {
-            throw $this->createNotFoundException("Ce campus ne peut pas être supprimé !");
+            throw $this->createAccessDeniedException("Ce campus ne peut pas être supprimé !");
         }
         return $this->redirectToRoute('admin_campus_list');
 
