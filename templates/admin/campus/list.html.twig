@@ -22,15 +22,19 @@
                         {% if isUpdate == true and campus.id == id %}
                             {{ form_start(campusForm2.name) }}
                             {{ form_widget(campusForm2.name) }}
-                            <button type="submit">Enregistrer</button>
-                            {{ form_end(campusForm2.name) }}
                         {% else %}
                             {{ campus.name }}
                         {% endif %}
                     </td>
                     <td>
-                        <a class="link_button" href="{{ path('admin_campus_update', {'id' : campus.id}) }}"
-                           onclick="return confirm('Changer le nom du campus : {{ campus.name }}')">Modifier</a>
+                        {% if isUpdate == true and campus.id == id %}
+                            <button type="submit">Enregistrer</button>
+                            {{ form_end(campusForm2.name) }}
+
+                        {% else %}
+                            <a class="link_button" href="{{ path('admin_campus_update', {'id' : campus.id}) }}"
+                               onclick="return confirm('Changer le nom du campus : {{ campus.name }}')">Modifier</a>
+                        {% endif %}
                         <a class="link_button" href="{{ path('admin_campus_remove', {'id': campus.id}) }}"
                            onclick="return confirm('Etes vous sur de vouloir supprimer le campus : {{ campus.name }}')">Supprimer</a>
                     </td>

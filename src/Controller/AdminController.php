@@ -34,7 +34,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
+    public function register(Request                    $request, UserPasswordHasherInterface $userPasswordHasher,
                              UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -71,20 +71,18 @@ class AdminController extends AbstractController
     #[Route('/campus/{id}', name: 'campus_update')]
     public function list(CampusRepository $campusRepository, Request $request, int $id = 0): Response
     {
-        $campus = new Campus();
+        $campus1 = new Campus();
         $campus2 = new Campus();
         $isUpdate = false;
         $campuses = $campusRepository->findBy([], ['name' => 'ASC']);
 
-        foreach ($campuses as $camp)
-        {
-            if ($camp->getId() == $id)
-            {
+        foreach ($campuses as $camp) {
+            if ($camp->getId() == $id) {
                 $campus2 = $camp;
             }
         }
 
-        $campusForm = $this->createForm(CampusType::class, $campus);
+        $campusForm = $this->createForm(CampusType::class, $campus1);
         $campusForm2 = $this->createForm(CampusType::class, $campus2);
         $campusForm->handleRequest($request);
         $campusForm2->handleRequest($request);
@@ -92,7 +90,7 @@ class AdminController extends AbstractController
 
         if ($request->getPathInfo() == '/admin/campus/' . $id && !$campusForm2->isSubmitted()) {
             $isUpdate = true;
-//            $this->entityManager = $entityManager;
+
             return $this->render('admin/campus/list.html.twig', [
                 'campuses' => $campuses,
                 'campusForm' => $campusForm->createView(),
@@ -103,7 +101,7 @@ class AdminController extends AbstractController
         }
 
 
-        if ($campusForm2->isSubmitted()) {//TODO isValid condition
+        if ($campusForm2->isSubmitted()) { //TODO condition validation
             dump($campus2);
             $campusRepository->save($campus2, true);
             $this->addFlash("success", "Le campus a bien été modifié ! ");
@@ -111,11 +109,10 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
         }
 
-        if ($campusForm->isSubmitted()) {//TODO isValid condition
-            dump($campus);
-            $campusRepository->save($campus, true);
+        if ($campusForm->isSubmitted() && $campusForm->isValid()) {
+            dump($campus1);
+            $campusRepository->save($campus1, true);
             $this->addFlash("success", "Le campus a bien été ajouté ! ");
-            $campus = $campusForm->getData();
             return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
         }
 
@@ -143,31 +140,67 @@ class AdminController extends AbstractController
     }
 
 
-    #[Route('/display/{id}', name: 'city_display')]
+    #[Route('/city/display/', name: 'city_display')]
+    #[Route('/city/update{id}', name: 'city_update')]
     public function displayCity(CityRepository $cityRepository, Request $request, int $id = 0): Response
     {
-        $city = new City();
+        $city1 = new City();
+        $city2 = new City();
+
+        $isUpdate = false;
+        $cities = $cityRepository->findBy([], ['name' => 'ASC']);
+
+        foreach ($cities as $city) {
+            if ($city->getId() == $id) {
+                $city2 = $city;
+                dump($city2);
+            }
+        }
 
         $cities = $cityRepository->findAll();
-        $cityForm = $this->createForm(CityType::class, $city);
+        $cityForm = $this->createForm(CityType::class, $city1);
+        $cityForm2 = $this->createForm(CityType::class, $city2);
         $cityForm->handleRequest($request);
-        if($cityForm->isSubmitted() && $cityForm->isValid()){
-            dump($city);
+        $cityForm2->handleRequest($request);
 
-            $cityRepository->save($city, true );
+        if ($request->getPathInfo() == '/admin/city/update' . $id && !$cityForm2->isSubmitted()) {
+            $isUpdate = true;
+            return $this->render('/city/city.html.twig', [
+                'cities' => $cities,
+                'cityForm' => $cityForm->createView(),
+                'cityForm2' => $cityForm2->createView(),
+                'city2' => $city2,
+                'isUpdate' => $isUpdate,
+                'id' => $id
+            ]);
+        }
+
+        if ($cityForm2->isSubmitted() && $cityForm2->isValid()) {
+            $cityRepository->save($city2, true);
+            $this->addFlash("success", "La ville a bien été modifié ! ");
+            //$city2 = $cityForm->getData();
+            dump($city1);
+            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
+        }
+        if ($cityForm->isSubmitted() && $cityForm->isValid()) {
+
+            $cityRepository->save($city1, true);
             $this->addFlash('success', 'Ville ajoutée ! ');
 
-            return $this->redirectToRoute('city_display', ['id' => $id]);
+            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
         }
+
         return $this->render('city/city.html.twig', [
             'cityForm' => $cityForm->createView(),
-            'cities' => $cities
+            'cities' => $cities,
+            'city1' => $city1,
+            'isUpdate' => $isUpdate
         ]);
     }
 
 
-    #[Route('/remove/{id}', name : 'city_remove')]
-    public function removeCity(int $id, CityRepository $cityRepository, EntityManagerInterface $entityManager) : Response
+    #[Route('/city/remove/{id}', name: 'city_remove')]
+    public function removeCity(int $id, CityRepository $cityRepository, EntityManagerInterface $entityManager): Response
     {
         $citie = $cityRepository->find($id);
         $citie = $entityManager->getRepository(City::class)->find($id);
@@ -175,12 +208,11 @@ class AdminController extends AbstractController
             $entityManager->remove($citie);
             $entityManager->flush();
             $this->addFlash("warning", "La ville a été supprimé ! ");
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash("error", 'Cette ville ne peut pas être supprimé ! ');
         }
         return $this->redirectToRoute('admin_city_display');
     }
-
 
 
     #[Route('/user', name: 'userList')]

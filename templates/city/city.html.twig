@@ -5,11 +5,11 @@
 {% block body %}
     <h2>Gérer les Villes</h2>
     <div class="cities">
-        {{ form_start(cityForm)}}
-        {{ form_row(cityForm.name)}}
-        {{ form_row(cityForm.zipCode)}}
+        {{ form_start(cityForm) }}
+        {{ form_row(cityForm.name) }}
+        {{ form_row(cityForm.zipCode) }}
         <button type="submit">Ajouter</button>
-        {{ form_end(cityForm)}}
+        {{ form_end(cityForm) }}
     </div>
     <div class="box">
 
@@ -24,13 +24,31 @@
             <tbody>
             {% for city in cities %}
                 <tr>
-                    <td>{{ city.name }}</td>
-                    <td>{{ city.zipCode }}</td>
                     <td>
+                        {% if isUpdate == true and city.id == id %}
+                            {{ form_start(cityForm2) }}
+                            {{ form_widget(cityForm2.name) }}
+                        {% else %}
+                            {{ city.name }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if isUpdate == true and city.id == id %}
+                            {{ form_widget(cityForm2.zipCode) }}
+                        {% else %}
+                            {{ city.zipCode }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if isUpdate == true and city.id == id %}
+                            <button type="submit">Enregistrer</button>
+                            {{ form_end(cityForm2) }}
+                        {% else %}
+                            <a class="link_button" href="{{ path('admin_city_update', {'id': city.id}) }}"
+                               onclick="return confirm('Modifier la ville : {{ city.name }}')">Modifier</a>
+                        {% endif %}
                         <a class="link_button" href="{{ path('admin_city_remove', {'id': city.id}) }}"
                            onclick="return confirm('Supprimer la ville :  {{ city.name }}')">Supprimer</a>
-{#                        <a class="link_button" href="{{ path('city_add') }}"#}
-{#                           onclick="return confirm('Etes vous sur de vouloir supprimer la ville : {{ city.name }}')">Modifier</a>#}
                     </td>
                 </tr>
             {% endfor %}
