@@ -208,18 +208,9 @@ select {
 
 /*--------------------------------------------------------------------------FORM----------------------------------------------------------------------*/
 
-.filterForm {
-    display: inline-grid;
-}
-
-.filterButton {
-
-}
-
 .form  {
   color : red;
   display: inline-grid;
-    grid-gap: 10px;
   margin-bottom: 3%;
 }
 
