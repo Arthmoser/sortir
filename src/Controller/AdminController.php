@@ -34,7 +34,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request                    $request, UserPasswordHasherInterface $userPasswordHasher,
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
                              UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -226,39 +226,47 @@ class AdminController extends AbstractController
     }
 
 
-//TODO finir la méthode (FK constraint)
     #[Route('/user/remove/{id}', name: 'removeUser')]
     public function removeUser(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->find($id);
 
-        if ($user) {
-            $userRepository->remove($user, true);
-            $this->addFlash("warning", "L'\utilisateur a bien été supprimé !");
-        } else {
-            throw $this->createNotFoundException("Cet utilisateur ne peut pas être supprimé !");
+        try {
+            if ($user) {
+                $userRepository->remove($user, true);
+                $this->addFlash("success", "L'utilisateur a bien été supprimé !");
+            } else {
+                $this->addFlash("warning", "La suppression de l'utilisateur a échoué !");
+            }
+        } catch (\Exception $e) {
+            $this->addFlash("warning", "L'utilisateur ne peut pas être supprimé !");
         }
-        return $this->redirectToRoute('admin_dashboard');
+        return $this->redirectToRoute('admin_userList');
 
     }
 
-    //TODO finir la méthode disable user
     #[Route('/user/disable/{id}', name: 'disableUser')]
     public function disableUser(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->find($id);
 
         if ($user) {
-            $userRepository->remove($user, true);
-            $this->addFlash("warning", "Les droits de l'utilisateur ont bien été modifiés !");
-        } else {
-            throw $this->createNotFoundException("Les droits de cet utilisateur ne peuvent pas être modifiés !");
+
+            if ($user->isIsAllowed()) {
+                $user->setIsAllowed(false);
+                $this->addFlash("success", "Les droits de l'utilisateur ont bien été désactivés !");
+
+            } else {
+                $user->setIsAllowed(true);
+                $this->addFlash("success", "Les droits de l'utilisateur ont bien été réactivés !");
+            }
+            $userRepository->save($user, true);
         }
-        return $this->redirectToRoute('admin_dashboard');
-
+        else
+        {
+            $this->addFlash("warning", "La modification des droits de l'utilisateur a échoué !");
+        }
+            return $this->redirectToRoute('admin_userList');
     }
-
-
 }
-
 
