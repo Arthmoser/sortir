@@ -327,6 +327,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->setProfilePicture('profilePicture.png');
         $this->setIsAllowed(true);
+        $this->setRoles(['ROLE_USER']);
     }
 
 }
