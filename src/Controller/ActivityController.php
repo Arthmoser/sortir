@@ -42,16 +42,18 @@ class ActivityController extends AbstractController
 
     #[Route('/home', name: 'home')]
     #[Route('/', name: 'home2')]
-    public function index(StatusRepository $statusRepository, ActivityRepository $activityRepository, UpdateStatus $updateStatus, Request $request): Response
+    public function index(StatusRepository $statusRepository,
+                          ActivityRepository $activityRepository,
+                          UpdateStatus $updateStatus,
+                          Request $request): Response
     {
         $currentDate = new \DateTime();
-
 
         /**
          * @var User $user
          */
-        $user = $this->getUser();
 
+        $user = $this->getUser();
 
         $activities = $activityRepository->findNonArchivedActivity($currentDate);
 
@@ -115,6 +117,7 @@ class ActivityController extends AbstractController
         $activityForm->remove('loc');
         $activityForm->handleRequest($request);
 
+
         if ($activityForm->isSubmitted() && $activityForm->isValid()) {
 
             $statuses = $statusRepository->findAll();
@@ -141,7 +144,6 @@ class ActivityController extends AbstractController
 
             return $this->redirectToRoute('activity_home', ['id' => $activity->getId()]);
         }
-
 
         return $this->render('activity/activity.html.twig', [
             'activityForm' => $activityForm->createView(),
@@ -270,5 +272,6 @@ class ActivityController extends AbstractController
         return $this->redirectToRoute('activity_home');
 
     }
+
 
 }

@@ -74,17 +74,17 @@ class ActivityType extends AbstractType
                 }
             ])
 
-//            ->add('location', EntityType::class, [
-//                'class' => Location::class,
-//                'placeholder' => '-Veuillez choisir un lieu-',
-//                'choice_label' => 'name',
-//                'label' => 'Lieu : ',
-//                'query_builder' => function (LocationRepository $locationRepository) {
-//                    $qb = $locationRepository->createQueryBuilder("l");
-//                    $qb->addOrderBy("l.name");
-//                    return $qb;
-//                }
-//                ])
+            ->add('location', EntityType::class, [
+                'class' => Location::class,
+                'placeholder' => '-Veuillez choisir un lieu-',
+                'choice_label' => 'name',
+                'label' => 'Lieu : ',
+                'query_builder' => function (LocationRepository $locationRepository) {
+                    $qb = $locationRepository->createQueryBuilder("l");
+                    $qb->addOrderBy("l.name");
+                    return $qb;
+                }
+                ])
 
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,

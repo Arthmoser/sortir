@@ -47,9 +47,6 @@ class LocationType extends AbstractType
             ])
         ;
 
-//        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
-//        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -90,66 +90,14 @@ class ActivityRepository extends ServiceEntityRepository
             ->addSelect('loc')
             ->addSelect('cam')
             ->addSelect('use')
-            ->addSelect('users');
+            ->addSelect('users')
+            ->setMaxResults(1);
 
         $query = $qb->getQuery();
 
-        return $query->getResult();
+        return $query->getSingleResult();
     }
-//        $statusClosed = 'CLO';
-//        $statusInProgress = 'AEC';
-//        $statusPast = 'PAS';
-//        $statusArchived = 'HIS';
-//        $oneMonthBeforeDate = clone $date;
-//        $oneMonthBeforeDate->modify('-1 month');
-//
-//        $qb = $this->createQueryBuilder('a');
-//
-//        if ($statusToUpdate == $statusClosed) {
-//
-//            $qb
-//                ->andWhere('a.registrationDeadLine < :val')
-//                ->andWhere('a.startingDateTime > :val')
-//                ->setParameter('val', $date);
-//
-//        } elseif ($statusToUpdate == $statusInProgress){
-//
-//            $qb
-//                ->andWhere('a.startingDateTime >= :val')
-//                ->andWhere('a.startingDateTime + a.duration < :val')
-//                ->setParameter('val', $date);
-//        } elseif ($statusToUpdate == $statusPast){
-//
-//            $qb
-//                ->andWhere('a.startingDateTime <= :val')
-//                ->andWhere('a.startingDateTime > :val2')
-//                ->setParameter('val', $date)
-//                ->setParameter('val2', $oneMonthBeforeDate);
-//
-//        } elseif ($statusToUpdate == $statusArchived){
-//
-//            $qb
-//                ->andWhere('a.startingDateTime < :val')
-//                ->setParameter('val', $oneMonthBeforeDate);
-//        }
-//
-//        $qb
-//            ->leftJoin('a.status', 'sta')
-//            ->leftJoin('a.location', 'loc')
-//            ->leftJoin('a.campus', 'cam')
-//            ->leftJoin('a.user', "use")
-//            ->leftJoin('a.users', 'users')
-//            ->addSelect('sta')
-//            ->addSelect('loc')
-//            ->addSelect('cam')
-//            ->addSelect('use')
-//            ->addSelect('users');
-//
-//        $query = $qb->getQuery();
-//
-//        return $query->getResult();
-//
-//    }
+
 
     public function filterActivities(FilterModel $form, User $user)
     {

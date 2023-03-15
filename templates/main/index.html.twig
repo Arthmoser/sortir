@@ -101,7 +101,7 @@
                                 <a href="{{ path('activity_update', {'id': activity.id}) }}">Modifier</a>
                             {% endif %}
                             {% if activity.status.type == 'Créée' %}
-                                <a>Publier</a>
+                                <a href="{{ path('activity_update', {'id': activity.id}) }}">Publier</a>
                             {% endif %}
                         {% else %}
                             <a href="{{ path('activity_show', {'id': activity.id}) }}">Afficher</a>

@@ -7,6 +7,8 @@ use App\Entity\City;
 use App\Entity\User;
 use App\Form\CampusType;
 use App\Form\CityType;
+use App\Form\FilterType;
+use App\Form\Model\FilterModel;
 use App\Form\RegistrationFormType;
 use App\Repository\CampusRepository;
 use App\Repository\UserRepository;
@@ -148,8 +150,32 @@ class AdminController extends AbstractController
         $city1 = new City();
         $city2 = new City();
 
+        $filterModel = new FilterModel();
+        $cities = [];
+
+        $filterForm = $this->createForm(FilterType::class, $filterModel);
+        $filterForm->remove('campus');
+        $filterForm->remove('startingDateTime');
+        $filterForm->remove('endingDateTime');
+        $filterForm->remove('isOrganiser');
+        $filterForm->remove('isRegistered');
+        $filterForm->remove('isNotRegistered');
+        $filterForm->remove('availableActivity');
+        $filterForm->handleRequest($request);
+
+        if ($filterForm->isSubmitted() && $filterForm->isValid())
+        {
+
+            $cities = $cityRepository->filterCities($filterModel);
+
+        }
+        else{
+            $cities = $cityRepository->findBy([], ['name' => 'ASC']);
+        }
+
+
         $isUpdate = false;
-        $cities = $cityRepository->findBy([], ['name' => 'ASC']);
+
 
         foreach ($cities as $city) {
             if ($city->getId() == $id) {
@@ -158,7 +184,7 @@ class AdminController extends AbstractController
             }
         }
 
-        $cities = $cityRepository->findAll();
+//        $cities = $cityRepository->findAll();
         $cityForm = $this->createForm(CityType::class, $city1);
         $cityForm2 = $this->createForm(CityType::class, $city2);
         $cityForm->handleRequest($request);
@@ -188,11 +214,12 @@ class AdminController extends AbstractController
             $cityRepository->save($city1, true);
             $this->addFlash('success', 'La ville a bien été ajoutée ! ');
 
-            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
+            return $this->redirectToRoute('admin_city_display');
         }
 
         return $this->render('city/city.html.twig', [
             'cityForm' => $cityForm->createView(),
+            'filterForm' => $filterForm->createView(),
             'cities' => $cities,
             'city1' => $city1,
             'isUpdate' => $isUpdate
