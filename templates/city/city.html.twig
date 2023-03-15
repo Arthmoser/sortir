@@ -9,7 +9,9 @@
         {{ form_row(cityForm.name) }}
         {{ form_row(cityForm.zipCode) }}
         <button type="submit">Ajouter</button>
+        <button class="btn btn-secondary"><a href="{{ path('admin_dashboard') }}">Retour</a></button>
         {{ form_end(cityForm) }}
+
     </div>
     <div class="box">
 
@@ -17,7 +19,7 @@
             <thead>
             <tr class="activityLine">
                 <td>Villes</td>
-                <td>Code Postale</td>
+                <td>Code Postal</td>
                 <td>Actions</td>
             </tr>
             </thead>

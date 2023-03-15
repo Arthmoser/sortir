@@ -7,6 +7,11 @@
 
 <div class="content1">
     <h2>Gérer les utilisateurs</h2>
+
+
+    <button class="btn btn-secondary"><a class="link_button" href="{{ path('admin_register') }}">Ajouter un utilisateur</a></button>
+    <button class="btn btn-secondary"><a class="link_button" href="{{ path('admin_dashboard') }}">Retour</a></button>
+
     <table>
         <thead>
         <tr class="activityLine">
@@ -34,9 +39,12 @@
         <a class="link_button" href="{{ path('admin_disableUser', {'id' : user.id}) }}"
 
            {% if user.isAllowed %}
+
            onclick="return confirm('Désactiver les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname}} ?')">Désactiver</a>
+
             {% else %}
                 onclick="return confirm('Réactiver les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname}} ?')">Réactiver</a>
+
             {% endif %}
 
 

@@ -46,10 +46,11 @@
                     {{ form_widget(campusForm.name) }}
                 </td>
                 <td>
-                    <button type="submit">Ajouter</button>
+                    <button class="btn btn-secondary" type="submit">Ajouter</button>
                     {{ form_end(campusForm.name) }}
 
-                    <a href="{{ path('admin_dashboard') }}">Annuler</a>
+                    <button class="btn btn-secondary"> <a href="{{ path('admin_dashboard') }}">Retour</a></button>
+
                 </td>
             </tr>
             </tbody>

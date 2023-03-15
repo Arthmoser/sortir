@@ -4,12 +4,12 @@
     <h1><a href="{{ path('activity_home') }}"><img class="logo" src="{{ asset('assets/activite.png') }}" alt="logo | Home" width="150px" ></a>Sortir</h1>
     {% include 'bodyStructure/menu/nav.html.twig' %}
 
-    <h3>
+    <h1>
         <script>
         let date =new Date()
         let mois =["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
         // document.write("Aujourd'hui, nous sommes le ")
         document.write(date.getDate()+' '+(mois[date.getMonth()]) + ' ' + date.getFullYear())
         </script>
-    </h3>
+    </h1>
 </header>
