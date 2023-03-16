@@ -13,8 +13,9 @@
             Vous êtes connecté.e {{ app.user.nickname }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
     {% endif %}
+    <h2 id="login" class="h3 mb-3 font-weight-normal">Se connecter</h2>
 <div class="loginForm">
-    <h2 class="h3 mb-3 font-weight-normal">Se connecter</h2>
+
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email"
            id="inputEmail" placeholder="adresse mail" class="form-control" autocomplete="email"
@@ -30,10 +31,10 @@
             <label>
                 <input type="checkbox" name="_remember_me"> Se souvenir de moi
             </label>
-            <a class="mdp" href="{{ path('app_forgot_password_request') }}">J'ai oublié mon mot de passe</a>
+            <a class="mdp" href="{{ path('app_forgot_password_request') }}">mot de passe oublié</a>
         </div>
 
-    <button type="submit">
+    <button id="btnLogin" type="submit">
         Se connecter
     </button>
     </div>

@@ -3,7 +3,6 @@
 
 body {
     background: linear-gradient(70deg, #62B6B7, #97DECE, #CBEDD5);
-
 }
 /*--------------------------------------------------------------------------HEADER/NAVBAR----------------------------------------------------------------------*/
 header {
@@ -69,6 +68,8 @@ h1, h2 {
     font-family: 'Rampart One', cursive;
     color: #439A97;
     font-size: 3em;
+
+
 }
 
 .logo {
@@ -265,17 +266,77 @@ select {
 }
 
 /*--------------------------------------------------------------------------LOGIN----------------------------------------------------------------------*/
-.loginForm {
 
-    display: flow-root;
+#login{
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 24%;
+}
+
+div.loginForm {
+
+    align-items: flex-start;
+    background: linear-gradient(45deg, #ECF2FF,#B5F1CC);
+    border-radius: 20px;
+    box-sizing: border-box;
+    height:400px;
+    padding: 20px;
+    width: 25%;
+    overflow: hidden;
+
+}
+
+.loginForm:hover{
+    filter : drop-shadow(0 0 0.75rem black);
+    transform:scale(1.01);
+    cursor : pointer;
+}
+
+.loginForm {
+    margin-right: 26%;
+    margin-left: 23%;
+}
+
+div.loginForm label {
+
+    display: inline-block;
+    width: 285px;
+    text-align: left;
+    height: 60px;
+    padding-top: 25px;
+    font-size: 20px;
+}
+
+div.loginForm input{
+    display: inline-block;
 
 }
 
 .mdp {
     font-size:18px;
-    color : red;
+    color: black;
+    padding-left: 135px;
 }
 
+.mdp:hover{
+    text-decoration: underline;
+}
+
+#btnLogin {
+    height: 40px;
+    width: 100px;
+    transition-duration: 0.1s;
+}
+
+#btnLogin:hover {
+    border-radius: 6px;
+    background-color: #ECF2FF;
+    filter : drop-shadow(0 0 0.10rem black);
+    color: black;
+}
+/*_________________________________________*/
 div.form label{
     display: inline-block;
     width: 285px;
