@@ -55,8 +55,6 @@ class AdminController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-//
-//            $user->setRoles($form->get('roles')->getData());
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -105,7 +103,6 @@ class AdminController extends AbstractController
 
 
         if ($campusForm2->isSubmitted()) { //TODO condition validation
-            dump($campus2);
             $campusRepository->save($campus2, true);
             $this->addFlash("success", "Le campus a bien été modifié ! ");
             $campus2 = $campusForm->getData();
@@ -113,7 +110,6 @@ class AdminController extends AbstractController
         }
 
         if ($campusForm->isSubmitted() && $campusForm->isValid()) {
-            dump($campus1);
             $campusRepository->save($campus1, true);
             $this->addFlash("success", "Le campus a bien été ajouté ! ");
             return $this->redirectToRoute('admin_campus_list', ['id' => $id]);
@@ -184,7 +180,6 @@ class AdminController extends AbstractController
             }
         }
 
-//        $cities = $cityRepository->findAll();
         $cityForm = $this->createForm(CityType::class, $city1);
         $cityForm2 = $this->createForm(CityType::class, $city2);
         $cityForm->handleRequest($request);
@@ -196,6 +191,7 @@ class AdminController extends AbstractController
                 'cities' => $cities,
                 'cityForm' => $cityForm->createView(),
                 'cityForm2' => $cityForm2->createView(),
+                'filterForm' => $filterForm->createView(),
                 'city2' => $city2,
                 'isUpdate' => $isUpdate,
                 'id' => $id
@@ -213,9 +209,8 @@ class AdminController extends AbstractController
         if ($cityForm2->isSubmitted() && $cityForm2->isValid()) {
             $cityRepository->save($city2, true);
             $this->addFlash("success", "La ville a bien été modifiée ! ");
-            //$city2 = $cityForm->getData();
-            dump($city1);
-            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
+
+            return $this->redirectToRoute('admin_city_display');
         }
 
 

@@ -43,9 +43,22 @@ class CityRepository extends ServiceEntityRepository
     public function filterCities(FilterModel $form)
     {
         $qb = $this->createQueryBuilder("c");
+
+        if (is_numeric(intval($form->getSearch())))
+        {
+            $qb
+                ->andWhere('c.zipCode LIKE :search1')
+                ->setParameter(':search1', '%' . $form->getSearch() . '%');
+        }
+        else
+        {
+            $qb
+                ->andWhere("c.name LIKE :search")
+                ->setParameter("search", '%' . $form->getSearch() . '%');
+        }
+
         $qb
-            ->andWhere("c.name LIKE :search or c.zipCode = :search")
-            ->setParameter("search", '%' . $form->getSearch() . '%');
+            ->addOrderBy('c.name', 'ASC');
 
         $query = $qb->getQuery();
 

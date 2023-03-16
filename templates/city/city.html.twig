@@ -7,21 +7,23 @@
     <h2>Gérer les Villes</h2>
 
     <div>
-        {{ form_start(filterForm) }}
-        {{ form_row(filterForm.search) }}
-        <button type="submit">Rechercher</button>
-        {{ form_end(filterForm) }}
+        <div>
+            {{ form_start(filterForm) }}
+            {{ form_widget(filterForm.search) }}
+            <button type="submit">Rechercher</button>
+            {{ form_end(filterForm) }}
+        </div>
+
+
+        <div class="cities">
+            {{ form_start(cityForm) }}
+            {{ form_row(cityForm.name) }}
+            {{ form_row(cityForm.zipCode) }}
+            <button type="submit">Ajouter</button>
+            {{ form_end(cityForm) }}
+        </div>
     </div>
 
-
-    <div class="cities">
-        {{ form_start(cityForm) }}
-        {{ form_row(cityForm.name) }}
-        {{ form_row(cityForm.zipCode) }}
-        <button type="submit">Ajouter</button>
-        {{ form_end(cityForm) }}
-
-    </div>
     <div class="box">
 
         <table>
