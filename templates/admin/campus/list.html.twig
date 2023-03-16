@@ -3,16 +3,16 @@
 {% block title %}{{ parent() }} | Campus{% endblock %}
 
 {% block body %}
-    <h2>Gérer les Campus</h2>
+    <h2 class="camp">Gérer les Campus</h2>
     <a href="{{ path('admin_dashboard') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
-    <div class="content1">
+    <div class="contentCampus">
 
         <table>
             <thead>
             <tr class="activityLine">
-                <td>Campus</td>
-                <td>Actions</td>
+                <td id="navCamp">Campus</td>
+                <td id="navCamp" >Actions</td>
             </tr>
             </thead>
             <tbody>
@@ -32,10 +32,10 @@
                             {{ form_end(campusForm2.name) }}
 
                         {% else %}
-                            <a class="link_button" href="{{ path('admin_campus_update', {'id' : campus.id}) }}"
+                            <a id="linkCamp" class="link_button" href="{{ path('admin_campus_update', {'id' : campus.id}) }}"
                                onclick="return confirm('Changer le nom du campus : {{ campus.name }}')">Modifier</a>
                         {% endif %}
-                        <a class="link_button" href="{{ path('admin_campus_remove', {'id': campus.id}) }}"
+                        <a id="linkCamp"  class="link_button" href="{{ path('admin_campus_remove', {'id': campus.id}) }}"
                            onclick="return confirm('Etes vous sur de vouloir supprimer le campus : {{ campus.name }}')">Supprimer</a>
                     </td>
                 </tr>
