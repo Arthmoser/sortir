@@ -11,7 +11,6 @@
 {% block body %}
 
     <div>
-
         <article>
             <a href="{{ path('user_profil', {'id': user.id }) }}">
                 <div class="pp"><img src="{{ asset('assets/img/profilePictures/' ~ user.profilePicture) }}"
@@ -39,49 +38,39 @@
                     </h2>
 
                     <div>
-
                         {{ form_start(registrationForm) }}
-
                         <div>
                             {{ form_row(registrationForm.nickname) }}
                             {{ form_row(registrationForm.firstname) }}
                             {{ form_row(registrationForm.lastname) }}
                             {{ form_row(registrationForm.phone) }}
                             {{ form_row(registrationForm.email) }}
-                        </div>
-
                             {{ form_row(registrationForm.password) }}
-
                             {{ form_row(registrationForm.profilePicture) }}
-
-                        <div>Mon campus : {{ user.campus.name }}</div>
-                        <br>
-
-
-
-                        <button type="submit" class="btn">Enregistrer les modifications</button>
+                            {% if userRole == adminRole %}
+                                {{ form_row(registrationForm.campus) }}
+                                {{ form_row(registrationForm.isAllowed) }}
+                                {{ form_row(registrationForm.roles) }}
+                            {% endif %}
+                            <button type="submit" class="btn">Enregistrer les modifications</button>
+                        </div>
                         {{ form_end(registrationForm) }}
-                        {% else %}
-                            <div class="txt">
-                                <h1>{{ user.nickname }}</h1>
-                                <div> Prénom : {{ user.firstname }}</div>
-                                <div> Nom : {{ user.lastname }}</div>
-                                <div> Téléphone : {{ user.phone }}</div>
-                                <div> Email : {{ user.email }}</div>
-                                <div> Campus : {{ user.campus.name }}</div>
-                            </div>
-                        {% endif %}
-
-                        <a href="{{ path('activity_home') }}">Retour</a>
                     </div>
+                <div>
+
+            {% else %}
+                <div class="txt">
+                    <h2>{{ user.nickname }}</h2>
+                    <div> Prénom : {{ user.firstname }}</div>
+                    <div> Nom : {{ user.lastname }}</div>
+                    <div> Téléphone : {{ user.phone }}</div>
+                    <div> Email : {{ user.email }}</div>
+                    <div> Campus : {{ user.campus.name }}</div>
                 </div>
-
+            {% endif %}
+            <a href="{{ path('activity_home') }}">Retour</a>
+            </div>
         </div>
-
     </div>
 
-
 {% endblock %}
-
-
-

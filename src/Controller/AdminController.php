@@ -143,6 +143,7 @@ class AdminController extends AbstractController
     #[Route('/city/update{id}', name: 'city_update')]
     public function displayCity(CityRepository $cityRepository, Request $request, int $id = 0): Response
     {
+        $isUpdate = false;
         $city1 = new City();
         $city2 = new City();
 
@@ -161,77 +162,75 @@ class AdminController extends AbstractController
 
         if ($filterForm->isSubmitted() && $filterForm->isValid())
         {
-
             $cities = $cityRepository->filterCities($filterModel);
-
         }
         else{
             $cities = $cityRepository->findBy([], ['name' => 'ASC']);
         }
-
-
-        $isUpdate = false;
-
-
         foreach ($cities as $city) {
             if ($city->getId() == $id) {
                 $city2 = $city;
-                dump($city2);
             }
         }
-
+//        dd($city2);
         $cityForm = $this->createForm(CityType::class, $city1);
         $cityForm2 = $this->createForm(CityType::class, $city2);
         $cityForm->handleRequest($request);
         $cityForm2->handleRequest($request);
 
+
         if ($request->getPathInfo() == '/admin/city/update' . $id && !$cityForm2->isSubmitted()) {
             $isUpdate = true;
+
             return $this->render('/city/city.html.twig', [
                 'cities' => $cities,
                 'cityForm' => $cityForm->createView(),
                 'cityForm2' => $cityForm2->createView(),
                 'filterForm' => $filterForm->createView(),
-                'city2' => $city2,
                 'isUpdate' => $isUpdate,
                 'id' => $id
             ]);
         }
 
-        if ($cityForm->isSubmitted() && $cityForm->isValid()) {
-
-            $cityRepository->save($city1, true);
-            $this->addFlash('success', 'La ville a bien été ajoutée ! ');
-
-            return $this->redirectToRoute('admin_city_display');
-        }
-
         if ($cityForm2->isSubmitted() && $cityForm2->isValid()) {
             $cityRepository->save($city2, true);
-            $this->addFlash("success", "La ville a bien été modifiée ! ");
+            if ($city1->getId() != null)
+            {
+                $this->addFlash("success", "La ville a bien été modifiée ! ");
+            }
+            else
+            {
+                $this->addFlash("success", "La ville a bien été ajoutée ! ");
+            }
 
-            return $this->redirectToRoute('admin_city_display');
+            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
         }
+
+//        if ($cityForm->isSubmitted() && $cityForm->isValid()) {
+//            $cityRepository->save($city1, true);
+//            $this->addFlash('success', 'La ville a bien été ajoutée ! ');
+//
+//            return $this->redirectToRoute('admin_city_display', ['id' => $id]);
+//        }
+
 
 
         return $this->render('city/city.html.twig', [
             'cityForm' => $cityForm->createView(),
             'filterForm' => $filterForm->createView(),
             'cities' => $cities,
-            'city1' => $city1,
             'isUpdate' => $isUpdate
         ]);
     }
 
 
     #[Route('/city/remove/{id}', name: 'city_remove')]
-    public function removeCity(int $id, CityRepository $cityRepository, EntityManagerInterface $entityManager): Response
+    public function removeCity(int $id, CityRepository $cityRepository): Response
     {
-        $citie = $cityRepository->find($id);
-        $citie = $entityManager->getRepository(City::class)->find($id);
+        $city = $cityRepository->find($id);
+
         try {
-            $entityManager->remove($citie);
-            $entityManager->flush();
+            $cityRepository->remove($city, true);
             $this->addFlash("warning", "La ville a été supprimé ! ");
         } catch (\Exception $e) {
             $this->addFlash("error", 'Cette ville ne peut pas être supprimé ! ');
@@ -243,7 +242,6 @@ class AdminController extends AbstractController
     #[Route('/user', name: 'userList')]
     public function userList(UserRepository $userRepository): Response
     {
-
         $users = $userRepository->findBy([], ['lastname' => 'ASC']);
         return $this->render('admin/user/userList.html.twig', [
             'users' => $users

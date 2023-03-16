@@ -141,7 +141,6 @@ class AppFixtures extends Fixture
 
         for($i=0; $i < $this->number; $i++){
 
-
             $location = new Location();
 
             $location
@@ -155,31 +154,38 @@ class AppFixtures extends Fixture
         }
         $this->entityManager->flush();
 
-
         $this->locations = $this->locationRepository->findAll();
-
     }
 
     public function addUsers(){
 
         $userAdmin = new User();
-        $userAdmin->setEmail('stropee@campus-eni.fr')
+        $userUser = new User();
+
+        $userAdmin
+            ->setEmail('stropee@campus-eni.fr')
             ->setRoles(['ROLE_ADMIN'])
             ->setPassword($this->passwordHasher->hashPassword($userAdmin, 'Pa$$w0rd'))
             ->setNickname('Sly')
             ->setLastname('Tropée')
             ->setFirstname('Sylvain')
             ->setPhone('0620304050')
-            ->setIsAllowed(true)
-            ->setCampus($this->faker->randomElement($this->campuses))
-            ->setProfilePicture('profilePicture.png');
+            ->setCampus($this->faker->randomElement($this->campuses));
 
         $this->entityManager->persist($userAdmin);
 
+        $userUser
+            ->setEmail('dsanchez@campus-eni.fr')
+            ->setPassword($this->passwordHasher->hashPassword($userAdmin, 'Pa$$w0rd'))
+            ->setNickname('DS')
+            ->setLastname('Sanchez')
+            ->setFirstname('Denis')
+            ->setPhone('0620304051')
+            ->setCampus($this->faker->randomElement($this->campuses));
 
+        $this->entityManager->persist($userUser);
 
         for($i=0; $i < $this->number; $i++){
-
 
             $user = new User();
 

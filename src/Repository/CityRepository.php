@@ -44,17 +44,17 @@ class CityRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder("c");
 
-        if (is_numeric(intval($form->getSearch())))
+        if (is_numeric($form->getSearch()))
         {
             $qb
                 ->andWhere('c.zipCode LIKE :search1')
                 ->setParameter(':search1', '%' . $form->getSearch() . '%');
         }
-        else
+        elseif (is_string($form->getSearch()))
         {
             $qb
-                ->andWhere("c.name LIKE :search")
-                ->setParameter("search", '%' . $form->getSearch() . '%');
+                ->andWhere("c.name LIKE :search2")
+                ->setParameter("search2", '%' . $form->getSearch() . '%');
         }
 
         $qb
@@ -64,5 +64,4 @@ class CityRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
-
 }

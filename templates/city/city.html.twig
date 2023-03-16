@@ -14,7 +14,6 @@
             {{ form_end(filterForm) }}
         </div>
 
-
         <div class="cities">
             {{ form_start(cityForm) }}
             {{ form_row(cityForm.name) }}
@@ -36,34 +35,34 @@
             </thead>
             <tbody>
             {% for city in cities %}
-                <tr>
-                    <td>
-                        {% if isUpdate == true and city.id == id %}
-                            {{ form_start(cityForm2) }}
-                            {{ form_widget(cityForm2.name) }}
-                        {% else %}
-                            {{ city.name }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if isUpdate == true and city.id == id %}
-                            {{ form_widget(cityForm2.zipCode) }}
-                        {% else %}
-                            {{ city.zipCode }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if isUpdate == true and city.id == id %}
-                            <button type="submit">Enregistrer</button>
-                            {{ form_end(cityForm2) }}
-                        {% else %}
+                {% if isUpdate == true and city.id == id %}
+                    {{ form_start(cityForm2) }}
+                        <tr>
+                            <td>
+                                {{ form_widget(cityForm2.name) }}
+                            </td>
+                            <td>
+                                {{ form_widget(cityForm2.zipCode) }}
+                            </td>
+                            <td>
+                                <button type="submit">Enregistrer</button>
+                                <a class="link_button" href="{{ path('admin_city_remove', {'id': city.id}) }}"
+                                   onclick="return confirm('Supprimer la ville :  {{ city.name }}')">Supprimer</a>
+                            </td>
+                        <tr>
+                    {{ form_end(cityForm2) }}
+                {% else %}
+                    <tr>
+                        <td>{{ city.name }}</td>
+                        <td>{{ city.zipCode }}</td>
+                        <td>
                             <a class="link_button" href="{{ path('admin_city_update', {'id': city.id}) }}"
                                onclick="return confirm('Modifier la ville : {{ city.name }}')">Modifier</a>
-                        {% endif %}
-                        <a class="link_button" href="{{ path('admin_city_remove', {'id': city.id}) }}"
-                           onclick="return confirm('Supprimer la ville :  {{ city.name }}')">Supprimer</a>
-                    </td>
-                </tr>
+                            <a class="link_button" href="{{ path('admin_city_remove', {'id': city.id}) }}"
+                               onclick="return confirm('Supprimer la ville :  {{ city.name }}')">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% endif %}
             {% endfor %}
             </tbody>
         </table>
