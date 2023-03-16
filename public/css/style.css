@@ -323,6 +323,13 @@ div.loginForm input{
     color: black;
 }
 /*--------------------------------------------------------------------------DASHBOARD----------------------------------------------------------------------*/
+.dashboard{
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 24%;
+}
 
 .iconAdmin {
 
@@ -330,11 +337,11 @@ div.loginForm input{
     border-radius: 100px;
     box-sizing: border-box;
     padding: 20px;
-
     display: ruby-base;
-    font-size: 3em;
-   justify-items: center;
-    margin-left: -6%;
+    font-size: 4em;
+    justify-items: center;
+    height: 20px;
+    margin-left: 20%;
     overflow: hidden;
 }
 
@@ -348,21 +355,22 @@ div.loginForm input{
 
 #icon1:hover ~ .user p {
     display: block;
-
+    width: 300px;
 }
 
 #icon2:hover ~ .campus p {
     display: block;
+    width: 250px;
 
 }
 #icon3:hover ~ .city p {
     display: block;
-
+    width: 250px;
 }
 
 #icon4:hover ~ .activity p {
     display: block;
-
+    width: 250px;
 
 }
 
@@ -370,14 +378,19 @@ div.loginForm input{
     display: flex;
     height: 20px;
     color : green;
-    padding: 80px;
     font-size: 50px;
 
 }
 
+/*#icon1:hover, #icon2:hover, #icon3:hover, #icon4:hover {*/
+/*    padding-right: 10px;*/
+/*}*/
+
+
 .user, .campus, .city, .activity {
 
     display: inline;
+    overflow: hidden;
 
 }
 
