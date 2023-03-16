@@ -192,8 +192,8 @@ input {
     border: 1px solid black;
     display: grid;
     -moz-box-sizing: border-box;
-
 }
+
 
 label {
 
@@ -317,8 +317,9 @@ div.loginForm input{
 }
 
 #btnLogin:hover {
+    border: 1px solid black;
     border-radius: 6px;
-    background-color: #ECF2FF;
+    background-color: #CFCFCF;
     filter : drop-shadow(0 0 0.10rem black);
     color: black;
 }
@@ -341,7 +342,7 @@ div.loginForm input{
     font-size: 4em;
     justify-items: center;
     height: 20px;
-    margin-left: 20%;
+    margin-left: 22%;
     overflow: hidden;
 }
 
@@ -382,16 +383,123 @@ div.loginForm input{
 
 }
 
-/*#icon1:hover, #icon2:hover, #icon3:hover, #icon4:hover {*/
-/*    padding-right: 10px;*/
-/*}*/
-
-
 .user, .campus, .city, .activity {
 
     display: inline;
     overflow: hidden;
 
+}
+
+/*--------------------------------------------------------------------------LIST_USERS----------------------------------------------------------------------*/
+
+.listUsers {
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 16%;
+}
+
+
+#arrow{
+    font-size: 30px;
+}
+
+#arrow:hover{
+    filter : drop-shadow(0 0 0.75rem black);
+    transform:scale(1.20);
+    cursor : pointer;
+}
+#linkUsers{
+    color: #06283D;
+}
+
+#linkUsers:hover{
+    text-decoration: underline;
+}
+
+#student{
+    color: #06283D;
+
+}
+
+#navUsers {
+    font-size: 19px;
+    font-family: 'Tilt Warp', cursive;
+}
+
+#btnUsers{
+    height: 70px;
+    width: 100px;
+    transition-duration: 0.1s;
+}
+
+#btnUsers a {
+    margin:auto;
+    color: black;
+}
+
+#btnUsers:hover{
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: #CFCFCF;
+    filter : drop-shadow(0 0 0.10rem black);
+    color: black;
+}
+
+.contentUser{
+    align-items: center;
+    background: linear-gradient(45deg, #ECF2FF,#B5F1CC);
+    border-radius: 20px;
+    box-sizing: border-box;
+    height:430px;
+    padding: 20px;
+    width: 40%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    margin-left: 15%;
+    margin-top: -1%;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    filter : drop-shadow(0 0 0.10rem black);
+}
+
+/*--------------------------------------------------------------------------LIST_CAMPUS----------------------------------------------------------------------*/
+
+.camp{
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 18%;
+}
+
+#navCamp{
+    font-size: 19px;
+    font-family: 'Tilt Warp', cursive;
+}
+
+#linkCamp{
+    color: #06283D;
+}
+
+#linkCamp:hover {
+    text-decoration: underline;
+}
+
+.contentCampus{
+
+    background: linear-gradient(20deg, #ECF2FF,#B5F1CC);
+    border-radius: 20px;
+    box-sizing: border-box;
+    height:300px;
+    padding: 20px;
+    width: 40%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    margin-left: 15%;
+    margin-top: 3%;
+    filter : drop-shadow(0 0 0.10rem black);
 }
 
 
@@ -404,21 +512,7 @@ div.loginForm input{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*--------------------------------------------------------------------------LIST_CAMPUS----------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------LIST_ACTIVITY----------------------------------------------------------------------*/
 div.form label{
     display: inline-block;
     width: 285px;
@@ -429,3 +523,5 @@ div.form label{
 div.form input{
     display: inline-block;
 }
+
+

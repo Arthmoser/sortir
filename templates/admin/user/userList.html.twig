@@ -4,56 +4,53 @@
 
 
 {% block body %}
-    <a href="{{ path('admin_dashboard') }}"><i class="fa-solid fa-arrow-left"></i></a>
-<div class="content1">
-    <h2>Gérer les utilisateurs</h2>
+
+    <h2 class="listUsers">Gérer les utilisateurs</h2>
+
+    <a href="{{ path('admin_dashboard') }}"><i id="arrow" class="fa-solid fa-arrow-left"></i></a>
+    <div class="contentUser">
+
+        <table>
+            <thead>
+            <tr class="activityLine">
+                <td  id="navUsers">Utilisateurs</td>
+                <td  id="navUsers">Actions</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for user in users %}
+                <tr>
+                    <td>
+                        <a id="student" href="{{ path('user_profil',{'id' : user.id}) }}">
+                            {{ user.lastname }}
+                            {{ user.firstname }}
+                        </a>
 
 
-    <button class="btn btn-secondary"><a class="link_button" href="{{ path('admin_register') }}">Ajouter un utilisateur</a></button>
-    <button class="btn btn-secondary"><a class="link_button" href="{{ path('admin_dashboard') }}">Retour</a></button>
+                    </td>
 
-    <table>
-        <thead>
-        <tr class="activityLine">
-            <td>Utilisateurs</td>
+                    <td>
 
+                        <a id="linkUsers" class="link_button" href="{{ path('admin_disableUser', {'id' : user.id}) }}"
 
-            <td>Actions</td>
-        </tr>
-        </thead>
-        <tbody>
+                                {% if user.isAllowed %}
 
-{% for user in users %}
-    <tr>
-        <td>
-            <a href="{{ path('user_profil',{'id' : user.id})  }}">
-                {{ user.lastname }}
-                {{ user.firstname }}
-            </a>
+                           onclick="return confirm('Désactiver les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname }} ?')">Désactiver</a>
+
+                        {% else %}
+                            onclick="return confirm('Réactiver les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname }} ?')">Réactiver</a>
+
+                        {% endif %}
 
 
-        </td>
-
-    <td>
-
-        <a class="link_button" href="{{ path('admin_disableUser', {'id' : user.id}) }}"
-
-           {% if user.isAllowed %}
-
-           onclick="return confirm('Désactiver les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname}} ?')">Désactiver</a>
-
-            {% else %}
-                onclick="return confirm('Réactiver les droits de l\'utilisateur {{ user.lastname }}  {{ user.firstname}} ?')">Réactiver</a>
-
-            {% endif %}
-
-
-        <a class="link_button" href="{{ path('admin_removeUser', {'id': user.id}) }}"
-           onclick="return confirm('Etes vous sur de vouloir supprimer l\'utisateur {{ user.lastname }} {{ user.firstname}}?')">Supprimer</a>
-    </td>
-</tr>
-{% endfor %}
-        </tbody>
-    </table>
-</div>
+                        <a id="linkUsers" class="link_button" href="{{ path('admin_removeUser', {'id': user.id}) }}"
+                           onclick="return confirm('Etes vous sur de vouloir supprimer l\'utisateur {{ user.lastname }} {{ user.firstname }}?')">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <button id="btnUsers" class="btn btn-secondary"><a class="link_button" href="{{ path('admin_register') }}">Ajouter un utilisateur</a></button>
 {% endblock %}
