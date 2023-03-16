@@ -159,31 +159,71 @@ class AppFixtures extends Fixture
 
     public function addUsers(){
 
-        $userAdmin = new User();
-        $userUser = new User();
+        $userSylvain = new User();
+        $userMaddy = new User();
+        $userLudvina = new User();
+        $userArthur = new User();
+        $userDenis = new User();
 
-        $userAdmin
+        $userSylvain
             ->setEmail('stropee@campus-eni.fr')
             ->setRoles(['ROLE_ADMIN'])
-            ->setPassword($this->passwordHasher->hashPassword($userAdmin, 'Pa$$w0rd'))
+            ->setPassword($this->passwordHasher->hashPassword($userSylvain, 'Pa$$w0rd'))
             ->setNickname('Sly')
             ->setLastname('Tropée')
             ->setFirstname('Sylvain')
             ->setPhone('0620304050')
             ->setCampus($this->faker->randomElement($this->campuses));
 
-        $this->entityManager->persist($userAdmin);
+        $this->entityManager->persist($userSylvain);
 
-        $userUser
-            ->setEmail('dsanchez@campus-eni.fr')
-            ->setPassword($this->passwordHasher->hashPassword($userAdmin, 'Pa$$w0rd'))
-            ->setNickname('DS')
-            ->setLastname('Sanchez')
-            ->setFirstname('Denis')
+        $userMaddy
+            ->setEmail('maddy.alletru2022@campus-eni.fr')
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword($this->passwordHasher->hashPassword($userMaddy, 'Pa$$w0rd'))
+            ->setNickname('MaddyChou')
+            ->setLastname('Allettru')
+            ->setFirstname('Maddy')
             ->setPhone('0620304051')
             ->setCampus($this->faker->randomElement($this->campuses));
 
-        $this->entityManager->persist($userUser);
+        $this->entityManager->persist($userMaddy);
+
+        $userLudvina
+            ->setEmail('ludvina.regeard2022@campus-eni.fr')
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword($this->passwordHasher->hashPassword($userLudvina, 'Pa$$w0rd'))
+            ->setNickname('Loouud')
+            ->setLastname('Regeard')
+            ->setFirstname('Ludvina')
+            ->setPhone('0620304052')
+            ->setProfilePicture('luudvina-6411cfcbd16f1.png')
+            ->setCampus($this->faker->randomElement($this->campuses));
+
+        $this->entityManager->persist($userLudvina);
+
+        $userArthur
+            ->setEmail('arthur.moser2022@campus-eni.fr')
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword($this->passwordHasher->hashPassword($userArthur, 'Pa$$w0rd'))
+            ->setNickname('Arthmos')
+            ->setLastname('Moser')
+            ->setFirstname('Arthur')
+            ->setPhone('0620304053')
+            ->setCampus($this->faker->randomElement($this->campuses));
+
+        $this->entityManager->persist($userArthur);
+
+        $userDenis
+            ->setEmail('dsanchez@campus-eni.fr')
+            ->setPassword($this->passwordHasher->hashPassword($userDenis, 'Pa$$w0rd'))
+            ->setNickname('DS')
+            ->setLastname('Sanchez')
+            ->setFirstname('Denis')
+            ->setPhone('0620304054')
+            ->setCampus($this->faker->randomElement($this->campuses));
+
+        $this->entityManager->persist($userDenis);
 
         for($i=0; $i < $this->number; $i++){
 
@@ -191,15 +231,12 @@ class AppFixtures extends Fixture
 
             $user
                 ->setEmail($this->faker->email)
-                ->setRoles(['ROLE_USER'])
                 ->setPassword($this->passwordHasher->hashPassword($user, 'Pa$$w0rd'))
                 ->setNickname($this->faker->userName)
                 ->setLastname($this->faker->lastName)
                 ->setFirstname($this->faker->firstName)
                 ->setPhone($this->faker->phoneNumber)
-                ->setIsAllowed($this->faker->boolean(90))
-                ->setCampus($this->faker->randomElement($this->campuses))
-                ->setProfilePicture('profilePicture.png');
+                ->setCampus($this->faker->randomElement($this->campuses));
 
             $this->entityManager->persist($user);
         }

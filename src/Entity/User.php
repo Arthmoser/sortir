@@ -329,5 +329,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->setIsAllowed(true);
         $this->setRoles(['ROLE_USER']);
     }
-
 }
