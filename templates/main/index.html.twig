@@ -19,6 +19,21 @@
 
      </script>
 
+     <script>
+         let cancelButton = document.getElementById('cancelButton')
+
+         cancelButton.addEventListener("click", function(){
+
+             let cancelReason = prompt("Veuillez renseigner le motif de l'annulation !")
+
+             if (cancelReason != null){
+
+                 document.cookie = "cancelReason = " + cancelReason
+             }
+
+         })
+     </script>
+
  {% endblock %}
 
 {% block body %}
@@ -112,7 +127,7 @@
                             {% endif %}
                         {% endif %}
                         {% if (activity.user.id == app.user.id or userRole == adminRole) and activity.status.type == 'Ouverte' and (activity.users | length) == 0 %}
-                            <a href="{{ path('activity_canceled', {'id': activity.id}) }}">Annuler</a>
+                            <a href="{{ path('activity_canceled', {'id': activity.id}) }}" id="cancelButton">Annuler</a>
                         {% endif %}
                     </td>
                 </tr>

@@ -21,6 +21,14 @@
             Modifier une sortie
         {% endif %}
     </h2>
+
+    {% if activity.cancelReason %}
+        <div>
+            <h3>Sortie annulée !</h3>
+            <p>Motif d'annulation : {{ activity.cancelReason }}</p>
+        </div>
+    {% endif %}
+
     {{ form_start(activityForm) }}
 
     <div class="form">

@@ -247,6 +247,8 @@ class ActivityController extends AbstractController
         $messageType = 'error';
         $flashMessage = '';
 
+
+
         $activity = $activityRepository->find($id);
 
        if ($activity)
@@ -256,7 +258,11 @@ class ActivityController extends AbstractController
            {
                if ($status->getStatusCode() == $statusCodeCanceled)
                {
-                   $activity->setStatus($status);
+                   $cancelReason = $_COOKIE['cancelReason'];
+                   dump($cancelReason);
+                   $activity
+                       ->setStatus($status)
+                       ->setCancelReason($cancelReason);
                    $activityRepository->save($activity, true);
                    $flashMessage = 'L\'activité est bien annulée';
                    $messageType = 'success';
