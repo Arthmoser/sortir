@@ -6,42 +6,30 @@
 
     <h2>Bonjour {{ app.user.nickname }} ! </h2>
 
-    <h3>En tant qu'administrateur, que souhaitez-vous faire ?</h3>
-
     <div class="iconAdmin">
+
+        <a id="icon1" href="{{ path('admin_userList') }}">
+            <i  class="fa-solid fa-users"></i></a>
         <div class="user">
-            <a href="{{ path('admin_userList') }}">
-
-                <i class="fa-solid fa-users"></i>
-                Gérer les utilisateurs </a>
+            <p> Gérer les utilisateurs </p>
         </div>
         <br>
+        <a id="icon2" href="{{ path('admin_campus_list') }}">
+            <i  class="fa-solid fa-school"></i></a>
         <div class="campus">
-            <a href="{{ path('admin_campus_list') }}">
-
-                <i class="fa-solid fa-school"></i>
-                Gérer les campus</a>
+            <p> Gérer les campus</p>
         </div>
         <br>
+        <a id="icon3" href="{{ path('admin_city_display') }}">
+            <i class="fa-solid fa-location-dot"></i></a>
         <div class="city">
-            <a href="{{ path('admin_city_display') }}">
-
-                <i class="fa-solid fa-location-dot"></i>
-                Gérer les villes</a>
+            <p>Gérer les villes</p>
         </div>
         <br>
+        <a id="icon4" href="{{ path('activity_home') }}">
+            <i  class="fa-solid fa-table-tennis-paddle-ball"></i></a>
         <div class="activity">
-            <a href="{{ path('activity_home') }}">
-
-                <i class="fa-solid fa-table-tennis-paddle-ball"></i>
-                Gérer les activités</a>
+            <p>Gérer les activités</p>
         </div>
-{#        <br>#}
-{#        <div class="home">#}
-{#            <a href="{{ path('activity_home') }}">#}
-{#                <i class="fa-solid fa-house"></i>#}
-{#                Retourner à la page d'accueil</a>#}
-{#        </div>#}
-
     </div>
 {% endblock %}

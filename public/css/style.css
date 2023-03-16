@@ -250,20 +250,6 @@ select {
     width: 600px;
 }
 
-/*--------------------------------------------------------------------------DASHBOARD----------------------------------------------------------------------*/
-
-.iconAdmin {
-
-
-}
-
-.user a {
-
-    display: inline-block;
-    text-align: center;
-    color : green;
-
-}
 
 /*--------------------------------------------------------------------------LOGIN----------------------------------------------------------------------*/
 
@@ -336,7 +322,90 @@ div.loginForm input{
     filter : drop-shadow(0 0 0.10rem black);
     color: black;
 }
-/*_________________________________________*/
+/*--------------------------------------------------------------------------DASHBOARD----------------------------------------------------------------------*/
+
+.iconAdmin {
+
+    background: linear-gradient(45deg, #ECF2FF,#B5F1CC);
+    border-radius: 100px;
+    box-sizing: border-box;
+    padding: 20px;
+
+    display: ruby-base;
+    font-size: 3em;
+   justify-items: center;
+    margin-left: -6%;
+    overflow: hidden;
+}
+
+.user p, .campus p, .city p, .activity p {
+
+    display: none;
+    color: green;
+    font-size: 35px;
+
+}
+
+#icon1:hover ~ .user p {
+    display: block;
+
+}
+
+#icon2:hover ~ .campus p {
+    display: block;
+
+}
+#icon3:hover ~ .city p {
+    display: block;
+
+}
+
+#icon4:hover ~ .activity p {
+    display: block;
+
+
+}
+
+#icon1, #icon2, #icon3, #icon4 {
+    display: flex;
+    height: 20px;
+    color : green;
+    padding: 80px;
+    font-size: 50px;
+
+}
+
+.user, .campus, .city, .activity {
+
+    display: inline;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------------------LIST_CAMPUS----------------------------------------------------------------------*/
 div.form label{
     display: inline-block;
     width: 285px;
