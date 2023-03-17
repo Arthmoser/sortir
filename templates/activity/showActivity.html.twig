@@ -46,15 +46,20 @@
 
 {% block body %}
 
+    <h2>Informations concernant la sortie</h2>
+
+    {% if activity.cancelReason %}
+        <div>
+            <h3>Sortie annulée !</h3>
+            <p>Motif d'annulation : {{ activity.cancelReason }}</p>
+        </div>
+    {% endif %}
+
     <article>
         <div id="map">
             <!-- OpenStreetMap -->
         </div>
     </article>
-
-
-
-    <h2>Informations concernant la sortie</h2>
 
     <div>
         <h2>Nom de la sortie : {{ activity.name }}</h2>

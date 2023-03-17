@@ -55,6 +55,9 @@ class Activity
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'activities')]
     private Collection $users;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $cancelReason = null;
+
 
     public function __construct()
     {
@@ -217,6 +220,18 @@ class Activity
         if ($this->users->removeElement($user)) {
             $user->removeActivity($this);
         }
+
+        return $this;
+    }
+
+    public function getCancelReason(): ?string
+    {
+        return $this->cancelReason;
+    }
+
+    public function setCancelReason(?string $cancelReason): self
+    {
+        $this->cancelReason = $cancelReason;
 
         return $this;
     }

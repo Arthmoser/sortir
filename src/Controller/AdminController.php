@@ -172,7 +172,7 @@ class AdminController extends AbstractController
                 $city2 = $city;
             }
         }
-//        dd($city2);
+
         $cityForm = $this->createForm(CityType::class, $city1);
         $cityForm2 = $this->createForm(CityType::class, $city2);
         $cityForm->handleRequest($request);
