@@ -23,16 +23,18 @@
 
 {% block body %}
 
-    <h2 class="title">Filtrer les sorties</h2>
+    <h2 class="activityTitle">Filtrer les sorties</h2>
     <div class="filterForm">
         {{ form_start(filterForm) }}
         <div class="form">
-
+            <div class="first">
             {{ form_row(filterForm.campus) }}
             {{ form_row(filterForm.search) }}
+            </div>
+            <div class="date">
             {{ form_row(filterForm.startingDateTime) }}
             {{ form_row(filterForm.endingDateTime) }}
-
+            </div>
         </div>
 
         <div class="form">
@@ -46,19 +48,19 @@
 
         </div>
         <div class="filterButton">
-            <button type="submit" class="btn btn-secondary">Rechercher</button>
-            <button class="btn btn-secondary"><a href="{{ path('activity_add') }}">Créer une sortie</a></button>
+            <button id="btnActivity" type="submit" class="btn btn-secondary">Rechercher</button>
+            <button id="btnCreate" class="btn btn-secondary"><a href="{{ path('activity_add') }}">Créer une sortie</a></button>
         </div>
     </div>
 
     {{ form_end(filterForm) }}
 
-    <div class="box">
+    <div class="contentActivity">
 
-        <table>
+        <table >
             <thead class="head">
 
-            <tr>
+            <tr class="trTitle">
                 <td>Activité</td>
                 <td>Date</td>
                 <td>Clôture</td>
@@ -93,27 +95,41 @@
                             X
                         {% endif %}
                     </td>
-                    <td><a href="{{ path('user_profil', {'id': activity.user.id}) }}">{{ activity.user.nickname }}</a>
+                    <td class="orga"><a href="{{ path('user_profil', {'id': activity.user.id}) }}">{{ activity.user.nickname }}</a>
                     </td>
                     <td>
+                        <div class="allActivity">
+                        <div class="linkActivity">
                         {% if activity.user.id == app.user.id %}
                             {% if activity.status.type == ('Créée' or 'Ouverte') %}
                                 <a href="{{ path('activity_update', {'id': activity.id}) }}">Modifier</a>
                             {% endif %}
+                        </div>
+                        <div class="linkActivity1">
                             {% if activity.status.type == 'Créée' %}
                                 <a href="{{ path('activity_update', {'id': activity.id}) }}">Publier</a>
                             {% endif %}
+                        </div>
+                        <div class="linkActivity2">
                         {% else %}
                             <a href="{{ path('activity_show', {'id': activity.id}) }}">Afficher</a>
+                        </div>
+                        <div class="linkActivity3">
                             {% if activity.users.contains(app.user) and date('now') < activity.startingDateTime %}
                                 <a href="{{ path('activity_unregister', {'id': activity.id}) }}">Se désister</a>
+                        </div>
+                        <div class="linkActivity4">
                             {% elseif (activity.users | length) < activity.maxRegistrationNb and activity.status.type == 'Ouverte' and date('now') < activity.registrationDeadLine %}
                                 <a href="{{ path('activity_register', {'id': activity.id}) }}">S'inscrire</a>
                             {% endif %}
+                        </div>
                         {% endif %}
+                        <div class="linkActivity5">
                         {% if (activity.user.id == app.user.id or userRole == adminRole) and activity.status.type == 'Ouverte' and (activity.users | length) == 0 %}
                             <a href="{{ path('activity_canceled', {'id': activity.id}) }}">Annuler</a>
                         {% endif %}
+                        </div>
+                </div>
                     </td>
                 </tr>
             {% endfor %}

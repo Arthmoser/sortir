@@ -4,7 +4,7 @@
 
 {% block body %}
     <h2 class="camp">Gérer les Campus</h2>
-    <a href="{{ path('admin_dashboard') }}"><i class="fa-solid fa-arrow-left"></i></a>
+    <a href="{{ path('admin_dashboard') }}"><i id="arrow" class="fa-solid fa-arrow-left"></i></a>
 
     <div class="contentCampus">
 
@@ -28,7 +28,7 @@
                     </td>
                     <td>
                         {% if isUpdate == true and campus.id == id %}
-                            <button type="submit">Enregistrer</button>
+                            <button id="btnCamp"  type="submit">Enregistrer</button>
                             {{ form_end(campusForm2.name) }}
 
                         {% else %}
@@ -46,7 +46,7 @@
                     {{ form_widget(campusForm.name) }}
                 </td>
                 <td>
-                    <button type="submit">Ajouter</button>
+                    <button id="btnCamp" type="submit">Ajouter</button>
                     {{ form_end(campusForm.name) }}
 
                 </td>

@@ -160,32 +160,9 @@ p {
     margin-top: -1%;
 }
 
-.content2 {
-    align-items: center;
-    background-color: #CBEDD5;
-    border-radius: 20px;
-    box-sizing: border-box;
-    height: 700px;
-    padding: 20px;
-    width: 70%;
-    overflow: hidden;
-    border: 1px solid #439A97;
-    margin-top: -2%;
 
-}
 /*--------------------------------------------------------------------------TEXT/OTHERS----------------------------------------------------------------------*/
-.pp .content {
-    display: inline;
-}
 
-.pp {
-    margin-left: 50%;
-}
-
-.txt {
-    text-align: left;
-    margin-left: 10%;
-}
 
 input {
     border-radius: 6px;
@@ -209,17 +186,6 @@ select {
 /*    color: #ff43fe;*/
 /*}*/
 
-/*--------------------------------------------------------------------------FORM----------------------------------------------------------------------*/
-
-.form  {
-  color : red;
-  display: inline-grid;
-  margin-bottom: 3%;
-}
-
-.form > label {
-    color : yellow;
-}
 
 /*--------------------------------------------------------------------------Flash message----------------------------------------------------------------------*/
 
@@ -349,7 +315,7 @@ div.loginForm input{
 .user p, .campus p, .city p, .activity p {
 
     display: none;
-    color: green;
+    color: #06283D;
     font-size: 35px;
 
 }
@@ -378,7 +344,7 @@ div.loginForm input{
 #icon1, #icon2, #icon3, #icon4 {
     display: flex;
     height: 20px;
-    color : green;
+    color : #62B6B7;
     font-size: 50px;
 
 }
@@ -464,6 +430,11 @@ div.loginForm input{
     filter : drop-shadow(0 0 0.10rem black);
 }
 
+#tableUsers{
+    margin: auto;
+
+}
+
 /*--------------------------------------------------------------------------LIST_CAMPUS----------------------------------------------------------------------*/
 
 .camp{
@@ -502,26 +473,378 @@ div.loginForm input{
     filter : drop-shadow(0 0 0.10rem black);
 }
 
+#btnCamp{
+    height: 27px;
+    width: 100px;
+    transition-duration: 0.1s;
+}
 
+#btnCamp a {
+    margin:auto;
+    color: black;
+}
 
+#btnCamp:hover{
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: #CFCFCF;
+    filter : drop-shadow(0 0 0.10rem black);
+    color: black;
+}
 
+/*--------------------------------------------------------------------------CITY----------------------------------------------------------------------*/
 
+.cityH2{
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 18%;
+}
 
-
-
-
-
-
-/*--------------------------------------------------------------------------LIST_ACTIVITY----------------------------------------------------------------------*/
-div.form label{
+div.formCity input{
     display: inline-block;
-    width: 285px;
-    text-align: right;
+    width: 180px;
+    text-align: left;
     padding-right: 10px;
 }
+
+div.formCity1{
+
+    position: absolute;
+    padding: 18px;
+
+}
+div.formCity label{
+    display: inline-block;
+    width: 680px;
+    text-align: right;
+    margin: 10px;
+}
+
+.formCity #btnAdd{
+    height: 46px;
+    width: 100px;
+    float: right;
+    margin-right: 27%;
+    margin-top: -60px;
+    transition-duration: 0.1s;
+
+}
+
+#btnSearch {
+    height: 27px;
+    width: 100px;
+    margin-right: 27%;
+    margin-top: 5px;
+    transition-duration: 0.1s;
+
+}
+
+#btnSearch:hover, #btnAdd:hover{
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: #CFCFCF;
+    filter : drop-shadow(0 0 0.10rem black);
+    color: black;
+}
+
+#linkCity{
+    color: #06283D;
+}
+
+#linkCity:hover {
+    text-decoration: underline;
+}
+
+#navCity{
+    font-size: 19px;
+    font-family: 'Tilt Warp', cursive;
+
+}
+
+.contentCity {
+
+    background: linear-gradient(12deg, #ECF2FF,#B5F1CC);
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 500px;
+    padding: 20px;
+    width: 74%;
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    border: 1px solid #439A97;
+    filter : drop-shadow(0 0 0.10rem black);
+}
+
+#tableCity{
+    margin: auto;
+
+}
+
+/*--------------------------------------------------------------------------LIST_ACTIVITY----------------------------------------------------------------------*/
+
+
+.activityTitle{
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 18%;
+}
+
+div.form label{
+
+    text-align: right;
+    padding-right: 0;
+    margin: 8px;
+   }
 
 div.form input{
     display: inline-block;
 }
 
+div.form select{
+    margin-left: 1px;
+}
 
+div.form .date{
+    display: flex;
+    margin: auto;
+}
+
+div.form .first{
+    display: flex;
+    margin: auto;
+}
+
+.filterForm {
+
+    background: linear-gradient(12deg, #ECF2FF,#B5F1CC);
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    width: 68%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    filter : drop-shadow(0 0 0.10rem black);
+    margin-bottom: 40px;
+    margin-left: 35px;
+}
+
+.form{
+    display: inline-flex;
+    margin-bottom: 3%;
+
+}
+
+.filterButton{
+    display: flex;
+    margin-top: 15px;
+    color: black;
+}
+
+#btnCreate a {
+    color: black;
+
+}
+
+div .filterButton #btnActivity{
+    display: flex;
+    margin: auto;
+
+}
+
+div .filterButton #btnCreate{
+    display: flex;
+    margin: auto;
+}
+
+
+#btnActivity:hover, #btnCreate:hover{
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: #CFCFCF;
+    filter : drop-shadow(0 0 0.10rem black);
+    color: black;
+}
+
+.contentActivity {
+
+    background: linear-gradient(12deg, #ECF2FF,#B5F1CC);
+    border-radius: 10px;
+    box-sizing: border-box;
+    height: 500px;
+    padding: 20px;
+    width: 74%;
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    border: 1px solid #439A97;
+    filter : drop-shadow(0 0 0.10rem black);
+}
+
+.allActivity a{
+    color: #06283D;
+}
+
+.linkActivity:hover, .linkActivity1:hover, .linkActivity2:hover, .linkActivity3:hover, .linkActivity4:hover, .linkActivity5:hover{
+    text-decoration: underline;
+}
+
+.trTitle td {
+    font-size: 19px;
+    font-family: 'Tilt Warp', cursive;
+}
+
+.orga a {
+    color: #06283D;
+}
+
+/*--------------------------------------------------------------------------PROFIL----------------------------------------------------------------------*/
+
+.showTitle{
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 18%;
+}
+
+div .profilForm input {
+    display: inline-block;
+}
+
+.contentShow{
+
+    background: linear-gradient(12deg, #ECF2FF,#B5F1CC);
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    width: 74%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    margin-top: -16%;
+    /*filter : drop-shadow(0 0 0.10rem black);*/
+}
+
+.pp .contentShow {
+    display: inline;
+}
+
+.pp {
+    margin-left: 57%;
+}
+
+.txt {
+    text-align: left;
+    margin-left: 10%;
+}
+
+/*--------------------------------------------------------------------------CREATE_USER----------------------------------------------------------------------*/
+
+.createUser {
+
+    background: linear-gradient(12deg, #ECF2FF,#B5F1CC);
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 640px;
+    padding: 20px;
+    width: 70%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    margin-top: -2%;
+    filter : drop-shadow(0 0 0.10rem black);
+
+}
+
+.createTitle{
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 18%;
+}
+
+div.formCreate input{
+    display: inline-block;
+    width: 180px;
+    text-align: left;
+    padding-right: 10px;
+}
+
+div.formCreate label{
+    display: inline-block;
+    width: 380px;
+    text-align: right;
+    margin: 10px;
+}
+
+#btnCreateU {
+    height: 52px;
+    width: 100px;
+    margin-top: 5px;
+    transition-duration: 0.1s;
+    float: right;
+    margin-right: 15%;
+
+}
+
+#btnCreateU:hover{
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: #CFCFCF;
+    filter : drop-shadow(0 0 0.10rem black);
+    color: black;
+}
+
+/*--------------------------------------------------------------------------ADD_ACTIVITY----------------------------------------------------------------------*/
+
+.addActivity{
+    font-family: 'Rampart One', cursive;
+    color: #06283D;
+    font-size: 3em;
+    margin-right: 26%;
+    margin-left: 18%;
+}
+
+.addForm{
+    background: linear-gradient(12deg, #ECF2FF,#B5F1CC);
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 640px;
+    padding: 20px;
+    width: 70%;
+    overflow: hidden;
+    border: 1px solid #439A97;
+    margin-top: -2%;
+    filter : drop-shadow(0 0 0.10rem black);
+}
+
+div.addForm input{
+    display: inline-block;
+    width: 180px;
+    text-align: left;
+    padding-right: 10px;
+}
+
+div.addForm label{
+    display: inline-block;
+    width: 380px;
+    text-align: right;
+    margin: 10px;
+}
+
+
+#btnCreat{
+    display: flex;
+    margin: auto;
+    float: right;
+}
+div #btnn a {
+
+    float:  right;
+    margin-top: 10%;
+
+}

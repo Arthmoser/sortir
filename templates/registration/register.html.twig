@@ -3,23 +3,22 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<div class="content2">
-    <h2>Création utilisateur</h2>
+<div class="createUser">
+    <h2 class="createTitle">Création utilisateur</h2>
 
     {{ form_start(registrationForm) }}
 
-    <div>
+    <div class="formCreate">
         {{ form_row(registrationForm.nickname) }}
         {{ form_row(registrationForm.lastname) }}
         {{ form_row(registrationForm.firstname) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.phone) }}
-    </div>
-    <div>
+
         {{ form_row(registrationForm.password) }}
         {{ form_row(registrationForm.campus) }}
     </div>
-        <button type="submit" class="btn">Inscription</button>
+        <button id="btnCreateU" type="submit" class="btn">Inscription</button>
 
     {{ form_end(registrationForm) }}
 

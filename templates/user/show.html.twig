@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block body %}
-
     <div>
         <article>
             <a href="{{ path('user_profil', {'id': user.id }) }}">
@@ -18,7 +17,8 @@
             </a>
         </article>
 
-        <div class="content">
+        <div class="contentShow">
+            <a href="{{ path('admin_dashboard') }}"><i id="arrow" class="fa-solid fa-arrow-left"></i></a>
 
             {% set userRole = '' %}
             {% set adminRole = 'ROLE_ADMIN' %}
@@ -29,7 +29,7 @@
 
             {% if app.user.id == user.id or userRole == adminRole %}
                 <div class="txt">
-                    <h2>
+                    <h2 class="showTitle">
                         {% if app.user.id == user.id %}
                             Mon profil : {{ user.nickname }}
                         {% else %}
@@ -59,8 +59,9 @@
                 <div>
 
             {% else %}
-                <div class="txt">
+
                     <h2>{{ user.nickname }}</h2>
+                <div class="profilForm">
                     <div> Prénom : {{ user.firstname }}</div>
                     <div> Nom : {{ user.lastname }}</div>
                     <div> Téléphone : {{ user.phone }}</div>
@@ -68,7 +69,7 @@
                     <div> Campus : {{ user.campus.name }}</div>
                 </div>
             {% endif %}
-            <a href="{{ path('activity_home') }}">Retour</a>
+
             </div>
         </div>
     </div>
